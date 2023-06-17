@@ -1,6 +1,7 @@
 .btn-green {
   background-color: #0FD45E;
   color: #fff;
+  transition: 0.2s ease-in-out;
 
   &:disabled {
     transition: 0.2s ease-in-out;
