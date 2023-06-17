@@ -48,6 +48,12 @@ body {
   color: #aaa;
 }
 
+.card-shadow{
+  background-color: #fff;
+  box-shadow: 2px 2px 6px 2px #aaa;
+  border-radius: 20px;
+}
+
 .input-without-label-basic {
   border: none;
   border-radius: 10px;
