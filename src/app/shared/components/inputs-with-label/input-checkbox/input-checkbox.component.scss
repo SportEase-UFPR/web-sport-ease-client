@@ -1,0 +1,38 @@
+input {
+  appearance: none;
+  box-shadow: none;
+  height: 20px;
+  width: 20px;
+  border: 1px solid #aaa;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  outline: none;
+
+  &::after {
+    content: '';
+    font-weight: normal;
+    font-size: 8px;
+    padding: 0px 3.7px 0px 3.7px;
+    border-radius: 50%;
+    color: #0FD45E;
+    background-color: #0FD45E;
+    margin: 4px;
+    display: none;
+  }
+
+  &:checked {
+    border-width: 2px;
+    border-color: #0FD45E;
+
+    & + #label-input {
+      color: #0FD45E;
+      font-weight: 500;
+    }
+  }
+
+  &:checked::after {
+    display: block;
+  }
+}

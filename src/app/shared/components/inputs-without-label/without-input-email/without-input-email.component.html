@@ -1,0 +1,21 @@
+<div
+  [formGroup]="formGroup"
+  class="mb-3"
+  [ngClass]="
+    formGroup.controls[controlName].invalid &&
+    (formGroup.controls[controlName].dirty || formGroup.controls[controlName].touched) &&
+    validacaoInput
+      ? 'is-invalid-input-without-label'
+      : ''
+  "
+>
+  <input
+    formControlName="{{ controlName }}"
+    (change)="changeInput($event)"
+    type="email"
+    class="input-without-label-basic w-100"
+    placeholder="{{ placeholder }}"
+    name="{{ controlName }}"
+    autocomplete="email"
+  />
+</div>

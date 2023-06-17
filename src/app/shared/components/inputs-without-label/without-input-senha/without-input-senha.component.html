@@ -1,0 +1,26 @@
+<div
+  [formGroup]="formGroup"
+  class="mb-3 d-flex"
+  [ngClass]="
+    formGroup.controls[controlName].invalid &&
+    (formGroup.controls[controlName].dirty ||
+      formGroup.controls[controlName].touched) &&
+    validacaoInput
+      ? 'is-password-invalid'
+      : ''
+  "
+>
+  <input
+    formControlName="{{ controlName }}"
+    (focus)="inputFocus(controlName)"
+    id="{{ controlName }}"
+    type="{{ type }}"
+    class="input-without-label-password w-100"
+    name="{{ controlName }}"
+    autocomplete="new-password"
+  />
+
+  <button class="show-senha" (click)="showSenha()">
+    <fa-icon [icon]="faShowSenha"></fa-icon>
+  </button>
+</div>

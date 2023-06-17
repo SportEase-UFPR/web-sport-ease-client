@@ -1,0 +1,25 @@
+<div
+  class="d-flex align-items-center ms-2"
+  [formGroup]="formGroup"
+  [ngClass]="
+    formGroup.controls[controlName].invalid &&
+    (formGroup.controls[controlName].dirty || formGroup.controls[controlName].touched) &&
+    validacaoInput
+      ? 'is-invalid'
+      : ''
+  "
+>
+  <input
+    #checkbox
+    type="checkbox"
+    value="{{ value }}"
+    name="{{ controlName }}"
+    id="{{ controlName }}"
+    formControlName="{{ controlName }}"
+    [checked]="inputChecked"
+    (change)="emiterChange()"
+    class="me-1"
+  />
+  <app-label [idInput]="controlName" [textLabel]="label"></app-label>
+</div>
+

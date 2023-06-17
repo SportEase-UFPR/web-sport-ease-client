@@ -1,0 +1,22 @@
+<div
+  [formGroup]="formGroup"
+  class="mb-3"
+  [ngClass]="
+    formGroup.controls[controlName].invalid &&
+    (formGroup.controls[controlName].dirty ||
+      formGroup.controls[controlName].touched) &&
+    validacaoInput
+      ? 'is-invalid-input-without-label'
+      : ''
+  "
+>
+  <input
+    type="number"
+    class="input-without-label-basic input-number w-100"
+    mask="{{ maskInput }}"
+    placeholder="{{ placeholder }}"
+    name="{{ controlName }}"
+    id="{{ controlName }}"
+    formControlName="{{ controlName }}"
+  />
+</div>
