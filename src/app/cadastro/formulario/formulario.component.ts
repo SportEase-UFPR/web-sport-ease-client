@@ -1,4 +1,9 @@
-import { AfterContentChecked, Component, OnInit } from '@angular/core';
+import {
+  AfterContentChecked,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faXmark, faCheck } from '@fortawesome/free-solid-svg-icons';
@@ -8,7 +13,9 @@ import { faXmark, faCheck } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './formulario.component.html',
   styleUrls: ['./formulario.component.scss'],
 })
-export class FormularioComponent implements OnInit, AfterContentChecked {
+export class FormularioComponent
+  implements OnInit, AfterContentChecked, OnDestroy
+{
   public formCadastroCliente: FormGroup = new FormGroup({
     nome: new FormControl(null, [Validators.required]),
     email: new FormControl(null, [Validators.required, Validators.email]),
@@ -34,9 +41,11 @@ export class FormularioComponent implements OnInit, AfterContentChecked {
 
   focusPasswordType?: string;
 
-  ngOnInit(): void {}
-
   constructor(private router: Router) {}
+
+  ngOnInit(): void {
+    document.body.classList.add('display-centered');
+  }
 
   ngAfterContentChecked(): void {
     if (
@@ -48,15 +57,18 @@ export class FormularioComponent implements OnInit, AfterContentChecked {
 
     if (
       this.formCadastroCliente.get('senha')?.value ===
-      this.formCadastroCliente.get('confirmacaoSenha')?.value &&
+        this.formCadastroCliente.get('confirmacaoSenha')?.value &&
       this.formCadastroCliente.get('senha')?.value !== null &&
       this.formCadastroCliente.get('confirmacaoSenha')?.value !== null
     ) {
-      this.senhasDiferentes = false
+      this.senhasDiferentes = false;
     } else {
-      this.senhasDiferentes = true
+      this.senhasDiferentes = true;
     }
+  }
 
+  ngOnDestroy(): void {
+    document.body.classList.remove('display-centered');
   }
 
   focusPassword(type: any) {
@@ -75,7 +87,7 @@ export class FormularioComponent implements OnInit, AfterContentChecked {
     }
   }
 
-  cadastrar(){
+  cadastrar() {
     this.router.navigateByUrl('/confirmacao-cadastro');
   }
 }

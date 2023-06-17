@@ -34,6 +34,13 @@ button {
 
 body {
   background-color: #fafbfc;
+  min-height: 100vh;
+}
+
+.display-centered{
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
 
 .text-dark-blue {
