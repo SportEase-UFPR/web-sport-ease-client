@@ -44,6 +44,10 @@ body {
   color: #0fd45e;
 }
 
+.text-gray {
+  color: #aaa;
+}
+
 .input-without-label-basic {
   border: none;
   border-radius: 10px;
@@ -71,8 +75,22 @@ body {
   }
 }
 
-.is-invalid-input-without-label{
-  input{
+.is-invalid-input-without-label {
+  input {
     box-shadow: 4px 4px 2px 0 #ff0000;
+  }
+}
+
+.btn-basic {
+  border: none;
+  border-radius: 10px;
+  font-weight: 500;
+  height: 45px;
+  padding: 8px;
+  width: 100%;
+
+  &:hover {
+    transition: 0.2s ease-in-out;
+    transform: scale(1.05);
   }
 }

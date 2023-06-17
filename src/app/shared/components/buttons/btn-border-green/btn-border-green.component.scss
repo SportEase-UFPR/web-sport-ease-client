@@ -1,0 +1,13 @@
+.btn-border-green {
+  background-color: #fff;
+  color: #0FD45E;
+  border: 1px solid #0FD45E !important;
+
+  &:disabled {
+    transition: 0.2s ease-in-out;
+    opacity: 60%;
+    color: #0FD45E;
+    opacity: 0.6;
+    transform: scale(1);
+  }
+}

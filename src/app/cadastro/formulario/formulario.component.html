@@ -64,7 +64,10 @@
             </div>
           </div>
 
-          
+          <div class="col-12 mt-2">
+            <p class="text-gray mb-0">Senha</p>
+          </div>
+
           <div class="col-12 col-md-6 mt-2">
             <app-without-input-senha
               [formGroup]="formCadastroCliente"
@@ -81,6 +84,18 @@
               [validacaoInput]="true"
             >
             </app-without-input-senha>
+          </div>
+
+          <div class="col-12 d-block d-md-flex justify-content-end">
+            <div>
+              <app-btn-green [textButton]="'Cadastrar'"></app-btn-green>
+            </div>
+
+            <div class="ms-0 ms-md-2 mt-2 mt-md-0">
+              <app-btn-border-green
+                [textButton]="'Cancelar'"
+              ></app-btn-border-green>
+            </div>
           </div>
         </div>
       </form>

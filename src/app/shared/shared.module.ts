@@ -11,6 +11,8 @@ import { WithoutInputNumberComponent } from './components/inputs-without-label/w
 import { WithoutInputEmailComponent } from './components/inputs-without-label/without-input-email/without-input-email.component';
 import { WithoutInputSenhaComponent } from './components/inputs-without-label/without-input-senha/without-input-senha.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { BtnGreenComponent } from './components/buttons/btn-green/btn-green.component';
+import { BtnBorderGreenComponent } from './components/buttons/btn-border-green/btn-border-green.component';
 
 
 
@@ -21,7 +23,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     WithoutInputTextComponent,
     WithoutInputNumberComponent,
     WithoutInputEmailComponent,
-    WithoutInputSenhaComponent
+    WithoutInputSenhaComponent,
+    BtnGreenComponent,
+    BtnBorderGreenComponent
   ],
   imports: [
     CommonModule,
@@ -37,6 +41,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     WithoutInputNumberComponent,
     WithoutInputEmailComponent,
     WithoutInputSenhaComponent,
+    BtnGreenComponent,
+    BtnBorderGreenComponent
   ],
   providers: [
     provideNgxMask()

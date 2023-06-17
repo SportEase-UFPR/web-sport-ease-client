@@ -33,17 +33,15 @@
 }
 
 .is-password-invalid {
-  .input-password {
+  .input-without-label-password {
     transition: 0.2s ease-in-out;
-    border-width: 1px;
-    border-right: none !important;
+    box-shadow: 4px 4px 2px 0 #ff0000;
     background-color: transparent;
-  }
 
-  .show-senha {
-    transition: 0.2s ease-in-out;
-    border-width: 1px;
-    border-left: none !important;
-    background-color: transparent;
+    ~ .show-senha {
+      transition: 0.2s ease-in-out;
+      box-shadow: 4px 4px 2px 0 #ff0000;
+      background-color: transparent;
+    }
   }
 }

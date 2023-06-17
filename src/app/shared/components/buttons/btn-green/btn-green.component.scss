@@ -1,0 +1,12 @@
+.btn-green {
+  background-color: #0FD45E;
+  color: #fff;
+
+  &:disabled {
+    transition: 0.2s ease-in-out;
+    opacity: 60%;
+    color: #aaa;
+    opacity: 0.6;
+    transform: scale(1);
+  }
+}
