@@ -3,18 +3,16 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { InputCheckboxComponent } from './components/inputs-with-label/input-checkbox/input-checkbox.component';
 import { LabelComponent } from './components/inputs-with-label/label/label.component';
 import { WithoutInputTextComponent } from './components/inputs-without-label/without-input-text/without-input-text.component';
 import { WithoutInputNumberComponent } from './components/inputs-without-label/without-input-number/without-input-number.component';
 import { WithoutInputEmailComponent } from './components/inputs-without-label/without-input-email/without-input-email.component';
-import { WithoutInputSenhaComponent } from './components/inputs-without-label/without-input-senha/without-input-senha.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BtnGreenComponent } from './components/buttons/btn-green/btn-green.component';
 import { BtnBorderGreenComponent } from './components/buttons/btn-border-green/btn-border-green.component';
-
-
+import { InputSenhaComponent } from './components/inputs-with-label/input-senha/input-senha.component';
 
 @NgModule({
   declarations: [
@@ -23,9 +21,9 @@ import { BtnBorderGreenComponent } from './components/buttons/btn-border-green/b
     WithoutInputTextComponent,
     WithoutInputNumberComponent,
     WithoutInputEmailComponent,
-    WithoutInputSenhaComponent,
     BtnGreenComponent,
-    BtnBorderGreenComponent
+    BtnBorderGreenComponent,
+    InputSenhaComponent,
   ],
   imports: [
     CommonModule,
@@ -33,19 +31,17 @@ import { BtnBorderGreenComponent } from './components/buttons/btn-border-green/b
     ReactiveFormsModule,
     NgxMaskDirective,
     NgxMaskPipe,
-    FontAwesomeModule
+    FontAwesomeModule,
   ],
   exports: [
     InputCheckboxComponent,
     WithoutInputTextComponent,
     WithoutInputNumberComponent,
     WithoutInputEmailComponent,
-    WithoutInputSenhaComponent,
+    InputSenhaComponent,
     BtnGreenComponent,
-    BtnBorderGreenComponent
+    BtnBorderGreenComponent,
   ],
-  providers: [
-    provideNgxMask()
-  ]
+  providers: [provideNgxMask()],
 })
-export class SharedModule { }
+export class SharedModule {}

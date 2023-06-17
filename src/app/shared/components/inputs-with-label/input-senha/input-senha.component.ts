@@ -1,17 +1,17 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
-import { faEye } from '@fortawesome/free-regular-svg-icons';
-import { faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
-  selector: 'app-without-input-senha',
-  templateUrl: './without-input-senha.component.html',
-  styleUrls: ['./without-input-senha.component.scss'],
+  selector: 'app-input-senha',
+  templateUrl: './input-senha.component.html',
+  styleUrls: ['./input-senha.component.scss']
 })
-export class WithoutInputSenhaComponent implements OnInit {
+export class InputSenhaComponent implements OnInit {
   @Input() formGroup: FormGroup = new FormGroup({});
   @Input() controlName?: any;
   @Input() placeholder: string = '';
+  @Input() label: string = '';
   @Input() validacaoInput: boolean = false;
 
   @Output() emmiterFocus = new EventEmitter();

@@ -64,31 +64,85 @@
             </div>
           </div>
 
-          <div class="col-12 mt-2">
-            <p class="text-gray mb-0">Senha</p>
-          </div>
-
           <div class="col-12 col-md-6 mt-2">
-            <app-without-input-senha
+            <app-input-senha
               [formGroup]="formCadastroCliente"
               [controlName]="'senha'"
+              [label]="'Senha...'"
               [validacaoInput]="true"
+              (emmiterFocus)="focusPassword($event)"
             >
-            </app-without-input-senha>
+            </app-input-senha>
           </div>
 
           <div class="col-12 col-md-6 mt-2">
-            <app-without-input-senha
+            <app-input-senha
               [formGroup]="formCadastroCliente"
               [controlName]="'confirmacaoSenha'"
+              [label]="'Confirmar Senha...'"
               [validacaoInput]="true"
+              (emmiterFocus)="focusPassword($event)"
             >
-            </app-without-input-senha>
+            </app-input-senha>
           </div>
 
-          <div class="col-12 d-block d-md-flex justify-content-end">
+          <ng-container *ngIf="passwordChecklist">
+            <div class="checklist">
+              <ul class="password-checklist">
+                <li
+                  [ngClass]="
+                    formCadastroCliente.controls['senha'].hasError(
+                      'required'
+                    ) ||
+                    formCadastroCliente.controls['senha'].hasError(
+                      'minlength'
+                    )
+                      ? 'tem-erros'
+                      : 'sem-erros'
+                  "
+                >
+                  <ng-container
+                    *ngIf="
+                      formCadastroCliente.controls['senha'].hasError(
+                        'required'
+                      ) ||
+                        formCadastroCliente.controls['senha'].hasError(
+                          'minlength'
+                        );
+                      else isMinlengthValid
+                    "
+                  >
+                    <fa-icon [icon]="faInvalid"></fa-icon>
+                  </ng-container>
+
+                  <ng-template #isMinlengthValid>
+                    <fa-icon [icon]="faValid"></fa-icon>
+                  </ng-template>
+
+                  A senha deve ter pelo menos <strong> 6 dígitos </strong>
+                </li>
+                <li [ngClass]="senhasDiferentes ? 'tem-erros' : 'sem-erros'">
+                  <ng-container *ngIf="senhasDiferentes; else isSenhasIguais">
+                    <fa-icon [icon]="faInvalid"></fa-icon>
+                  </ng-container>
+
+                  <ng-template #isSenhasIguais>
+                    <fa-icon [icon]="faValid"></fa-icon>
+                  </ng-template>
+
+                  As senhas devem ser <strong> iguais </strong>
+                </li>
+              </ul>
+            </div>
+          </ng-container>
+
+          <div class="col-12 d-block d-md-flex justify-content-end mt-2">
             <div>
-              <app-btn-green [textButton]="'Cadastrar'"></app-btn-green>
+              <app-btn-green
+                [textButton]="'Cadastrar'"
+                [buttonDisabled]="formCadastroCliente.invalid"
+                (emmiterClick)="cadastrar()"
+              ></app-btn-green>
             </div>
 
             <div class="ms-0 ms-md-2 mt-2 mt-md-0">

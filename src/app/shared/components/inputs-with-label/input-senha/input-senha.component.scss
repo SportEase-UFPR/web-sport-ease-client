@@ -1,4 +1,4 @@
-.input-without-label-password {
+.input-password {
   background-color: #fff;
   border: none;
   border-radius: 10px 0 0 10px;
@@ -33,7 +33,7 @@
 }
 
 .is-password-invalid {
-  .input-without-label-password {
+  .input-password {
     transition: 0.2s ease-in-out;
     box-shadow: 4px 4px 2px 0 #ff0000;
     background-color: transparent;
