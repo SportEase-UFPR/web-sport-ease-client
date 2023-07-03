@@ -3,6 +3,9 @@
 /* Importing Bootstrap SCSS file. */
 @import "bootstrap/scss/bootstrap";
 
+// regular style toast
+@import "ngx-toastr/toastr";
+
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 :root {
@@ -37,7 +40,7 @@ body {
   min-height: 100vh;
 }
 
-.display-centered{
+.display-centered {
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
@@ -55,7 +58,7 @@ body {
   color: #aaa;
 }
 
-.card-shadow{
+.card-shadow {
   background-color: #fff;
   box-shadow: 2px 2px 6px 2px #aaa;
   border-radius: 20px;
@@ -107,4 +110,27 @@ body {
     transition: 0.2s ease-in-out;
     transform: scale(1.05);
   }
+}
+
+// Estilo para o ngx-toastr
+.toast-container .ngx-toastr {
+  border-radius: 10px 5px 5px 10px !important;
+}
+
+.toast-success {
+  background-image: url(assets/icons-ngx-toastr/check-solid.svg) !important;
+  background-color: #8bec7b !important;
+}
+
+.toast-error {
+  background-image: url(assets/icons-ngx-toastr/xmark-solid.svg) !important;
+  background-color: #ff2626 !important;
+}
+
+.toast-info {
+  background-color: #0275d8 !important;
+}
+
+.toast-warning {
+  background-color: #ffa500 !important;
 }

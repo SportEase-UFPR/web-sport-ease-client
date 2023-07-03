@@ -7,6 +7,9 @@ import {
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faXmark, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { ToastrService } from 'ngx-toastr';
+import { CadastroService } from '../services/cadastro.service';
+import { Cliente } from 'src/app/shared/models/cliente/cliente';
 
 @Component({
   selector: 'app-formulario',
@@ -41,7 +44,11 @@ export class FormularioComponent
 
   focusPasswordType?: string;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private toastrService: ToastrService,
+    private cadastroService: CadastroService
+  ) {}
 
   ngOnInit(): void {
     document.body.classList.add('display-centered');
@@ -88,6 +95,37 @@ export class FormularioComponent
   }
 
   cadastrar() {
-    this.router.navigateByUrl('/confirmacao-cadastro');
+    const form = this.formCadastroCliente;
+
+    const newCliente: Cliente = new Cliente(
+      0,
+      form.get('nome')?.value,
+      form.get('email')?.value,
+      form.get('cpf')?.value,
+      form.get('vinculo')?.value,
+      form.get('grr')?.value,
+      form.get('senha')?.value
+    );
+
+    if (newCliente.alunoUFPR) {
+      newCliente.grr = `GRR${newCliente.grr}`;
+    } else {
+      newCliente.grr = null;
+    }
+
+    this.cadastroService.cadastrar(newCliente).subscribe({
+      next: (result) => {
+        this.router.navigateByUrl('/confirmacao-cadastro');
+      },
+
+      error: (err) => {
+        this.toastrService.error(
+          err.error?.errors?.[0]?.message ||
+            err.error?.message ||
+            'Não foi possível realizar o cadastro. tente novamente mais tarde',
+          'Erro'
+        );
+      },
+    });
   }
 }
