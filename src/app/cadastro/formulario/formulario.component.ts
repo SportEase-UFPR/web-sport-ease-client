@@ -122,7 +122,7 @@ export class FormularioComponent
         this.toastrService.error(
           err.error?.errors?.[0]?.message ||
             err.error?.message ||
-            'Não foi possível realizar o cadastro. tente novamente mais tarde',
+            'Não foi possível realizar o cadastro. Tente novamente mais tarde',
           'Erro'
         );
       },
