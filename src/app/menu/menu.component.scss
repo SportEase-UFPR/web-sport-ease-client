@@ -1,0 +1,28 @@
+.menu {
+  background-color: #ffffff;
+}
+
+a {
+  text-decoration: none;
+  font-size: 16px;
+}
+
+p {
+  margin: 1.5em 0;
+  padding: 0.5em 1em;
+  color: #737791;
+  border-radius: 10px;
+  transition: 0.2s ease-in-out;
+}
+
+fa-icon {
+  font-size: 22px;
+}
+
+.menu-actived p {
+  transition: 0.2s ease-in-out;
+  font-weight: 600;
+  background-color: #0fd45e;
+  color: #ffffff;
+  font-size: 18px;
+}

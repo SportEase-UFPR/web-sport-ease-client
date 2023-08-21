@@ -7,15 +7,27 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CadastroModule } from './cadastro/cadastro.module';
 import { SharedModule } from './shared/shared.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { LoginModule } from './login/login.module';
+import { MenuComponent } from './menu/menu.component';
+import { CabecalhoComponent } from './cabecalho/cabecalho.component';
+import { EspacosEsportivosModule } from './espacos-esportivos/espacos-esportivos.module';
+import { MinhasReservasModule } from './minhas-reservas/minhas-reservas.module';
+import { NovaReservaModule } from './nova-reserva/nova-reserva.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MenuComponent,
+    CabecalhoComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     CadastroModule,
+    LoginModule,
+    EspacosEsportivosModule,
+    MinhasReservasModule,
+    NovaReservaModule,
     SharedModule,
     NgbModule,
     FontAwesomeModule
