@@ -30,45 +30,45 @@ export class MenuComponent implements OnInit, DoCheck {
   }
 
   paginaAtual(url: string): void {
-    const inicio = document.getElementById('inicio');
-    const espacos = document.getElementById('espacos-esportivos');
-    const minhasReservas = document.getElementById('minhas-reservas');
-    const solicitarReservas = document.getElementById('solicitar-reserva');
+    const inicio = document.getElementById('inicio')?.classList;
+    const espacos = document.getElementById('espacos-esportivos')?.classList;
+    const minhasReservas = document.getElementById('minhas-reservas')?.classList;
+    const solicitarReservas = document.getElementById('solicitar-reserva')?.classList;
 
     switch (url) {
       case 'dashboard':
-        inicio?.classList.add('menu-actived');
-        espacos?.classList.remove('menu-actived');
-        minhasReservas?.classList.remove('menu-actived');
-        solicitarReservas?.classList.remove('menu-actived');
+        inicio?.add('menu-actived');
+        espacos?.remove('menu-actived');
+        minhasReservas?.remove('menu-actived');
+        solicitarReservas?.remove('menu-actived');
         break;
 
       case 'espacos-esportivos':
-        espacos?.classList.add('menu-actived');
-        inicio?.classList.remove('menu-actived');
-        minhasReservas?.classList.remove('menu-actived');
-        solicitarReservas?.classList.remove('menu-actived');
+        espacos?.add('menu-actived');
+        inicio?.remove('menu-actived');
+        minhasReservas?.remove('menu-actived');
+        solicitarReservas?.remove('menu-actived');
         break;
 
       case 'minhas-reservas':
-        minhasReservas?.classList.add('menu-actived');
-        inicio?.classList.remove('menu-actived');
-        espacos?.classList.remove('menu-actived');
-        solicitarReservas?.classList.remove('menu-actived');
+        minhasReservas?.add('menu-actived');
+        inicio?.remove('menu-actived');
+        espacos?.remove('menu-actived');
+        solicitarReservas?.remove('menu-actived');
         break;
 
       case 'nova-reserva':
-        solicitarReservas?.classList.add('menu-actived');
-        inicio?.classList.remove('menu-actived');
-        espacos?.classList.remove('menu-actived');
-        minhasReservas?.classList.remove('menu-actived');
+        solicitarReservas?.add('menu-actived');
+        inicio?.remove('menu-actived');
+        espacos?.remove('menu-actived');
+        minhasReservas?.remove('menu-actived');
         break;
 
       default:
-        inicio?.classList.remove('menu-actived');
-        espacos?.classList.remove('menu-actived');
-        minhasReservas?.classList.remove('menu-actived');
-        solicitarReservas?.classList.remove('menu-actived');
+        inicio?.remove('menu-actived');
+        espacos?.remove('menu-actived');
+        minhasReservas?.remove('menu-actived');
+        solicitarReservas?.remove('menu-actived');
         break;
     }
   }
