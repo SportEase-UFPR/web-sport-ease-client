@@ -13,6 +13,7 @@ import { CabecalhoComponent } from './cabecalho/cabecalho.component';
 import { EspacosEsportivosModule } from './espacos-esportivos/espacos-esportivos.module';
 import { MinhasReservasModule } from './minhas-reservas/minhas-reservas.module';
 import { NovaReservaModule } from './nova-reserva/nova-reserva.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { NovaReservaModule } from './nova-reserva/nova-reserva.module';
     AppRoutingModule,
     CadastroModule,
     LoginModule,
+    DashboardModule,
     EspacosEsportivosModule,
     MinhasReservasModule,
     NovaReservaModule,
