@@ -1,5 +1,9 @@
 .card-fomulario {
   width: 70%;
+
+  input{
+    color: #000 !important;
+  }
 }
 
 .checklist {
@@ -16,11 +20,15 @@
     }
 
     .tem-erros {
-      color: #ff0000;
+      fa-icon {
+        color: #ff0000;
+      }
     }
 
     .sem-erros {
-      color: #0fd45e;
+      fa-icon {
+        color: #0fd45e;
+      }
     }
   }
 }

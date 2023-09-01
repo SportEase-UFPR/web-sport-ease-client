@@ -54,6 +54,10 @@ body {
   color: #0fd45e;
 }
 
+.text-red {
+  color: #ff3045;
+}
+
 .text-gray {
   color: #aaa;
 }
@@ -71,7 +75,7 @@ body {
   outline: none;
   padding: 0 10px;
   box-shadow: 4px 4px 5px 0 #aaa;
-  color: #aaa;
+  color: #292929;
   transition: 0.2s ease-in-out;
 
   &:focus {

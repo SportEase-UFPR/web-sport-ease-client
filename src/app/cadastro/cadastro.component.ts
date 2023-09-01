@@ -1,23 +1,21 @@
-import {
-  AfterContentChecked,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { AfterContentChecked, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { faXmark, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
-import { CadastroService } from '../services/cadastro.service';
-import { Cliente } from 'src/app/shared/models/cliente/cliente';
+
+import { CadastroService } from './services/cadastro.service';
+import { Cliente } from '../shared/models/cliente/cliente';
+import { Validacoes } from '../utils/validacoes';
+
 
 @Component({
-  selector: 'app-formulario',
-  templateUrl: './formulario.component.html',
-  styleUrls: ['./formulario.component.scss'],
+  selector: 'app-cadastro',
+  templateUrl: './cadastro.component.html',
+  styleUrls: ['./cadastro.component.scss']
 })
-export class FormularioComponent
-  implements OnInit, AfterContentChecked, OnDestroy
+export class CadastroComponent implements OnInit, AfterContentChecked, OnDestroy
 {
   public formCadastroCliente: FormGroup = new FormGroup({
     nome: new FormControl(null, [Validators.required]),
@@ -46,12 +44,16 @@ export class FormularioComponent
 
   constructor(
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private toastrService: ToastrService,
     private cadastroService: CadastroService
   ) {}
 
   ngOnInit(): void {
     document.body.classList.add('display-centered');
+    this.activatedRoute.queryParams.subscribe((queryParams) => {
+      this.formCadastroCliente.get('email')?.setValue(queryParams?.['email']);
+    });
   }
 
   ngAfterContentChecked(): void {
@@ -62,11 +64,13 @@ export class FormularioComponent
       this.passwordChecklist = true;
     }
 
+    const senha = this.formCadastroCliente.get('senha');
+    const confirmacaoSenha = this.formCadastroCliente.get('confirmacaoSenha');
+
     if (
-      this.formCadastroCliente.get('senha')?.value ===
-        this.formCadastroCliente.get('confirmacaoSenha')?.value &&
-      this.formCadastroCliente.get('senha')?.value !== null &&
-      this.formCadastroCliente.get('confirmacaoSenha')?.value !== null
+      senha?.value === confirmacaoSenha?.value &&
+      senha?.value !== null &&
+      confirmacaoSenha?.value !== null
     ) {
       this.senhasDiferentes = false;
     } else {
@@ -91,6 +95,14 @@ export class FormularioComponent
       this.formCadastroCliente
         .get('grr')
         ?.removeValidators([Validators.required]);
+    }
+  }
+
+  validarCpf(){
+    const cpf = this.formCadastroCliente.get('cpf')
+    if(!Validacoes.isValidCpf(cpf?.value)){
+      this.toastrService.warning('Por favor, informe um CPF válido.', 'CPF Incorreto')
+      cpf?.setValue(null)
     }
   }
 
@@ -127,5 +139,9 @@ export class FormularioComponent
         );
       },
     });
+  }
+
+  navigate() {
+    this.router.navigateByUrl('/login')
   }
 }

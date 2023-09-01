@@ -1,0 +1,59 @@
+<div class="d-flex align-items-center justify-content-center">
+  <div class="card-msg card-shadow p-3 mt-5">
+    <header class="d-flex align-items-center justify-content-center">
+      <img
+        src="../../../assets/site/logo-sport-ease.png"
+        alt="logo sport ease ufpr"
+        width="70"
+      />
+      <h1 class="ms-2 mb-0 text-dark-blue">SportEase</h1>
+    </header>
+
+    <main class="text-center mt-5">
+      <section class="main-content" *ngIf="ativandoConta; else resultAtivacao">
+        <h2 class="text-green">Estamos ativando sua conta</h2>
+
+        <div class="custom-loader"></div>
+
+        <p class="text-gray my-4 px-3">Isso pode demorar alguns segundos</p>
+      </section>
+
+      <ng-template #resultAtivacao>
+        <section>
+          <ng-container *ngIf="contaAtivada; else contaNaoAtivada">
+            <h2 class="text-green">Sua conta foi ativada com sucesso!</h2>
+            <p class="text-gray my-4 px-3">
+              Agora você já pode realizar o login
+            </p>
+            <div class="card-button-confirm mx-auto">
+              <app-btn-green
+                *ngIf="isMobile; else isWeb"
+                [textButton]="'Abrir App'"
+                (emmiterClick)="navigate()"
+              ></app-btn-green>
+
+              <ng-template #isWeb>
+                <app-btn-green
+                  [textButton]="'Fazer Login'"
+                  (emmiterClick)="navigate()"
+                ></app-btn-green>
+              </ng-template>
+            </div>
+          </ng-container>
+
+          <ng-template #contaNaoAtivada>
+            <h2 class="text-red">
+              Infelizmente não foi possível ativar sua conta
+            </h2>
+            <p class="text-gray my-4 px-3">
+              Por favor, entre em contato com o nosso suporte através do nosso
+              e-mail (<a href="mailto:{{ email }}">{{ email }}</a
+              >) para que seja possível tomar as medidas para resolver esse
+              imprevisto
+            </p>
+          </ng-template>
+        </section>
+      </ng-template>
+    </main>
+  </div>
+</div>

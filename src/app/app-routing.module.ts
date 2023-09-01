@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FormularioComponent } from './cadastro/formulario/formulario.component';
-import { IntrucoesAtivacaoContaComponent } from './cadastro/intrucoes-ativacao-conta/intrucoes-ativacao-conta.component';
+
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './dashboard/home/home.component';
-import { EspacosEsportivosComponent } from './espacos-esportivos/espacos-esportivos/espacos-esportivos.component';
-import { MinhasReservasComponent } from './minhas-reservas/minhas-reservas/minhas-reservas.component';
-import { NovaReservaComponent } from './nova-reserva/nova-reserva/nova-reserva.component';
+import { EspacosEsportivosComponent } from './espacos-esportivos/espacos-esportivos.component';
+import { MinhasReservasComponent } from './minhas-reservas/minhas-reservas.component';
+import { NovaReservaComponent } from './nova-reserva/nova-reserva.component';
 
 const routes: Routes = [
   {
@@ -18,16 +17,6 @@ const routes: Routes = [
     path: '',
     redirectTo: 'login',
     pathMatch: 'full',
-  },
-
-  {
-    path: 'autocadastro',
-    component: FormularioComponent,
-  },
-
-  {
-    path: 'confirmacao-cadastro',
-    component: IntrucoesAtivacaoContaComponent,
   },
 
   {

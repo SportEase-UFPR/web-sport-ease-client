@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-intrucoes-ativacao-conta',
@@ -6,7 +7,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
   styleUrls: ['./intrucoes-ativacao-conta.component.scss'],
 })
 export class IntrucoesAtivacaoContaComponent implements OnInit, OnDestroy {
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     document.body.classList.add('display-centered');
@@ -14,5 +15,9 @@ export class IntrucoesAtivacaoContaComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     document.body.classList.remove('display-centered');
+  }
+
+  navigate() {
+    this.router.navigateByUrl('/login');
   }
 }

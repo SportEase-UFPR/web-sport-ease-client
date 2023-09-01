@@ -41,6 +41,7 @@
               [validacaoInput]="true"
               [typeForAutocomplete]="'off'"
               [maskInput]="'000.000.000-00'"
+              (emmiterBlur)="validarCpf()"
             ></app-without-input-text>
           </div>
 
@@ -94,9 +95,7 @@
                     formCadastroCliente.controls['senha'].hasError(
                       'required'
                     ) ||
-                    formCadastroCliente.controls['senha'].hasError(
-                      'minlength'
-                    )
+                    formCadastroCliente.controls['senha'].hasError('minlength')
                       ? 'tem-erros'
                       : 'sem-erros'
                   "
@@ -148,6 +147,7 @@
             <div class="ms-0 ms-md-2 mt-2 mt-md-0">
               <app-btn-border-green
                 [textButton]="'Cancelar'"
+                (emmiterClick)="navigate()"
               ></app-btn-border-green>
             </div>
           </div>

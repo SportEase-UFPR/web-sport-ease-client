@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EspacosEsportivosComponent } from './espacos-esportivos/espacos-esportivos.component';
+import { EspacosEsportivosComponent } from './espacos-esportivos.component';
 
 
 

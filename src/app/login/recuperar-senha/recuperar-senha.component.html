@@ -10,11 +10,16 @@
     </header>
 
     <main class="mt-5">
-      <form [formGroup]="formLogin" class="p-2">
+      <p class="text-gray text-center">
+        Informe o seu e-mail cadastrado na plataforma para receber as instruções
+        e recuperar sua senha.
+      </p>
+
+      <form [formGroup]="formRecuperarSenha" class="p-2">
         <div class="row w-100 justify-content-center m-0">
           <div class="col-12">
             <app-without-input-email
-              [formGroup]="formLogin"
+              [formGroup]="formRecuperarSenha"
               [controlName]="'email'"
               [placeholder]="'E-mail...'"
               [validacaoInput]="true"
@@ -22,27 +27,11 @@
           </div>
 
           <div class="col-12 mt-2">
-            <app-input-senha
-              [formGroup]="formLogin"
-              [controlName]="'senha'"
-              [label]="'Senha...'"
-              [validacaoInput]="true"
-            >
-            </app-input-senha>
-          </div>
-
-          <div class="col-12">
-            <a class="text-blue text-decoration-none" (click)="navigate('recuperar-senha')">
-              <p class="text-center forgot-password">Esqueci a senha</p>
-            </a>
-          </div>
-
-          <div class="col-12 mt-2">
             <div>
               <app-btn-green
-                [textButton]="'Entrar'"
-                [buttonDisabled]="formLogin.invalid"
-                (emmiterClick)="entrar()"
+                [textButton]="'Recuperar Senha'"
+                [buttonDisabled]="formRecuperarSenha.invalid"
+                (emmiterClick)="recuperarSenha()"
               ></app-btn-green>
             </div>
           </div>
@@ -51,8 +40,8 @@
 
       <footer class="mt-5">
         <div>
-          <a class="text-blue text-decoration-none" (click)="navigate('autocadastro')">
-            <p class="text-center">Quero me cadastrar</p>
+          <a class="text-blue text-decoration-none" (click)="navigate()">
+            <p class="text-center">Voltar</p>
           </a>
         </div>
       </footer>
