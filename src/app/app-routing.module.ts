@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './dashboard/home/home.component';
 import { EspacosEsportivosComponent } from './espacos-esportivos/espacos-esportivos.component';
 import { MinhasReservasComponent } from './minhas-reservas/minhas-reservas.component';
 import { NovaReservaComponent } from './nova-reserva/nova-reserva.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   {
@@ -21,7 +21,7 @@ const routes: Routes = [
 
   {
     path: 'dashboard',
-    component: HomeComponent,
+    component: DashboardComponent,
   },
 
   {
