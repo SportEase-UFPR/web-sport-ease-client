@@ -1,4 +1,9 @@
-import { AfterContentChecked, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterContentChecked,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -8,14 +13,15 @@ import { ToastrService } from 'ngx-toastr';
 import { CadastroService } from './services/cadastro.service';
 import { Cliente } from '../shared/models/cliente/cliente';
 import { Validacoes } from '../utils/validacoes';
-
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-cadastro',
   templateUrl: './cadastro.component.html',
-  styleUrls: ['./cadastro.component.scss']
+  styleUrls: ['./cadastro.component.scss'],
 })
-export class CadastroComponent implements OnInit, AfterContentChecked, OnDestroy
+export class CadastroComponent
+  implements OnInit, AfterContentChecked, OnDestroy
 {
   public formCadastroCliente: FormGroup = new FormGroup({
     nome: new FormControl(null, [Validators.required]),
@@ -46,7 +52,8 @@ export class CadastroComponent implements OnInit, AfterContentChecked, OnDestroy
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private toastrService: ToastrService,
-    private cadastroService: CadastroService
+    private cadastroService: CadastroService,
+    private ngxService: NgxUiLoaderService
   ) {}
 
   ngOnInit(): void {
@@ -64,8 +71,9 @@ export class CadastroComponent implements OnInit, AfterContentChecked, OnDestroy
       this.passwordChecklist = true;
     }
 
-    const senha = this.formCadastroCliente.get('senha');
-    const confirmacaoSenha = this.formCadastroCliente.get('confirmacaoSenha');
+    const form = this.formCadastroCliente;
+    const senha = form.get('senha');
+    const confirmacaoSenha = form.get('confirmacaoSenha');
 
     if (
       senha?.value === confirmacaoSenha?.value &&
@@ -98,50 +106,64 @@ export class CadastroComponent implements OnInit, AfterContentChecked, OnDestroy
     }
   }
 
-  validarCpf(){
-    const cpf = this.formCadastroCliente.get('cpf')
-    if(!Validacoes.isValidCpf(cpf?.value)){
-      this.toastrService.warning('Por favor, informe um CPF válido.', 'CPF Incorreto')
-      cpf?.setValue(null)
+  validarCpf() {
+    const cpf = this.formCadastroCliente.get('cpf');
+    if (!Validacoes.isValidCpf(cpf?.value)) {
+      this.toastrService.warning(
+        'Por favor, informe um CPF válido.',
+        'CPF Incorreto'
+      );
+      cpf?.setValue(null);
     }
   }
 
   cadastrar() {
+    this.ngxService.startLoader('loader-01');
     const form = this.formCadastroCliente;
 
-    const newCliente: Cliente = new Cliente(
-      0,
-      form.get('nome')?.value,
-      form.get('email')?.value,
-      form.get('cpf')?.value,
-      form.get('vinculo')?.value,
-      form.get('grr')?.value,
-      form.get('senha')?.value
-    );
+    if (form.valid && !this.senhasDiferentes) {
+      const newCliente: Cliente = new Cliente(
+        0,
+        form.get('nome')?.value,
+        form.get('email')?.value,
+        form.get('cpf')?.value,
+        form.get('vinculo')?.value,
+        form.get('grr')?.value,
+        form.get('senha')?.value
+      );
 
-    if (newCliente.alunoUFPR) {
-      newCliente.grr = `GRR${newCliente.grr}`;
+      if (newCliente.alunoUFPR) {
+        newCliente.grr = `GRR${newCliente.grr}`;
+      } else {
+        newCliente.grr = null;
+      }
+
+      this.cadastroService.cadastrar(newCliente).subscribe({
+        next: (result) => {
+          this.ngxService.stopLoader('loader-01');
+          this.router.navigateByUrl('/confirmacao-cadastro');
+        },
+
+        error: (err) => {
+          this.ngxService.stopLoader('loader-01');
+          this.toastrService.error(
+            err.error?.errors?.[0]?.message ||
+              err.error?.message ||
+              'Não foi possível realizar o cadastro. Tente novamente mais tarde',
+            'Erro'
+          );
+        },
+      });
     } else {
-      newCliente.grr = null;
+      this.ngxService.stopLoader('loader-01');
+      this.toastrService.warning(
+        'Por favor, preencha todos os campos do formulário corretamente',
+        'Impossível realizar o cadastro'
+      );
     }
-
-    this.cadastroService.cadastrar(newCliente).subscribe({
-      next: (result) => {
-        this.router.navigateByUrl('/confirmacao-cadastro');
-      },
-
-      error: (err) => {
-        this.toastrService.error(
-          err.error?.errors?.[0]?.message ||
-            err.error?.message ||
-            'Não foi possível realizar o cadastro. Tente novamente mais tarde',
-          'Erro'
-        );
-      },
-    });
   }
 
   navigate() {
-    this.router.navigateByUrl('/login')
+    this.router.navigateByUrl('/login');
   }
 }

@@ -2,11 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-intrucoes-ativacao-conta',
-  templateUrl: './intrucoes-ativacao-conta.component.html',
-  styleUrls: ['./intrucoes-ativacao-conta.component.scss'],
+  selector: 'app-instrucoes-ativacao-conta',
+  templateUrl: './instrucoes-ativacao-conta.component.html',
+  styleUrls: ['./instrucoes-ativacao-conta.component.scss'],
 })
-export class IntrucoesAtivacaoContaComponent implements OnInit, OnDestroy {
+export class InstrucoesAtivacaoContaComponent implements OnInit, OnDestroy {
   constructor(private router: Router) {}
 
   ngOnInit(): void {

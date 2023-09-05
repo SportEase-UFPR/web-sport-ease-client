@@ -8,15 +8,32 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { ToastrModule } from 'ngx-toastr';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-import { IntrucoesAtivacaoContaComponent } from './intrucoes-ativacao-conta/intrucoes-ativacao-conta.component';
+import { InstrucoesAtivacaoContaComponent } from './instrucoes-ativacao-conta/instrucoes-ativacao-conta.component';
 import { SharedModule } from '../shared/shared.module';
 import { CadastroService } from './services/cadastro.service';
 import { CadastroComponent } from './cadastro.component';
 import { CadastroRoutingModule } from './cadastro-routing.module';
 import { AtivacaoContaComponent } from './ativacao-conta/ativacao-conta.component';
+import { NgxUiLoaderConfig, NgxUiLoaderModule, PB_DIRECTION, POSITION, SPINNER } from 'ngx-ui-loader';
+
+const ngxUiLoaderConfig: NgxUiLoaderConfig = {
+  bgsColor: "#0fd45e",
+  bgsPosition: POSITION.centerCenter,
+  bgsSize: 40,
+  bgsType: SPINNER.ballSpinClockwise,
+  fgsType: SPINNER.ballSpin,
+  fgsColor: '#0fd45e',
+  blur: 10,
+  overlayColor: "rgba(255,255,255,0.5)",
+  hasProgressBar: false
+};
 
 @NgModule({
-  declarations: [IntrucoesAtivacaoContaComponent, CadastroComponent, AtivacaoContaComponent],
+  declarations: [
+    InstrucoesAtivacaoContaComponent,
+    CadastroComponent,
+    AtivacaoContaComponent
+  ],
   imports: [
     CommonModule,
     BrowserAnimationsModule,
@@ -29,7 +46,11 @@ import { AtivacaoContaComponent } from './ativacao-conta/ativacao-conta.componen
     FontAwesomeModule,
     HttpClientModule,
     ToastrModule.forRoot(),
+    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
   ],
-  providers: [provideNgxMask(), CadastroService],
+  providers: [
+    provideNgxMask(),
+    CadastroService
+  ],
 })
 export class CadastroModule {}

@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DetectarMobile } from 'src/app/utils/detectar-mobile';
 import { environment as env } from 'src/environments/environment';
+import { CadastroService } from '../services/cadastro.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-ativacao-conta',
@@ -12,19 +14,47 @@ export class AtivacaoContaComponent implements OnInit, OnDestroy {
   ativandoConta: boolean = true;
   contaAtivada: boolean = false;
   isMobile: boolean = false;
-  email = env.email
-  detectarMobile: DetectarMobile = new DetectarMobile()
+  email = env.email;
+  inscricaoRota!: Subscription;
+  inscricaoAtivacao!: Subscription;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private cadastroService: CadastroService
+  ) {}
 
   ngOnInit(): void {
     document.body.classList.add('display-centered');
-    this.isMobile = this.detectarMobile.isMobile()
+    this.isMobile = DetectarMobile.isMobile();
+
+    this.inscricaoRota = this.activatedRoute.queryParams.subscribe(
+      (queryParams) => {
+        const token = queryParams['token'];
+
+        if (token) {
+          this.inscricaoAtivacao = this.cadastroService
+            .ativarConta(token)
+            .subscribe({
+              next: (result) => {
+                this.ativandoConta = false;
+                this.contaAtivada = true;
+              },
+
+              error: (err) => {
+                this.ativandoConta = false;
+                this.contaAtivada = false;
+              },
+            });
+        }
+      }
+    );
   }
 
   ngOnDestroy(): void {
     document.body.classList.remove('display-centered');
-
+    this.inscricaoAtivacao?.unsubscribe();
+    this.inscricaoRota?.unsubscribe();
   }
 
   navigate() {

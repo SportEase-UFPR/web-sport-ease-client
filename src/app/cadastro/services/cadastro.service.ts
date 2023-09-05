@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 import { Observable } from 'rxjs';
+import { AtivacaoConta } from 'src/app/shared/models/ativacao-conta/ativacao-conta.model';
 import { Cliente } from 'src/app/shared/models/cliente/cliente';
 import { environment as env } from 'src/environments/environment';
 
@@ -15,7 +17,17 @@ export class CadastroService {
   constructor(private httpService: HttpClient) {}
 
   cadastrar(c: Cliente): Observable<Cliente> {
-    return this.httpService.post<Cliente>(`${env.baseUrl}clientes`, JSON.stringify(c), {
+    return this.httpService.post<Cliente>(
+      `${env.baseUrl}clientes`,
+      JSON.stringify(c),
+      {
+        headers: this.header,
+      }
+    );
+  }
+
+  ativarConta(token: string): Observable<AtivacaoConta> {
+    return this.httpService.put<AtivacaoConta>(`${env.baseUrl}usuarios/ativacao/${token}`, {
       headers: this.header,
     });
   }

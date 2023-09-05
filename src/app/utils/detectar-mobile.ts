@@ -1,5 +1,5 @@
 export class DetectarMobile {
-  isMobile(): boolean {
+  static isMobile(): boolean {
     const dispositivos = [
       /Android/i,
       /webOS/i,

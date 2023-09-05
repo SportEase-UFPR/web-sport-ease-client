@@ -10,8 +10,21 @@ import { LoginRoutingModule } from './login-routing.module';
 import { RecuperarSenhaComponent } from './recuperar-senha/recuperar-senha.component';
 import { CadastrarSenhaComponent } from './cadastrar-senha/cadastrar-senha.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { LoginService } from './services/login.service';
+import { HttpClientModule } from '@angular/common/http';
+import { NgxUiLoaderConfig, NgxUiLoaderModule, POSITION, SPINNER } from 'ngx-ui-loader';
 
-
+const ngxUiLoaderConfig: NgxUiLoaderConfig = {
+  bgsColor: "#0fd45e",
+  bgsPosition: POSITION.centerCenter,
+  bgsSize: 40,
+  bgsType: SPINNER.ballSpinClockwise,
+  fgsType: SPINNER.ballSpin,
+  fgsColor: '#0fd45e',
+  blur: 10,
+  overlayColor: "rgba(255,255,255,0.5)",
+  hasProgressBar: false
+};
 
 @NgModule({
   declarations: [
@@ -26,10 +39,13 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ReactiveFormsModule,
     SharedModule,
     FontAwesomeModule,
+    HttpClientModule,
     ToastrModule.forRoot(),
+    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
   ],
   exports: [
     LoginComponent
-  ]
+  ],
+  providers: [LoginService]
 })
 export class LoginModule { }

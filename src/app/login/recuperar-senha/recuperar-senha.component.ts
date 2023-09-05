@@ -2,6 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { LoginService } from '../services/login.service';
+import { InstrucoesRecuperacaoRequest } from 'src/app/shared/models/instrucoes-recuperacao-request/instrucoes-recuperacao-request.model';
 
 @Component({
   selector: 'app-recuperar-senha',
@@ -16,7 +19,9 @@ export class RecuperarSenhaComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private ngxService: NgxUiLoaderService,
+    private loginService: LoginService
   ) {}
 
   ngOnInit(): void {
@@ -32,8 +37,21 @@ export class RecuperarSenhaComponent implements OnInit, OnDestroy {
   }
 
   recuperarSenha() {
-    // lógica para enviar o e-mail com instruções para recuperar a senha
-    this.toastrService.success('Em alguns minutos você receberá o e-mail com as instruções.', 'Email enviado!')
+    this.ngxService.startLoader('loader-01')
+    const form = this.formRecuperarSenha
+    if(form.valid){
+      const email = form.get('email')?.value
+      this.loginService.enviarIntrucoesRecuperacao(email).subscribe({
+        next: (result) => {
+          this.ngxService.stopLoader('loader-01')
+          this.toastrService.success('Em alguns minutos você receberá o e-mail com as instruções.', 'Email enviado!')
+        },
+        error: (err) => {
+          this.toastrService.warning('Não foi possível enviar o e-mail. Por favor, tente novamente mais tarde.', 'Falha ao enviar e-mail!')
+          this.ngxService.stopLoader('loader-01')
+        }
+      })
+    }
   }
 
   navigate() {
