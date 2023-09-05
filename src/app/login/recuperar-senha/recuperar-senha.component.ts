@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { LoginService } from '../services/login.service';
 import { InstrucoesRecuperacaoRequest } from 'src/app/shared/models/instrucoes-recuperacao-request/instrucoes-recuperacao-request.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-recuperar-senha',
@@ -15,6 +16,9 @@ export class RecuperarSenhaComponent implements OnInit, OnDestroy {
   public formRecuperarSenha: FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
   });
+
+  inscricaoRota!: Subscription;
+  inscricaoIntrucoes!: Subscription;
 
   constructor(
     private router: Router,
@@ -27,30 +31,44 @@ export class RecuperarSenhaComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     document.body.classList.add('display-centered');
 
-    this.activatedRoute.queryParams.subscribe((queryParams) => {
-      this.formRecuperarSenha.get('email')?.setValue(queryParams?.['email']);
-    });
+    this.inscricaoRota = this.activatedRoute.queryParams.subscribe(
+      (queryParams) => {
+        this.formRecuperarSenha.get('email')?.setValue(queryParams?.['email']);
+      }
+    );
   }
 
   ngOnDestroy(): void {
     document.body.classList.remove('display-centered');
+    this.inscricaoIntrucoes?.unsubscribe();
+    this.inscricaoRota?.unsubscribe();
   }
 
   recuperarSenha() {
-    this.ngxService.startLoader('loader-01')
-    const form = this.formRecuperarSenha
-    if(form.valid){
-      const email = form.get('email')?.value
-      this.loginService.enviarIntrucoesRecuperacao(email).subscribe({
-        next: (result) => {
-          this.ngxService.stopLoader('loader-01')
-          this.toastrService.success('Em alguns minutos você receberá o e-mail com as instruções.', 'Email enviado!')
-        },
-        error: (err) => {
-          this.toastrService.warning('Não foi possível enviar o e-mail. Por favor, tente novamente mais tarde.', 'Falha ao enviar e-mail!')
-          this.ngxService.stopLoader('loader-01')
-        }
-      })
+    this.ngxService.startLoader('loader-01');
+    const form = this.formRecuperarSenha;
+    if (form.valid) {
+      const dados: InstrucoesRecuperacaoRequest =
+        new InstrucoesRecuperacaoRequest(form.get('email')?.value);
+
+      this.inscricaoIntrucoes = this.loginService
+        .enviarIntrucoesRecuperacao(dados)
+        .subscribe({
+          next: (result) => {
+            this.ngxService.stopLoader('loader-01');
+            this.toastrService.success(
+              'Em alguns minutos você receberá o e-mail com as instruções.',
+              'Email enviado!'
+            );
+          },
+          error: (err) => {
+            this.toastrService.warning(
+              'Não foi possível enviar o e-mail. Por favor, tente novamente mais tarde.',
+              'Falha ao enviar e-mail!'
+            );
+            this.ngxService.stopLoader('loader-01');
+          },
+        });
     }
   }
 

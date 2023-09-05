@@ -1,6 +1,6 @@
 export class InstrucoesRecuperacaoResponse {
   constructor(
-    email?: string,
-    mensagem?: string
+    public email?: string,
+    public mensagem?: string
   ) {}
 }

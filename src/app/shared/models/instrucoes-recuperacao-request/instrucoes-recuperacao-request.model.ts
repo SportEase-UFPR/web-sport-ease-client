@@ -1,5 +1,5 @@
 export class InstrucoesRecuperacaoRequest {
   constructor(
-    email?: string
+    public email?: string
   ) {}
 }

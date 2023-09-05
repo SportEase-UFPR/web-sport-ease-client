@@ -1,6 +1,6 @@
 export class CadastroSenhaResponse {
   constructor(
-    idConta?: number,
-    mensagem?: string
+    public idConta?: number,
+    public mensagem?: string
   ) {}
 }

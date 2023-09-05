@@ -1,6 +1,6 @@
 export class CadastroSenhaRequest {
   constructor(
-    tokenUsuario?: string,
-    novaSenha?: string
+    public tokenUsuario?: string,
+    public novaSenha?: string
   ) {}
 }

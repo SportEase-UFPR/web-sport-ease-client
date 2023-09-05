@@ -8,6 +8,7 @@ import { DetectarMobile } from 'src/app/utils/detectar-mobile';
 import { LoginService } from '../services/login.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CadastroSenhaRequest } from 'src/app/shared/models/cadastro-senha-request/cadastro-senha-request.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-cadastrar-senha',
@@ -22,6 +23,9 @@ export class CadastrarSenhaComponent implements OnInit, OnDestroy {
   focusPasswordType?: string;
 
   private token?: string;
+
+  inscricaoRota!: Subscription;
+  inscricaoAlterarSenha!: Subscription;
 
   public formNovaSenha: FormGroup = new FormGroup({
     senha: new FormControl(null, [
@@ -44,14 +48,18 @@ export class CadastrarSenhaComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     document.body.classList.add('display-centered');
-    this.activatedRoute.queryParams.subscribe((queryParams) => {
-      const tokenQueryParams = queryParams['token'];
-      if (tokenQueryParams) this.token = tokenQueryParams;
-    });
+    this.inscricaoRota = this.activatedRoute.queryParams.subscribe(
+      (queryParams) => {
+        const tokenQueryParams = queryParams['token'];
+        if (tokenQueryParams) this.token = tokenQueryParams;
+      }
+    );
   }
 
   ngOnDestroy(): void {
     document.body.classList.remove('display-centered');
+    this.inscricaoAlterarSenha?.unsubscribe();
+    this.inscricaoRota?.unsubscribe();
   }
 
   ngAfterContentChecked(): void {
@@ -85,8 +93,13 @@ export class CadastrarSenhaComponent implements OnInit, OnDestroy {
     const form = this.formNovaSenha;
 
     if (form.valid && !this.senhasDiferentes) {
-      this.loginService
-        .alterarSenha(this.token!, form.get('senha')?.value)
+      const dados: CadastroSenhaRequest = new CadastroSenhaRequest(
+        this.token,
+        form.get('senha')?.value
+      );
+
+      this.inscricaoAlterarSenha = this.loginService
+        .alterarSenha(dados)
         .subscribe({
           next: (result) => {
             if (DetectarMobile.isMobile()) {

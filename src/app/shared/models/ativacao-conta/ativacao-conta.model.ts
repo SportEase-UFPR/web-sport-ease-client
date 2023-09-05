@@ -1,6 +1,6 @@
 export class AtivacaoConta {
   constructor(
-    idUsuario?: number,
-    mensagem?: string
+    public idUsuario?: number,
+    public mensagem?: string
   ) {}
 }

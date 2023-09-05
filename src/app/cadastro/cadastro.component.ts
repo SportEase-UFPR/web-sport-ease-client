@@ -14,6 +14,7 @@ import { CadastroService } from './services/cadastro.service';
 import { Cliente } from '../shared/models/cliente/cliente';
 import { Validacoes } from '../utils/validacoes';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-cadastro',
@@ -48,6 +49,9 @@ export class CadastroComponent
 
   focusPasswordType?: string;
 
+  inscricaoRota!: Subscription;
+  inscricaoCadastro!: Subscription;
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -58,9 +62,11 @@ export class CadastroComponent
 
   ngOnInit(): void {
     document.body.classList.add('display-centered');
-    this.activatedRoute.queryParams.subscribe((queryParams) => {
-      this.formCadastroCliente.get('email')?.setValue(queryParams?.['email']);
-    });
+    this.inscricaoRota = this.activatedRoute.queryParams.subscribe(
+      (queryParams) => {
+        this.formCadastroCliente.get('email')?.setValue(queryParams?.['email']);
+      }
+    );
   }
 
   ngAfterContentChecked(): void {
@@ -88,6 +94,8 @@ export class CadastroComponent
 
   ngOnDestroy(): void {
     document.body.classList.remove('display-centered');
+    this.inscricaoCadastro?.unsubscribe();
+    this.inscricaoRota?.unsubscribe();
   }
 
   focusPassword(type: any) {
@@ -138,22 +146,24 @@ export class CadastroComponent
         newCliente.grr = null;
       }
 
-      this.cadastroService.cadastrar(newCliente).subscribe({
-        next: (result) => {
-          this.ngxService.stopLoader('loader-01');
-          this.router.navigateByUrl('/confirmacao-cadastro');
-        },
+      this.inscricaoCadastro = this.cadastroService
+        .cadastrar(newCliente)
+        .subscribe({
+          next: (result) => {
+            this.ngxService.stopLoader('loader-01');
+            this.router.navigateByUrl('/confirmacao-cadastro');
+          },
 
-        error: (err) => {
-          this.ngxService.stopLoader('loader-01');
-          this.toastrService.error(
-            err.error?.errors?.[0]?.message ||
-              err.error?.message ||
-              'Não foi possível realizar o cadastro. Tente novamente mais tarde',
-            'Erro'
-          );
-        },
-      });
+          error: (err) => {
+            this.ngxService.stopLoader('loader-01');
+            this.toastrService.error(
+              err.error?.errors?.[0]?.message ||
+                err.error?.message ||
+                'Não foi possível realizar o cadastro. Tente novamente mais tarde',
+              'Erro'
+            );
+          },
+        });
     } else {
       this.ngxService.stopLoader('loader-01');
       this.toastrService.warning(

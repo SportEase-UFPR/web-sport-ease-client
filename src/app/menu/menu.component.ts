@@ -7,6 +7,7 @@ import {
   faHouse,
   faPlusSquare,
 } from '@fortawesome/free-solid-svg-icons';
+import { LoginService } from '../login/services/login.service';
 
 @Component({
   selector: 'app-menu',
@@ -20,7 +21,7 @@ export class MenuComponent implements OnInit, DoCheck {
   faPlus = faPlusSquare;
   faExit = faArrowRightFromBracket;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private loginService: LoginService) {}
 
   ngOnInit(): void {}
 
@@ -32,8 +33,10 @@ export class MenuComponent implements OnInit, DoCheck {
   paginaAtual(url: string): void {
     const inicio = document.getElementById('inicio')?.classList;
     const espacos = document.getElementById('espacos-esportivos')?.classList;
-    const minhasReservas = document.getElementById('minhas-reservas')?.classList;
-    const solicitarReservas = document.getElementById('solicitar-reserva')?.classList;
+    const minhasReservas =
+      document.getElementById('minhas-reservas')?.classList;
+    const solicitarReservas =
+      document.getElementById('solicitar-reserva')?.classList;
 
     switch (url) {
       case 'dashboard':
@@ -70,6 +73,12 @@ export class MenuComponent implements OnInit, DoCheck {
         minhasReservas?.remove('menu-actived');
         solicitarReservas?.remove('menu-actived');
         break;
+    }
+  }
+
+  sair() {
+    if (this.loginService.logout()) {
+      this.router.navigateByUrl('/login');
     }
   }
 }
