@@ -141,7 +141,7 @@
             <div>
               <app-btn-green
                 [textButton]="'Cadastrar'"
-                [buttonDisabled]="(formCadastroCliente.invalid && senhasDiferentes) || formCadastroCliente.invalid"
+                [buttonDisabled]="!cadastroValido()"
                 (emmiterClick)="cadastrar()"
               ></app-btn-green>
             </div>

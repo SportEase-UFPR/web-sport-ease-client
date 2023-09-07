@@ -103,14 +103,16 @@ export class CadastroComponent
   }
 
   showGrr(): void {
-    if (this.formCadastroCliente.get('vinculo')?.value) {
+    const form = this.formCadastroCliente;
+    const grr = form.get('grr');
+    if (form.get('vinculo')?.value) {
       this.showInputGrr = true;
-      this.formCadastroCliente.get('grr')?.addValidators([Validators.required]);
+      grr?.addValidators([Validators.required]);
+      grr?.updateValueAndValidity();
     } else {
       this.showInputGrr = false;
-      this.formCadastroCliente
-        .get('grr')
-        ?.removeValidators([Validators.required]);
+      grr?.removeValidators([Validators.required]);
+      grr?.updateValueAndValidity();
     }
   }
 
@@ -129,7 +131,7 @@ export class CadastroComponent
     this.ngxService.startLoader('loader-01');
     const form = this.formCadastroCliente;
 
-    if (form.valid && !this.senhasDiferentes) {
+    if (this.cadastroValido()) {
       const newCliente: Cliente = new Cliente(
         0,
         form.get('nome')?.value,
@@ -160,7 +162,7 @@ export class CadastroComponent
               err.error?.errors?.[0]?.message ||
                 err.error?.message ||
                 'Não foi possível realizar o cadastro. Tente novamente mais tarde',
-              'Erro'
+              'Falha ao realizar o cadastro'
             );
           },
         });
@@ -175,5 +177,11 @@ export class CadastroComponent
 
   navigate() {
     this.router.navigateByUrl('/login');
+  }
+
+  cadastroValido(): boolean {
+    if (this.formCadastroCliente.invalid) return false;
+    if (this.senhasDiferentes) return false;
+    return true;
   }
 }
