@@ -1,33 +1,20 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { LocalStorageService } from './shared/services/local-storage/local-storage.service';
+import { environment as env } from 'src/environments/environment';
+import { UsuarioLs } from './shared/models/usuario-ls/usuario-ls.model';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, DoCheck {
-  isNotLogado: boolean = true;
-
-  constructor(private router: Router) {}
+export class AppComponent implements OnInit {
+  constructor(private lsService: LocalStorageService) {}
 
   ngOnInit(): void {}
 
-  ngDoCheck(): void {
-    const url = this.router.url;
-    this.isNotLogado = this.isCliente(url.split('/')[1]?.split('?')[0]);
-  }
-
-  isCliente(url: string): boolean {
-    if (
-      url === 'login' ||
-      url === 'autocadastro' ||
-      url === 'confirmacao-cadastro' ||
-      url === 'ativar-conta' ||
-      url === 'recuperar-senha' ||
-      url === 'cadastrar-senha'
-    )
-      return true;
+  selectLayout(): boolean {
+    if (!this.isLogado()) return true;
 
     const alturaJanela = window.innerHeight;
     const alturaMinima = Math.round(alturaJanela * 0.05);
@@ -43,5 +30,19 @@ export class AppComponent implements OnInit, DoCheck {
     if (paginas) paginas.style.minHeight = `${alturaMaxima}px`;
 
     return false;
+  }
+
+  isLogado(): boolean {
+    const lsDados: UsuarioLs = this.lsService.get(env.ls_token);
+
+    if (lsDados) {
+      if (lsDados.usuarioLogado) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 }
