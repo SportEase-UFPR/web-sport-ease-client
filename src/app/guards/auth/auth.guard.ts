@@ -15,12 +15,9 @@ export const authGuard: CanActivateFn = (route, state) => {
   const router: Router = inject(Router);
   const toastrService: ToastrService = inject(ToastrService);
 
-  const userNotLogado = () => {
-    toastrService.warning(
-      'Você deve estar logado para acessar nosso sistema. Por favor, faça o login',
-      'Usuário não está logado'
-    );
-    lsService.remove(lsToken)
+  const userNotLogado = (titulo: string, msg: string) => {
+    toastrService.warning(msg, titulo);
+    lsService.remove(lsToken);
     router.navigateByUrl('/login');
   };
 
@@ -28,13 +25,22 @@ export const authGuard: CanActivateFn = (route, state) => {
     if (lsDados.usuarioLogado) {
       const token: Token = jwt_decode(lsDados.token!);
       if (token.userProfile !== env.userProfile) {
-        userNotLogado();
+        userNotLogado(
+          'Você não pode acessar o site',
+          'Seu perfil não tem acesso a esse site'
+        );
       }
     } else {
-      userNotLogado();
+      userNotLogado(
+        'Usuário não está logado',
+        'Você deve estar logado para acessar nosso sistema. Por favor, faça o login'
+      );
     }
   } else {
-    userNotLogado();
+    userNotLogado(
+      'Usuário não está logado',
+      'Você deve estar logado para acessar nosso sistema. Por favor, faça o login'
+    );
   }
 
   return true;
