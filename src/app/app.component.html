@@ -1,4 +1,4 @@
-<ng-container *ngIf="selectLayout(); else isCliente">
+<ng-container *ngIf="!isLogado(); else isCliente">
   <router-outlet></router-outlet>
 </ng-container>
 
