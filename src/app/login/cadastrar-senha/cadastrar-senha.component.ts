@@ -56,36 +56,57 @@ export class CadastrarSenhaComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnDestroy(): void {
-    document.body.classList.remove('display-centered');
-    this.inscricaoAlterarSenha?.unsubscribe();
-    this.inscricaoRota?.unsubscribe();
-  }
-
   ngAfterContentChecked(): void {
-    if (
-      this.focusPasswordType === 'senha' ||
-      this.focusPasswordType === 'confirmacaoSenha'
-    ) {
-      this.passwordChecklist = true;
-    }
-
     const senha = this.formNovaSenha.get('senha');
     const confirmacaoSenha = this.formNovaSenha.get('confirmacaoSenha');
 
     if (
       senha?.value === confirmacaoSenha?.value &&
       senha?.value !== null &&
-      confirmacaoSenha?.value !== null
+      confirmacaoSenha?.value !== null &&
+      senha?.value !== '' &&
+      confirmacaoSenha?.value !== ''
     ) {
       this.senhasDiferentes = false;
+      if (senha?.valid && confirmacaoSenha?.valid) {
+        this.passwordChecklist = false;
+      }
     } else {
       this.senhasDiferentes = true;
+      if (!this.passwordChecklist) {
+        this.passwordChecklist = true;
+      }
     }
   }
 
-  focusPassword(type: any) {
-    this.focusPasswordType = type;
+  ngOnDestroy(): void {
+    document.body.classList.remove('display-centered');
+    this.inscricaoAlterarSenha?.unsubscribe();
+    this.inscricaoRota?.unsubscribe();
+  }
+
+  focusPassword() {
+    this.passwordChecklist = true;
+  }
+
+  blurPassword() {
+    if (
+      this.formNovaSenha.get('senha')?.valid &&
+      this.formNovaSenha.get('confirmacaoSenha')?.valid &&
+      !this.senhasDiferentes
+    ) {
+      this.passwordChecklist = false;
+    }
+  }
+
+  passwordValid(campo: string): boolean {
+    if (
+      this.formNovaSenha.controls[campo].hasError('required') ||
+      this.formNovaSenha.controls[campo].hasError('minlength')
+    ) {
+      return true;
+    }
+    return false;
   }
 
   recuperarSenha() {

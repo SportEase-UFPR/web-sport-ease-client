@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
+import { ValidacoesForm } from 'src/app/utils/validacoes-form';
 
 @Component({
   selector: 'app-input-senha',
@@ -15,6 +16,8 @@ export class InputSenhaComponent implements OnInit {
   @Input() validacaoInput: boolean = false;
 
   @Output() emmiterFocus = new EventEmitter();
+
+  @ViewChild('sectionInputPassword') sectionInputPassword!: ElementRef;
 
   faShowSenha = faEye;
 
@@ -38,11 +41,25 @@ export class InputSenhaComponent implements OnInit {
     }
   }
 
-  inputFocus(type: any) {
-    return this.emmiterFocus.emit(type);
+  inputFocus() {
+    return this.emmiterFocus.emit();
+  }
+
+  passwordFocus(){
+    this.sectionInputPassword.nativeElement.classList.toggle(
+      'section-input-password-focus'
+    );
   }
 
   get formControl(): AbstractControl {
     return this.formGroup?.controls[this.controlName] ?? new FormControl();
+  }
+
+  inputValid(): boolean {
+    return ValidacoesForm.inputInvalid(
+      this.formGroup,
+      this.controlName,
+      this.validacaoInput
+    );
   }
 }

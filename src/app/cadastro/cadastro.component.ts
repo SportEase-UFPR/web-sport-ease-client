@@ -70,25 +70,25 @@ export class CadastroComponent
   }
 
   ngAfterContentChecked(): void {
-    if (
-      this.focusPasswordType === 'senha' ||
-      this.focusPasswordType === 'confirmacaoSenha'
-    ) {
-      this.passwordChecklist = true;
-    }
-
-    const form = this.formCadastroCliente;
-    const senha = form.get('senha');
-    const confirmacaoSenha = form.get('confirmacaoSenha');
+    const senha = this.formCadastroCliente.get('senha');
+    const confirmacaoSenha = this.formCadastroCliente.get('confirmacaoSenha');
 
     if (
       senha?.value === confirmacaoSenha?.value &&
       senha?.value !== null &&
-      confirmacaoSenha?.value !== null
+      confirmacaoSenha?.value !== null &&
+      senha?.value !== '' &&
+      confirmacaoSenha?.value !== ''
     ) {
       this.senhasDiferentes = false;
+      if (senha?.valid && confirmacaoSenha?.valid) {
+        this.passwordChecklist = false;
+      }
     } else {
       this.senhasDiferentes = true;
+      if (!this.passwordChecklist) {
+        this.passwordChecklist = true;
+      }
     }
   }
 
@@ -98,8 +98,28 @@ export class CadastroComponent
     this.inscricaoRota?.unsubscribe();
   }
 
-  focusPassword(type: any) {
-    this.focusPasswordType = type;
+  focusPassword() {
+    this.passwordChecklist = true;
+  }
+
+  blurPassword() {
+    if (
+      this.formCadastroCliente.get('senha')?.valid &&
+      this.formCadastroCliente.get('confirmacaoSenha')?.valid &&
+      !this.senhasDiferentes
+    ) {
+      this.passwordChecklist = false;
+    }
+  }
+
+  passwordValid(campo: string): boolean {
+    if (
+      this.formCadastroCliente.controls[campo].hasError('required') ||
+      this.formCadastroCliente.controls[campo].hasError('minlength')
+    ) {
+      return true;
+    }
+    return false;
   }
 
   showGrr(): void {

@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { ValidacoesForm } from 'src/app/utils/validacoes-form';
 
 @Component({
   selector: 'app-input-checkbox',
@@ -37,5 +38,13 @@ export class InputCheckboxComponent implements OnInit, AfterViewInit {
 
   emiterChange(): void {
     return this.emmiterChange.emit();
+  }
+
+  inputValid(): boolean {
+    return ValidacoesForm.inputInvalid(
+      this.formGroup,
+      this.controlName,
+      this.validacaoInput
+    );
   }
 }

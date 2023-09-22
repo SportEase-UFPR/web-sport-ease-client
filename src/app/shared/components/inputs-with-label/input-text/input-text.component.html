@@ -1,0 +1,19 @@
+<div
+  [formGroup]="formGroup"
+  class="mb-3"
+  [ngClass]="{
+    'is-invalid-input': inputValid()
+  }"
+>
+  <app-label [idInput]="controlName" [textLabel]="label"></app-label>
+  <div class="d-flex">
+    <input
+      #inputText
+      type="text"
+      class="input-basic w-100"
+      formControlName="{{ controlName }}"
+      id="{{ controlName }}"
+      name="{{ controlName }}"
+    />
+  </div>
+</div>

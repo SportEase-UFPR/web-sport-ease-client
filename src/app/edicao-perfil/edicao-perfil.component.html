@@ -1,0 +1,95 @@
+<div class="container">
+  <h3 class="mt-2 text-purple">Editar minhas irformações</h3>
+
+  <form formGroup="formAlteracaoPerfil">
+    <div class="row w-100">
+      <div class="col-12">
+        <app-input-text
+          [formGroup]="formAlteracaoPerfil"
+          [label]="'Nome Completo'"
+          [controlName]="'nome'"
+          [validacaoInput]="true"
+        ></app-input-text>
+      </div>
+
+      <div class="col-12">
+        <app-input-email
+          [formGroup]="formAlteracaoPerfil"
+          [label]="'E-mail'"
+          [controlName]="'email'"
+          [validacaoInput]="true"
+        ></app-input-email>
+      </div>
+
+      <div class="col-12">
+        <app-input-text
+          [formGroup]="formAlteracaoPerfil"
+          [label]="'CPF'"
+          [controlName]="'cpf'"
+          [isDisabled]="true"
+        ></app-input-text>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <app-input-senha
+          [formGroup]="formAlteracaoPerfil"
+          [controlName]="'senha'"
+          [label]="'Senha'"
+          [validacaoInput]="true"
+          (emmiterFocus)="focusPassword()"
+        >
+        </app-input-senha>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <app-input-senha
+          [formGroup]="formAlteracaoPerfil"
+          [controlName]="'confirmacaoSenha'"
+          [label]="'Confirmar Senha'"
+          [validacaoInput]="true"
+          (emmiterFocus)="focusPassword()"
+        >
+        </app-input-senha>
+      </div>
+
+      <ng-container *ngIf="passwordChecklist">
+        <div class="checklist">
+          <ul class="password-checklist">
+            <li [ngClass]="passwordValid('senha') ? 'tem-erros' : 'sem-erros'">
+              <fa-icon
+                [icon]="passwordValid('senha') ? faInvalid : faValid"
+              ></fa-icon>
+
+              A senha deve ter pelo menos <strong> 6 dígitos </strong>
+            </li>
+
+            <li [ngClass]="senhasDiferentes ? 'tem-erros' : 'sem-erros'">
+              <fa-icon
+                [icon]="senhasDiferentes ? faInvalid : faValid"
+              ></fa-icon>
+
+              As senhas devem ser <strong> iguais </strong>
+            </li>
+          </ul>
+        </div>
+      </ng-container>
+
+      <div class="col-12 d-flex justify-content-end">
+        <div>
+          <app-btn-green
+            [textButton]="'Atualizar'"
+            [buttonDisabled]="formAlteracaoPerfil.invalid && senhasDiferentes"
+            (emmiterClick)="alterarDados()"
+          ></app-btn-green>
+        </div>
+
+        <div class="ms-2">
+          <app-btn-border-green
+            [textButton]="'Cancelar'"
+            (emmiterClick)="navigate()"
+          ></app-btn-border-green>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

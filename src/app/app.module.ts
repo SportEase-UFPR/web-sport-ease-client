@@ -14,12 +14,14 @@ import { EspacosEsportivosModule } from './espacos-esportivos/espacos-esportivos
 import { MinhasReservasModule } from './minhas-reservas/minhas-reservas.module';
 import { NovaReservaModule } from './nova-reserva/nova-reserva.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { EdicaoPerfilComponent } from './edicao-perfil/edicao-perfil.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
     CabecalhoComponent,
+    EdicaoPerfilComponent
   ],
   imports: [
     BrowserModule,

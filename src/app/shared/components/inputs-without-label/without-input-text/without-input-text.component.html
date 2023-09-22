@@ -1,21 +1,16 @@
 <div
   [formGroup]="formGroup"
   class="mb-3"
-  [ngClass]="
-    formGroup.controls[controlName].invalid &&
-    (formGroup.controls[controlName].dirty ||
-      formGroup.controls[controlName].touched) &&
-    validacaoInput
-      ? 'is-invalid-input-without-label'
-      : ''
-  "
+  [ngClass]="{
+    'is-invalid-input': inputValid()
+  }"
 >
   <input
     type="text"
     (focus)="inputFocus(controlName)"
     (blur)="inputFocus(null)"
     (blur)="emitterBlur($event)"
-    class="input-without-label-basic w-100"
+    class="input-basic w-100"
     mask="{{ maskInput }}"
     placeholder="{{ placeholder }}"
     name="{{ controlName }}"

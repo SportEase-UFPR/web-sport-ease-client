@@ -7,17 +7,12 @@ import { MinhasReservasComponent } from './minhas-reservas/minhas-reservas.compo
 import { NovaReservaComponent } from './nova-reserva/nova-reserva.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { authGuard } from './guards/auth/auth.guard';
+import { EdicaoPerfilComponent } from './edicao-perfil/edicao-perfil.component';
 
 const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-  },
-
-  {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full',
   },
 
   {
@@ -42,6 +37,18 @@ const routes: Routes = [
     path: 'nova-reserva',
     component: NovaReservaComponent,
     canActivate: [authGuard]
+  },
+
+  {
+    path: 'editar-perfil',
+    component: EdicaoPerfilComponent,
+    canActivate: [authGuard]
+  },
+
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full',
   },
 ];
 

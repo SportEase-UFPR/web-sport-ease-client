@@ -8,6 +8,8 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
+@import "/src/cores.scss";
+
 :root {
   --font-family: "Poppins", sans-serif;
 }
@@ -36,7 +38,7 @@ button {
 }
 
 body {
-  background-color: #fafbfc !important;
+  background-color: var(--azul-claro) !important;
   min-height: 100vh;
 }
 
@@ -47,44 +49,44 @@ body {
 }
 
 .text-dark-blue {
-  color: #151d48;
+  color: var(--azul-escuro);
 }
 
 .text-green {
-  color: #0fd45e;
+  color: var(--verde);
 }
 
 .text-red {
-  color: #ff3045;
+  color: var(--vermelho);
 }
 
 .text-gray {
-  color: #aaa;
+  color: var(--cinza-claro);
 }
 
 .card-shadow {
-  background-color: #fff;
-  box-shadow: 2px 2px 6px 2px #aaa;
+  background-color: var(--branco);
+  box-shadow: 2px 2px 6px 2px var(--cinza-claro);
   border-radius: 20px;
 }
 
-.input-without-label-basic {
+.input-basic {
   border: none;
   border-radius: 10px;
   height: 45px;
   outline: none;
   padding: 0 10px;
-  box-shadow: 4px 4px 5px 0 #aaa;
+  box-shadow: 4px 4px 5px 0 var(--cinza-claro);
   color: #292929;
   transition: 0.2s ease-in-out;
 
   &:focus {
     transition: 0.2s ease-in-out;
-    box-shadow: 4px 4px 2px 0 #0fd45e;
+    box-shadow: 4px 4px 2px 0 var(--verde);
   }
 
   &::placeholder {
-    color: #aaa;
+    color: var(--cinza-claro);
   }
 }
 
@@ -95,9 +97,9 @@ body {
   }
 }
 
-.is-invalid-input-without-label {
+.is-invalid-input {
   input {
-    box-shadow: 4px 4px 2px 0 #ff0000;
+    box-shadow: 4px 4px 2px 0 var(--vermelho);
   }
 }
 

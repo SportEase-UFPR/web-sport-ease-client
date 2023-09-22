@@ -6,19 +6,15 @@
       width="50"
     />
     <h2 class="ms-2 mb-0 text-dark-blue">SportEase</h2>
+
+    <div class="ms-3">
+      <h2 class="mb-0">{{ getSaudacao() }}{{ ", " + nomeCliente }}</h2>
+    </div>
   </div>
 
   <div>
-    <p class="dados-cliente text-dark-blue">
-      Seu score: {{ scoreCliente }}/10
-      <span><fa-icon [icon]="faFace"></fa-icon></span>
-    </p>
-  </div>
-
-  <div>
-    <p class="dados-cliente text-dark-blue">
+    <a class="dados-cliente text-dark-blue m-0" routerLink="/editar-perfil">
       <fa-icon [icon]="faUser"></fa-icon>
-      {{ nomeCliente }}
-    </p>
+    </a>
   </div>
 </header>

@@ -1,5 +1,7 @@
+@import "/src/cores.scss";
+
 label {
-  color: #aaa;
+  color: var(--cinza-claro);
   font-size: 16px;
   font-weight: normal;
   cursor: pointer;

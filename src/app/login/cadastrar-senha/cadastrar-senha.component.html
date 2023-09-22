@@ -2,7 +2,9 @@
 
 <div class="d-flex align-items-center justify-content-center">
   <div class="card-fomulario card-shadow p-3 my-3">
-    <header class="d-block text-center d-md-flex align-items-center justify-content-center">
+    <header
+      class="d-block text-center d-md-flex align-items-center justify-content-center"
+    >
       <img
         src="../../../assets/site/logo-sport-ease.png"
         alt="logo sport ease ufpr"
@@ -21,7 +23,7 @@
               [controlName]="'senha'"
               [label]="'Senha...'"
               [validacaoInput]="true"
-              (emmiterFocus)="focusPassword($event)"
+              (emmiterFocus)="focusPassword()"
             >
             </app-input-senha>
           </div>
@@ -32,7 +34,7 @@
               [controlName]="'confirmacaoSenha'"
               [label]="'Confirmar Senha...'"
               [validacaoInput]="true"
-              (emmiterFocus)="focusPassword($event)"
+              (emmiterFocus)="focusPassword()"
             >
             </app-input-senha>
           </div>
@@ -41,43 +43,19 @@
             <div class="checklist">
               <ul class="password-checklist">
                 <li
-                  [ngClass]="
-                  formNovaSenha.controls['senha'].hasError(
-                      'required'
-                    ) ||
-                    formNovaSenha.controls['senha'].hasError('minlength')
-                      ? 'tem-erros'
-                      : 'sem-erros'
-                  "
+                  [ngClass]="passwordValid('senha') ? 'tem-erros' : 'sem-erros'"
                 >
-                  <ng-container
-                    *ngIf="
-                    formNovaSenha.controls['senha'].hasError(
-                        'required'
-                      ) ||
-                      formNovaSenha.controls['senha'].hasError(
-                          'minlength'
-                        );
-                      else isMinlengthValid
-                    "
-                  >
-                    <fa-icon [icon]="faInvalid"></fa-icon>
-                  </ng-container>
-
-                  <ng-template #isMinlengthValid>
-                    <fa-icon [icon]="faValid"></fa-icon>
-                  </ng-template>
+                  <fa-icon
+                    [icon]="passwordValid('senha') ? faInvalid : faValid"
+                  ></fa-icon>
 
                   A senha deve ter pelo menos <strong> 6 dígitos </strong>
                 </li>
-                <li [ngClass]="senhasDiferentes ? 'tem-erros' : 'sem-erros'">
-                  <ng-container *ngIf="senhasDiferentes; else isSenhasIguais">
-                    <fa-icon [icon]="faInvalid"></fa-icon>
-                  </ng-container>
 
-                  <ng-template #isSenhasIguais>
-                    <fa-icon [icon]="faValid"></fa-icon>
-                  </ng-template>
+                <li [ngClass]="senhasDiferentes ? 'tem-erros' : 'sem-erros'">
+                  <fa-icon
+                    [icon]="senhasDiferentes ? faInvalid : faValid"
+                  ></fa-icon>
 
                   As senhas devem ser <strong> iguais </strong>
                 </li>

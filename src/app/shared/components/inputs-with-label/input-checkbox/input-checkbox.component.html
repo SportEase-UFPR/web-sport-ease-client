@@ -1,13 +1,9 @@
 <div
   class="d-flex align-items-center ms-2"
   [formGroup]="formGroup"
-  [ngClass]="
-    formGroup.controls[controlName].invalid &&
-    (formGroup.controls[controlName].dirty || formGroup.controls[controlName].touched) &&
-    validacaoInput
-      ? 'is-invalid'
-      : ''
-  "
+  [ngClass]="{
+    'is-invalid-input': inputValid()
+  }"
 >
   <input
     #checkbox
@@ -22,4 +18,3 @@
   />
   <app-label [idInput]="controlName" [textLabel]="label"></app-label>
 </div>
-

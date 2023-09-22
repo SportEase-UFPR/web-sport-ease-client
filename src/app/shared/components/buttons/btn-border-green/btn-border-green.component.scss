@@ -1,12 +1,12 @@
 .btn-border-green {
-  background-color: #fff;
-  color: #0fd45e;
-  border: 1px solid #0fd45e !important;
+  background-color: var(--branco);
+  color: var(--verde);
+  border: 1px solid var(--verde) !important;
   transition: 0.2s ease-in-out;
 
   &:disabled {
     transition: 0.2s ease-in-out;
-    color: #0fd45e;
+    color: var(--verde);
     opacity: 0.6;
     transform: scale(1);
   }

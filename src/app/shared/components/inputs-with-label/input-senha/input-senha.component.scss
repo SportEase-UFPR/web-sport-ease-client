@@ -1,47 +1,42 @@
+@import "/src/cores.scss";
+
+.section-input-password {
+  box-shadow: 4px 4px 5px 0 var(--cinza-claro);
+  border-radius: 10px;
+  transition: 0.2s ease-in-out;
+}
+
+.section-input-password-focus {
+  transition: 0.2s ease-in-out;
+  box-shadow: 4px 4px 2px 0 var(--verde);
+}
+
 .input-password {
-  background-color: #fff;
+  background-color: var(--branco);
   border: none;
   border-radius: 10px 0 0 10px;
   height: 45px;
   outline: none;
   padding: 0 10px;
-  box-shadow: 4px 4px 5px 0 #aaa;
-  color: #292929;
+  color: var(--cinza-claro);
   transition: 0.2s ease-in-out;
-
-  &:focus {
-    transition: 0.2s ease-in-out;
-    box-shadow: 4px 4px 2px 0 #0fd45e;
-
-    ~ .show-senha {
-      transition: 0.2s ease-in-out;
-      box-shadow: 4px 4px 2px 0 #0fd45e;
-    }
-  }
 }
 
 .show-senha {
-  background-color: #fff;
+  background-color: var(--branco);
   border: none;
-  color: #292929;
+  color: var(--cinza-claro);
   border-radius: 0 10px 10px 0;
   height: 45px;
   outline: none;
   padding: 0 10px;
-  box-shadow: 4px 4px 5px 0 #aaa;
   transition: 0.2s ease-in-out;
 }
 
 .is-password-invalid {
-  .input-password {
+  .section-input-password {
     transition: 0.2s ease-in-out;
-    box-shadow: 4px 4px 2px 0 #ff0000;
+    box-shadow: 4px 4px 2px 0 var(--vermelho);
     background-color: transparent;
-
-    ~ .show-senha {
-      transition: 0.2s ease-in-out;
-      box-shadow: 4px 4px 2px 0 #ff0000;
-      background-color: transparent;
-    }
   }
 }

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { ValidacoesForm } from 'src/app/utils/validacoes-form';
 
 @Component({
   selector: 'app-without-input-number',
@@ -20,5 +21,13 @@ export class WithoutInputNumberComponent implements OnInit {
 
   get formControl(): AbstractControl {
     return this.formGroup?.controls[this.controlName] ?? new FormControl();
+  }
+
+  inputValid(): boolean {
+    return ValidacoesForm.inputInvalid(
+      this.formGroup,
+      this.controlName,
+      this.validacaoInput
+    );
   }
 }

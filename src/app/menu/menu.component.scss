@@ -1,5 +1,7 @@
+@import "/src/cores.scss";
+
 .menu {
-  background-color: #ffffff;
+  background-color: var(--branco);
 }
 
 a {
@@ -10,7 +12,7 @@ a {
 p {
   margin: 1.5em 0;
   padding: 0.5em 1em;
-  color: #737791;
+  color: var(--cinza);
   border-radius: 10px;
   transition: 0.2s ease-in-out;
 }
@@ -22,8 +24,8 @@ fa-icon {
 .menu-actived p {
   transition: 0.2s ease-in-out;
   font-weight: 600;
-  background-color: #0fd45e;
-  color: #ffffff;
+  background-color: var(--verde);
+  color: var(--branco);
   font-size: 18px;
 }
 
@@ -34,5 +36,5 @@ fa-icon {
   height: 45px;
   padding: 8px;
   background-color: transparent;
-  color: #737791;
+  color: var(--cinza);
 }

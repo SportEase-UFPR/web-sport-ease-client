@@ -1,21 +1,18 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { ValidacoesForm } from 'src/app/utils/validacoes-form';
 
 @Component({
-  selector: 'app-without-input-email',
-  templateUrl: './without-input-email.component.html',
-  styleUrls: ['./without-input-email.component.scss'],
+  selector: 'app-input-email',
+  templateUrl: './input-email.component.html',
+  styleUrls: ['./input-email.component.scss'],
 })
-export class WithoutInputEmailComponent implements OnInit {
+export class InputEmailComponent implements OnInit {
   @Input() formGroup: FormGroup = new FormGroup({});
+  @Input() controlName?: any;
   @Input() placeholder: string = '';
-  @Input() inputName: string = '';
-  @Input() controlName: string = '';
-  @Input() placeHolder?: string = '';
+  @Input() label: string = '';
   @Input() validacaoInput: boolean = false;
-
-  @Output() emmiterChange = new EventEmitter();
 
   constructor() {}
 
@@ -23,10 +20,6 @@ export class WithoutInputEmailComponent implements OnInit {
 
   get formControl(): AbstractControl {
     return this.formGroup?.controls[this.controlName] ?? new FormControl();
-  }
-
-  changeInput(data: any): void {
-    return this.emmiterChange.emit(data);
   }
 
   inputValid(): boolean {

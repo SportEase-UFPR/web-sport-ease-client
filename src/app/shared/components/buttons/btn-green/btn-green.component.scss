@@ -1,6 +1,8 @@
+@import "/src/cores.scss";
+
 .btn-green {
-  background-color: #0FD45E;
-  color: #fff;
+  background-color: var(--verde);
+  color: var(--branco);
   transition: 0.2s ease-in-out;
 
   &:disabled {

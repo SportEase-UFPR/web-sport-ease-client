@@ -1,20 +1,16 @@
 <div
   [formGroup]="formGroup"
   class="mb-3"
-  [ngClass]="
-    formGroup.controls[controlName].invalid &&
-    (formGroup.controls[controlName].dirty ||
-      formGroup.controls[controlName].touched) &&
-    validacaoInput
-      ? 'is-password-invalid'
-      : ''
-  "
+  [ngClass]="{
+    'is-password-invalid': inputValid()
+  }"
 >
   <app-label [idInput]="controlName" [textLabel]="label"></app-label>
-  <div class="d-flex">
+  <div class="d-flex section-input-password" #sectionInputPassword>
     <input
       formControlName="{{ controlName }}"
-      (focus)="inputFocus(controlName)"
+      (focus)="inputFocus(); passwordFocus()"
+      (blur)="passwordFocus()"
       id="{{ controlName }}"
       type="{{ type }}"
       class="input-password w-100"
@@ -22,7 +18,13 @@
       autocomplete="new-password"
     />
 
-    <button class="show-senha" (click)="showSenha()">
+    <button
+      type="button"
+      class="show-senha"
+      (click)="showSenha()"
+      (focus)="passwordFocus()"
+      (blur)="passwordFocus()"
+    >
       <fa-icon [icon]="faShowSenha"></fa-icon>
     </button>
   </div>

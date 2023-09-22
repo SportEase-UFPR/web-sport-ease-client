@@ -1,52 +1,24 @@
 <div>
-  <ng-container *ngIf="buttonDisabled; else buttonNotDisabled">
-    <button
-      disabled
-      type="button"
-      class="btn-basic btn-border-green"
-      (click)="clickButton($event)"
-      [disabled]="buttonDisabled"
-    >
-      <ng-container *ngIf="showIcon; else notIcon">
-        <ng-container *ngIf="iconFirst; else textFirst">
-          <fa-icon [icon]="icone"></fa-icon>
-          {{ textButton }}
-        </ng-container>
-
-        <ng-template #textFirst>
-          {{ textButton }}
-          <fa-icon [icon]="icone"></fa-icon>
-        </ng-template>
+  <button
+    #buttonGreen
+    type="button"
+    class="btn-basic btn-border-green"
+    (click)="clickButton($event)"
+  >
+    <ng-container *ngIf="showIcon; else notIcon">
+      <ng-container *ngIf="iconFirst; else textFirst">
+        <fa-icon [icon]="icone"></fa-icon>
+        {{ textButton }}
       </ng-container>
 
-      <ng-template #notIcon>
+      <ng-template #textFirst>
         {{ textButton }}
+        <fa-icon [icon]="icone"></fa-icon>
       </ng-template>
-    </button>
-  </ng-container>
+    </ng-container>
 
-  <ng-template #buttonNotDisabled>
-    <button
-      type="button"
-      class="btn-basic btn-border-green"
-      (click)="clickButton($event)"
-      [disabled]="buttonDisabled"
-    >
-      <ng-container *ngIf="showIcon; else notIcon">
-        <ng-container *ngIf="iconFirst; else textFirst">
-          <fa-icon [icon]="icone"></fa-icon>
-          {{ textButton }}
-        </ng-container>
-
-        <ng-template #textFirst>
-          {{ textButton }}
-          <fa-icon [icon]="icone"></fa-icon>
-        </ng-template>
-      </ng-container>
-
-      <ng-template #notIcon>
-        {{ textButton }}
-      </ng-template>
-    </button>
-  </ng-template>
+    <ng-template #notIcon>
+      {{ textButton }}
+    </ng-template>
+  </button>
 </div>

@@ -14,6 +14,8 @@ import { BtnGreenComponent } from './components/buttons/btn-green/btn-green.comp
 import { BtnBorderGreenComponent } from './components/buttons/btn-border-green/btn-border-green.component';
 import { InputSenhaComponent } from './components/inputs-with-label/input-senha/input-senha.component';
 import { LocalStorageService } from './services/local-storage/local-storage.service';
+import { InputEmailComponent } from './components/inputs-with-label/input-email/input-email.component';
+import { InputTextComponent } from './components/inputs-with-label/input-text/input-text.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { LocalStorageService } from './services/local-storage/local-storage.serv
     BtnGreenComponent,
     BtnBorderGreenComponent,
     InputSenhaComponent,
+    InputEmailComponent,
+    InputTextComponent
   ],
   imports: [
     CommonModule,
@@ -42,6 +46,8 @@ import { LocalStorageService } from './services/local-storage/local-storage.serv
     InputSenhaComponent,
     BtnGreenComponent,
     BtnBorderGreenComponent,
+    InputEmailComponent,
+    InputTextComponent
   ],
   providers: [
     provideNgxMask(),
