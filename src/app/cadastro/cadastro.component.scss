@@ -4,33 +4,6 @@
   width: 70%;
 
   input{
-    color: #000 !important;
-  }
-}
-
-.checklist {
-  .password-checklist {
-    list-style: none;
-    padding: 0 10px;
-
-    li {
-      fa-icon {
-        font-size: 16px;
-        margin-right: 4px;
-        padding: 0;
-      }
-    }
-
-    .tem-erros {
-      fa-icon {
-        color: var(--vermelho);
-      }
-    }
-
-    .sem-erros {
-      fa-icon {
-        color: var(--verde);
-      }
-    }
+    color: var(--azul-escuro) !important;
   }
 }

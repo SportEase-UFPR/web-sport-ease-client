@@ -17,34 +17,32 @@
       <form [formGroup]="formCadastroCliente" class="p-2">
         <div class="row w-100">
           <div class="col-12">
-            <app-without-input-text
+            <app-input-text
               [formGroup]="formCadastroCliente"
               [controlName]="'nome'"
-              [placeholder]="'Seu nome completo...'"
+              [label]="'Nome completo'"
               [validacaoInput]="true"
-              [typeForAutocomplete]="'off'"
-            ></app-without-input-text>
+            ></app-input-text>
           </div>
 
           <div class="col-12">
-            <app-without-input-email
+            <app-input-email
               [formGroup]="formCadastroCliente"
               [controlName]="'email'"
-              [placeholder]="'Seu melhor e-mail...'"
+              [label]="'E-mail'"
               [validacaoInput]="true"
-            ></app-without-input-email>
+            ></app-input-email>
           </div>
 
           <div class="col-12">
-            <app-without-input-text
+            <app-input-text
               [formGroup]="formCadastroCliente"
               [controlName]="'cpf'"
-              [placeholder]="'Seu CPF (123.456.789-10)...'"
+              [label]="'CPF'"
               [validacaoInput]="true"
-              [typeForAutocomplete]="'off'"
-              [maskInput]="'000.000.000-00'"
+              [mask]="'000.000.000-00'"
               (emmiterBlur)="validarCpf()"
-            ></app-without-input-text>
+            ></app-input-text>
           </div>
 
           <div class="col-12">
@@ -56,14 +54,13 @@
             ></app-input-checkbox>
 
             <div class="mt-2" *ngIf="showInputGrr">
-              <app-without-input-text
+              <app-input-text
                 [formGroup]="formCadastroCliente"
                 [controlName]="'grr'"
-                [placeholder]="'Seu GRR (somente os números)...'"
+                [label]="'GRR (somente os números)'"
                 [validacaoInput]="true"
-                [typeForAutocomplete]="'off'"
-                [maskInput]="'00000000'"
-              ></app-without-input-text>
+                [mask]="'00000000'"
+              ></app-input-text>
             </div>
           </div>
 

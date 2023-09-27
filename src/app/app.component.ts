@@ -28,7 +28,10 @@ export class AppComponent implements OnInit {
 
     if (cabecalho) cabecalho.style.minHeight = `${alturaMinima}px`;
 
-    if (menu) menu.style.minHeight = `${alturaMaxima}px`;
+    if (menu) {
+      menu.style.height = `${alturaMaxima}px`;
+      menu.style.overflowY = 'scroll';
+    }
 
     if (paginas) paginas.style.minHeight = `${alturaMaxima}px`;
   }

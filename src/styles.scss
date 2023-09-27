@@ -77,7 +77,7 @@ body {
   outline: none;
   padding: 0 10px;
   box-shadow: 4px 4px 5px 0 var(--cinza-claro);
-  color: #292929;
+  color: var(--azul-escuro);
   transition: 0.2s ease-in-out;
 
   &:focus {
@@ -87,6 +87,11 @@ body {
 
   &::placeholder {
     color: var(--cinza-claro);
+  }
+
+  &:disabled {
+    background-color: var(--cinza-claro);
+    color: var(--branco);
   }
 }
 
@@ -115,6 +120,34 @@ body {
   &:hover {
     transition: 0.2s ease-in-out;
     transform: scale(1.05);
+  }
+}
+
+// Estilo para oi checklist de senha
+.checklist {
+  .password-checklist {
+    list-style: none;
+    padding: 0 10px;
+
+    li {
+      fa-icon {
+        font-size: 16px;
+        margin-right: 4px;
+        padding: 0;
+      }
+    }
+
+    .tem-erros {
+      fa-icon {
+        color: var(--vermelho);
+      }
+    }
+
+    .sem-erros {
+      fa-icon {
+        color: var(--verde);
+      }
+    }
   }
 }
 

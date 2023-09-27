@@ -4,10 +4,23 @@ header {
   background-color: var(--branco);
 }
 
+.itens-cabecalho{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+
+  .saudacao{
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--azul-escuro);
+  }
+}
+
 .dados-cliente {
   cursor: pointer;
 
   fa-icon {
     font-size: 30px;
+    color: var(--azul-escuro);
   }
 }

@@ -18,6 +18,7 @@ export class InputTextComponent implements OnInit, AfterViewInit {
   @Input() formGroup: FormGroup = new FormGroup({});
   @Input() controlName?: any;
   @Input() placeholder: string = '';
+  @Input() mask: string = '';
   @Input() label: string = '';
   @Input() validacaoInput: boolean = false;
   @Input() isDisabled: boolean = false;

@@ -3,11 +3,23 @@
 .cliente-logado {
   min-height: 100vh;
 
-  .cabecalho {
-    background-color: var(--branco);
-  }
-
   .menu {
     background-color: var(--branco);
+    scrollbar-width: thin;
+    scrollbar-color: var(--verde) var(--branco);
+
+    &::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: var(--branco);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--verde);
+      border-radius: 20px;
+      border: 3px solid var(--branco);
+    }
   }
 }
