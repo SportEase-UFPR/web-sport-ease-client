@@ -3,11 +3,11 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
-export class LocalStorageService {
+export class SessionStorageService {
   private storage: Storage;
 
   constructor() {
-    this.storage = window.localStorage;
+    this.storage = window.sessionStorage;
   }
 
   set(key: string, value: any): boolean {

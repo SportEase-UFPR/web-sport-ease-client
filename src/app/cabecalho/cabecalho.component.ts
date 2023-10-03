@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faFaceSmile } from '@fortawesome/free-regular-svg-icons';
+
 import { faUserPen } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -10,8 +10,6 @@ import { faUserPen } from '@fortawesome/free-solid-svg-icons';
 export class CabecalhoComponent implements OnInit {
   faUser = faUserPen;
 
-  nomeCliente: string = 'Matheus';
-
   constructor() {}
 
   ngOnInit(): void {}
@@ -20,9 +18,9 @@ export class CabecalhoComponent implements OnInit {
     const horaAtual = new Date().getHours();
     let saudacao = 'Bom dia';
 
-    if (horaAtual > 18 && horaAtual < 6) {
+    if (horaAtual >= 18 || horaAtual < 6) {
       saudacao = 'Boa noite';
-    } else if (horaAtual > 12) {
+    } else if (horaAtual >= 12) {
       saudacao = 'Boa tarde';
     }
 

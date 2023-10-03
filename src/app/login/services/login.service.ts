@@ -9,8 +9,8 @@ import { InstrucoesRecuperacaoRequest } from 'src/app/shared/models/instrucoes-r
 import { CadastroSenhaRequest } from 'src/app/shared/models/cadastro-senha-request/cadastro-senha-request.model';
 import { LoginResponse } from 'src/app/shared/models/login-response/login-response.model';
 import { LoginRequest } from 'src/app/shared/models/login-request/login-request.model';
-import { LocalStorageService } from 'src/app/shared/services/local-storage/local-storage.service';
-import { UsuarioLs } from 'src/app/shared/models/usuario-ls/usuario-ls.model';
+import { SessionStorageService } from 'src/app/shared/services/session-storage/session-storage.service';
+import { UsuarioSs } from 'src/app/shared/models/usuario-ss/usuario-ss.model';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +20,7 @@ export class LoginService {
     'Content-Type': 'application/json; charset=utf-8',
   });
 
-  constructor(private httpService: HttpClient, private lsService: LocalStorageService) {}
+  constructor(private httpService: HttpClient, private ssService: SessionStorageService) {}
 
   enviarIntrucoesRecuperacao(
     dados: InstrucoesRecuperacaoRequest
@@ -49,11 +49,11 @@ export class LoginService {
   }
 
   logout(): boolean{
-    return this.lsService.remove(env.ls_token)
+    return this.ssService.remove(env.ss_token)
   }
 
   setUsuarioLogado(dados: LoginResponse){
-    const dadosLs: UsuarioLs = new UsuarioLs(dados.token, true)
-    this.lsService.set(env.ls_token, dadosLs)
+    const dadosLs: UsuarioSs = new UsuarioSs(dados.token, true)
+    this.ssService.set(env.ss_token, dadosLs)
   }
 }

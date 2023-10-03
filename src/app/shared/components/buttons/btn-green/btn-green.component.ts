@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-btn-green',
@@ -14,17 +14,9 @@ export class BtnGreenComponent implements OnInit {
 
   @Output() emmiterClick = new EventEmitter();
 
-  @ViewChild('buttonGreen') buttonGreen!: ElementRef;
-
   constructor() {}
 
   ngOnInit(): void {}
-
-  ngAfterViewInit(): void {
-    if (this.buttonGreen) {
-      this.buttonGreen.nativeElement.disabled = this.buttonDisabled;
-    }
-  }
 
   clickButton(data: any): void {
     return this.emmiterClick.emit(data);

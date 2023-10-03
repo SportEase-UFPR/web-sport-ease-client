@@ -15,14 +15,13 @@ import { EspacosEsportivosModule } from './espacos-esportivos/espacos-esportivos
 import { MinhasReservasModule } from './minhas-reservas/minhas-reservas.module';
 import { NovaReservaModule } from './nova-reserva/nova-reserva.module';
 import { DashboardModule } from './dashboard/dashboard.module';
-import { EdicaoPerfilComponent } from './edicao-perfil/edicao-perfil.component';
+import { EdicaoPerfilModule } from './edicao-perfil/edicao-perfil.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
-    CabecalhoComponent,
-    EdicaoPerfilComponent
+    CabecalhoComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +35,8 @@ import { EdicaoPerfilComponent } from './edicao-perfil/edicao-perfil.component';
     SharedModule,
     NgbModule,
     FontAwesomeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    EdicaoPerfilModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

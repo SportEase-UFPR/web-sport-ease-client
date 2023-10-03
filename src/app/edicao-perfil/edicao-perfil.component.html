@@ -1,13 +1,15 @@
+<ngx-ui-loader [loaderId]="'loader-01'"></ngx-ui-loader>
+
 <div class="container">
   <h3 class="mt-2 text-purple">Editar minhas irformações</h3>
 
-  <form [formGroup]="formAlteracaoPerfil">
+  <form [formGroup]="formAlteracaoPerfil" class="p-2">
     <div class="row w-100">
       <div class="col-12">
         <app-input-text
           [formGroup]="formAlteracaoPerfil"
-          [label]="'Nome Completo'"
           [controlName]="'nome'"
+          [label]="'Nome completo'"
           [validacaoInput]="true"
         ></app-input-text>
       </div>
@@ -15,8 +17,8 @@
       <div class="col-12">
         <app-input-email
           [formGroup]="formAlteracaoPerfil"
-          [label]="'E-mail'"
           [controlName]="'email'"
+          [label]="'E-mail'"
           [validacaoInput]="true"
         ></app-input-email>
       </div>
@@ -24,28 +26,58 @@
       <div class="col-12">
         <app-input-text
           [formGroup]="formAlteracaoPerfil"
-          [label]="'CPF'"
           [controlName]="'cpf'"
+          [label]="'CPF'"
           [isDisabled]="true"
         ></app-input-text>
       </div>
 
-      <div class="col-12 col-md-6">
+      <div class="col-12">
+        <app-input-checkbox
+          [formGroup]="formAlteracaoPerfil"
+          [controlName]="'vinculo'"
+          [label]="'Sou aluno(a) da UFPR'"
+          [inputChecked]="!isAluno"
+          (emmiterChange)="showGrr()"
+        ></app-input-checkbox>
+
+        <div class="mt-2" *ngIf="showInputGrr">
+          <ng-container *ngIf="isAluno else notIsAluno">
+            <app-input-text
+              [formGroup]="formAlteracaoPerfil"
+              [controlName]="'grr'"
+              [label]="'GRR (Somente números)'"
+              [mask]="'00000000'"
+            ></app-input-text>
+          </ng-container>
+
+          <ng-template #notIsAluno>
+            <app-input-text
+              [formGroup]="formAlteracaoPerfil"
+              [controlName]="'grr'"
+              [label]="'GRR'"
+              [isDisabled]="true"
+            ></app-input-text>
+          </ng-template>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 mt-2">
         <app-input-senha
           [formGroup]="formAlteracaoPerfil"
           [controlName]="'senha'"
-          [label]="'Senha'"
+          [label]="'Senha...'"
           [validacaoInput]="true"
           (emmiterFocus)="focusPassword()"
         >
         </app-input-senha>
       </div>
 
-      <div class="col-12 col-md-6">
+      <div class="col-12 col-md-6 mt-2">
         <app-input-senha
           [formGroup]="formAlteracaoPerfil"
           [controlName]="'confirmacaoSenha'"
-          [label]="'Confirmar Senha'"
+          [label]="'Confirmar Senha...'"
           [validacaoInput]="true"
           (emmiterFocus)="focusPassword()"
         >
@@ -74,16 +106,15 @@
         </div>
       </ng-container>
 
-      <div class="col-12 d-flex justify-content-end">
+      <div class="col-12 d-block d-md-flex justify-content-end mt-2">
         <div>
           <app-btn-green
-            [textButton]="'Atualizar'"
-            [buttonDisabled]="formAlteracaoPerfil.invalid && senhasDiferentes"
+            [textButton]="'Salvar'"
             (emmiterClick)="alterarDados()"
           ></app-btn-green>
         </div>
 
-        <div class="ms-2">
+        <div class="ms-0 ms-md-2 mt-2 mt-md-0">
           <app-btn-border-green
             [textButton]="'Cancelar'"
             (emmiterClick)="navigate()"

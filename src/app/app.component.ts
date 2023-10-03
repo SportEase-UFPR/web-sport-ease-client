@@ -1,21 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { LocalStorageService } from './shared/services/local-storage/local-storage.service';
+import { SessionStorageService } from './shared/services/session-storage/session-storage.service';
 import { environment as env } from 'src/environments/environment';
-import { UsuarioLs } from './shared/models/usuario-ls/usuario-ls.model';
+import { LoginService } from './login/services/login.service';
+import { UsuarioSs } from './shared/models/usuario-ss/usuario-ss.model';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
-  constructor(private lsService: LocalStorageService) {}
+export class AppComponent implements OnInit, OnDestroy {
+  constructor(
+    private ssService: SessionStorageService,
+    private loginService: LoginService
+  ) {}
 
   ngOnInit(): void {
     window.onresize = () => {
       this.formatLayout();
     };
+  }
+
+  ngOnDestroy(): void {
+    this.loginService.logout();
   }
 
   formatLayout() {
@@ -33,11 +41,14 @@ export class AppComponent implements OnInit {
       menu.style.overflowY = 'scroll';
     }
 
-    if (paginas) paginas.style.minHeight = `${alturaMaxima}px`;
+    if (paginas) {
+      paginas.style.height = `${alturaMaxima}px`;
+      paginas.style.overflowY = 'scroll';
+    }
   }
 
   isLogado(): boolean {
-    const lsDados: UsuarioLs = this.lsService.get(env.ls_token);
+    const lsDados: UsuarioSs = this.ssService.get(env.ss_token);
     this.formatLayout();
 
     if (lsDados) {

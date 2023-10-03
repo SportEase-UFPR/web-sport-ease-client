@@ -10,9 +10,10 @@ import { LabelComponent } from './components/inputs/label/label.component';
 import { BtnGreenComponent } from './components/buttons/btn-green/btn-green.component';
 import { BtnBorderGreenComponent } from './components/buttons/btn-border-green/btn-border-green.component';
 import { InputSenhaComponent } from './components/inputs/input-senha/input-senha.component';
-import { LocalStorageService } from './services/local-storage/local-storage.service';
 import { InputEmailComponent } from './components/inputs/input-email/input-email.component';
 import { InputTextComponent } from './components/inputs/input-text/input-text.component';
+import { ClienteService } from './services/cliente/cliente.service';
+import { SessionStorageService } from './services/session-storage/session-storage.service';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { InputTextComponent } from './components/inputs/input-text/input-text.co
   ],
   providers: [
     provideNgxMask(),
-    LocalStorageService
+    SessionStorageService,
+    ClienteService
   ],
 })
 export class SharedModule {}

@@ -123,6 +123,26 @@ body {
   }
 }
 
+//Estilo do modal
+.btn-close-modal {
+  border: none;
+  background-color: transparent;
+  border-radius: 10px;
+  font-size: 20px;
+  transition: 0.2s ease-in-out;
+
+  &:hover:not(:disabled) {
+    transition: 0.2s ease-in-out;
+    transform: scale(1.05);
+  }
+}
+
+.modal-content {
+  border: none !important;
+  border-radius: 15px;
+  background-color: var(--branco-gelo);
+}
+
 // Estilo para oi checklist de senha
 .checklist {
   .password-checklist {

@@ -1,6 +1,6 @@
 export const environment = {
   baseUrl: 'http://localhost:8080/',
   email: 'sportease.ufpr@gmail.com',
-  ls_token: 'LS_USUARIO',
+  ss_token: 'SS_USUARIO',
   userProfile: 'ROLE_CLIENTE'
 };

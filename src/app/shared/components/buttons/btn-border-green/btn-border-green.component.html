@@ -1,9 +1,9 @@
 <div>
   <button
-    #buttonGreen
     type="button"
     class="btn-basic btn-border-green"
     (click)="clickButton($event)"
+    [disabled]="buttonDisabled"
   >
     <ng-container *ngIf="showIcon; else notIcon">
       <ng-container *ngIf="iconFirst; else textFirst">

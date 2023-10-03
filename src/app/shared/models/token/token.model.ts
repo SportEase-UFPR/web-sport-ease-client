@@ -3,6 +3,7 @@ export class Token {
     public exp?: number,
     public iss?: string,
     public sub?: string,
-    public userProfile?: string
+    public userProfile?: string,
+    public userName?: string
   ) {}
 }
