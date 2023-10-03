@@ -14,27 +14,26 @@ import { EmailAtivacaoResponse } from '../../models/email-ativacao-response/emai
   providedIn: 'root',
 })
 export class ClienteService {
-  header!: HttpHeaders;
-  headerWithoutToken: HttpHeaders = new HttpHeaders({
+  private headerWithoutToken: HttpHeaders = new HttpHeaders({
     'Content-Type': 'application/json; charset=utf-8',
   });
 
   constructor(
     private httpService: HttpClient,
     private ssService: SessionStorageService
-  ) {
-    const ssDados: UsuarioSs = ssService.get(env.ss_token);
-    this.header = new HttpHeaders({
+  ) {}
+
+  getDadosCliente(): Observable<Cliente> {
+    const ssDados: UsuarioSs = this.ssService.get(env.ss_token);
+    const header: HttpHeaders = new HttpHeaders({
       'Content-Type': 'application/json; charset=utf-8',
       Authorization: ssDados?.token!,
     });
-  }
 
-  getDadosCliente(): Observable<Cliente> {
     return this.httpService.get<Cliente>(
       `${env.baseUrl}clientes/cliente-logado`,
       {
-        headers: this.header,
+        headers: header,
       }
     );
   }
@@ -42,10 +41,16 @@ export class ClienteService {
   atualizarDados(
     cliente: ClienteAlteracaoRequest
   ): Observable<ClienteAlteracaoResponse> {
+    const ssDados: UsuarioSs = this.ssService.get(env.ss_token);
+    const header: HttpHeaders = new HttpHeaders({
+      'Content-Type': 'application/json; charset=utf-8',
+      Authorization: ssDados?.token!,
+    });
+
     return this.httpService.put<ClienteAlteracaoResponse>(
       `${env.baseUrl}clientes`,
       JSON.stringify(cliente),
-      { headers: this.header }
+      { headers: header }
     );
   }
 
