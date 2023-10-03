@@ -24,16 +24,10 @@ export class ClienteService {
   ) {}
 
   getDadosCliente(): Observable<Cliente> {
-    const ssDados: UsuarioSs = this.ssService.get(env.ss_token);
-    const header: HttpHeaders = new HttpHeaders({
-      'Content-Type': 'application/json; charset=utf-8',
-      Authorization: ssDados?.token!,
-    });
-
     return this.httpService.get<Cliente>(
       `${env.baseUrl}clientes/cliente-logado`,
       {
-        headers: header,
+        headers: this.createHeaders(),
       }
     );
   }
@@ -41,16 +35,10 @@ export class ClienteService {
   atualizarDados(
     cliente: ClienteAlteracaoRequest
   ): Observable<ClienteAlteracaoResponse> {
-    const ssDados: UsuarioSs = this.ssService.get(env.ss_token);
-    const header: HttpHeaders = new HttpHeaders({
-      'Content-Type': 'application/json; charset=utf-8',
-      Authorization: ssDados?.token!,
-    });
-
     return this.httpService.put<ClienteAlteracaoResponse>(
       `${env.baseUrl}clientes`,
       JSON.stringify(cliente),
-      { headers: header }
+      { headers: this.createHeaders() }
     );
   }
 
@@ -60,5 +48,14 @@ export class ClienteService {
       JSON.stringify(token),
       { headers: this.headerWithoutToken }
     );
+  }
+
+  private createHeaders(): HttpHeaders {
+    const ssDados: UsuarioSs = this.ssService.get(env.ss_token);
+
+    return new HttpHeaders({
+      'Content-Type': 'application/json; charset=utf-8',
+      Authorization: ssDados?.token!,
+    });
   }
 }
