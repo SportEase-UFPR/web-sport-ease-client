@@ -1,1 +1,92 @@
-<p>nova-reserva works!</p>
+<ngx-ui-loader [loaderId]="'loader-01'"></ngx-ui-loader>
+
+<div class="mx-3 mt-4">
+  <h3 class="text-green font-weight-bold">Nova solicitação de reserva</h3>
+
+  <form [formGroup]="formNovaReserva" class="form-nova-reserva">
+    <div class="row w-100">
+      <div class="col-12 col-lg-5 mt-4">
+        <div>
+          <h5 class="text-green">Dados do local</h5>
+        </div>
+
+        <div>
+          <app-input-select-option
+            [formGroup]="formNovaReserva"
+            [controlName]="'espacoEsportivo'"
+            [label]="'Selecione o local'"
+            [items]="nomesEE"
+            [valueSelected]="idEspacoQueryParam"
+            (emitterChange)="showNextSteps()"
+          ></app-input-select-option>
+        </div>
+
+        <div *ngIf="nextSteps">
+          <div>
+            <app-input-number
+              [formGroup]="formNovaReserva"
+              [controlName]="'qtdPessoas'"
+              [label]="'Quantidade de participantes'"
+            ></app-input-number>
+          </div>
+
+          <div class="mt-5">
+            <div>
+              <h5 class="text-green">Informações sobre a reserva</h5>
+            </div>
+
+            <div>
+              <app-input-date
+                [formGroup]="formNovaReserva"
+                [controlName]="'data'"
+                [label]="'Selecione a data'"
+                (emitterChange)="listarHorarios()"
+              ></app-input-date>
+            </div>
+
+            <div *ngIf="showHorarios">
+              <app-input-select-option
+                [formGroup]="formNovaReserva"
+                [controlName]="'horarioInicio'"
+                [label]="'Selecione o horário de início'"
+                [items]="horariosDisponiveis"
+                (emitterChange)="listarQtdHoras()"
+              ></app-input-select-option>
+            </div>
+
+            <div *ngIf="showQtdHoras">
+              <app-input-select-option
+                [formGroup]="formNovaReserva"
+                [controlName]="'qtdHoras'"
+                [label]="'Selecione a quantidade de horas para uso'"
+                [items]="qtdHoras"
+              ></app-input-select-option>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-7" *ngIf="showObjetivo">
+        <div>
+          <h5 class="text-green">Objetivo da reserva</h5>
+        </div>
+
+        <div>
+          <app-input-textarea
+            [formGroup]="formNovaReserva"
+            [controlName]="'objetivo'"
+            [label]="'Motivo da solicitação'"
+          ></app-input-textarea>
+        </div>
+
+        <div class="d-block d-md-flex">
+          <app-btn-green
+            [textButton]="'Solicitar'"
+            (emmiterClick)="solicitarReserva()"
+            [buttonDisabled]="formNovaReserva.invalid"
+          ></app-btn-green>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

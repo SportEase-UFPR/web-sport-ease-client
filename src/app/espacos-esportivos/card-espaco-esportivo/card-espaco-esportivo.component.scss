@@ -1,0 +1,42 @@
+@import "/src/cores.scss";
+
+.card-conteudo {
+  border-radius: 15px;
+  background-color: var(--branco-gelo);
+  box-shadow: 4px 4px 2px 0 var(--cinza-claro);
+  padding: 10px;
+
+  img {
+    border-radius: 15px;
+  }
+
+  .infos {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .esporte {
+    margin: 2px 4px;
+    border-radius: 25px;
+    background-color: var(--verde-claro);
+    color: var(--verde-escuro);
+    padding: 5px;
+  }
+
+  .espaco-indisponivel{
+    height: 45px;
+    font-size: 18px;
+    padding: 3px;
+    color: var(--branco);
+    background-color: var(--vermelho);
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    fa-icon{
+      font-size: 20px;
+    }
+  }
+}

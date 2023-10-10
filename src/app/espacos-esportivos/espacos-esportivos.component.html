@@ -1,1 +1,9 @@
-<p>espacos-esportivos works!</p>
+<ngx-ui-loader [loaderId]="'loader-01'"></ngx-ui-loader>
+
+<div class="mx-3 mt-4">
+  <h3 class="text-green font-weight-bold mb-3">Conheça os espaços esportivos</h3>
+
+  <ng-container *ngFor="let e of espacos">
+    <app-card-espaco-esportivo [espaco]="e"></app-card-espaco-esportivo>
+  </ng-container>
+</div>

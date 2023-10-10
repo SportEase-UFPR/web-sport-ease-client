@@ -3,6 +3,10 @@
 .cliente-logado {
   min-height: 100vh;
 
+  .cabecalho {
+    background-color: var(--branco);
+  }
+
   .with-scrollbar {
     background-color: var(--branco);
     scrollbar-width: thin;

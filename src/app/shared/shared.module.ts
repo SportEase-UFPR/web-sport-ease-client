@@ -14,6 +14,10 @@ import { InputEmailComponent } from './components/inputs/input-email/input-email
 import { InputTextComponent } from './components/inputs/input-text/input-text.component';
 import { ClienteService } from './services/cliente/cliente.service';
 import { SessionStorageService } from './services/session-storage/session-storage.service';
+import { InputTextareaComponent } from './components/inputs/input-textarea/input-textarea.component';
+import { InputSelectOptionComponent } from './components/inputs/input-select-option/input-select-option.component';
+import { InputNumberComponent } from './components/inputs/input-number/input-number.component';
+import { InputDateComponent } from './components/inputs/input-date/input-date.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +27,11 @@ import { SessionStorageService } from './services/session-storage/session-storag
     BtnBorderGreenComponent,
     InputSenhaComponent,
     InputEmailComponent,
-    InputTextComponent
+    InputTextComponent,
+    InputTextareaComponent,
+    InputSelectOptionComponent,
+    InputNumberComponent,
+    InputDateComponent
   ],
   imports: [
     CommonModule,
@@ -39,12 +47,12 @@ import { SessionStorageService } from './services/session-storage/session-storag
     BtnGreenComponent,
     BtnBorderGreenComponent,
     InputEmailComponent,
-    InputTextComponent
+    InputTextComponent,
+    InputTextareaComponent,
+    InputSelectOptionComponent,
+    InputNumberComponent,
+    InputDateComponent
   ],
-  providers: [
-    provideNgxMask(),
-    SessionStorageService,
-    ClienteService
-  ],
+  providers: [provideNgxMask(), SessionStorageService, ClienteService],
 })
 export class SharedModule {}

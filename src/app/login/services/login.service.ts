@@ -26,7 +26,7 @@ export class LoginService {
     dados: InstrucoesRecuperacaoRequest
   ): Observable<InstrucoesRecuperacaoResponse> {
     return this.httpService.post<InstrucoesRecuperacaoResponse>(
-      `${env.baseUrl}usuarios/email-recuperacao-senha`,
+      `${env.baseUrlMsCadastros}usuarios/email-recuperacao-senha`,
       JSON.stringify(dados),
       { headers: this.header }
     );
@@ -34,7 +34,7 @@ export class LoginService {
 
   alterarSenha(dados: CadastroSenhaRequest): Observable<CadastroSenhaResponse> {
     return this.httpService.put<CadastroSenhaResponse>(
-      `${env.baseUrl}usuarios/alterar-senha`,
+      `${env.baseUrlMsCadastros}usuarios/alterar-senha`,
       JSON.stringify(dados),
       { headers: this.header }
     );
@@ -42,7 +42,7 @@ export class LoginService {
 
   login(dados: LoginRequest): Observable<LoginResponse> {
     return this.httpService.post<LoginResponse>(
-      `${env.baseUrl}login`,
+      `${env.baseUrlMsCadastros}login`,
       JSON.stringify(dados),
       { headers: this.header }
     );

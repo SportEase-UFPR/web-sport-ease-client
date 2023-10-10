@@ -18,7 +18,7 @@ export class CadastroService {
 
   cadastrar(c: Cliente): Observable<Cliente> {
     return this.httpService.post<Cliente>(
-      `${env.baseUrl}clientes`,
+      `${env.baseUrlMsCadastros}clientes`,
       JSON.stringify(c),
       {
         headers: this.header,
@@ -27,7 +27,7 @@ export class CadastroService {
   }
 
   ativarConta(token: string): Observable<AtivacaoConta> {
-    return this.httpService.put<AtivacaoConta>(`${env.baseUrl}usuarios/ativacao/${token}`, {
+    return this.httpService.put<AtivacaoConta>(`${env.baseUrlMsCadastros}usuarios/ativacao/${token}`, {
       headers: this.header,
     });
   }

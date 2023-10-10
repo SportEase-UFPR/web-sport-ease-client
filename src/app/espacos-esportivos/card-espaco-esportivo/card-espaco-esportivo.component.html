@@ -1,0 +1,62 @@
+<div class="my-2">
+  <h5 class="text-dark-blue">{{ espaco.nome | titlecase }}</h5>
+  <div class="card-conteudo row w-100 mt-2">
+    <div class="col-12 col-md-4 text-center">
+      <img
+        width="340px"
+        height="240px"
+        [src]="sanatizerImg(espaco.imagemBase64!)"
+      />
+    </div>
+
+    <div class="col-12 col-md-8 infos">
+      <div>
+        <p class="text-dark-blue mb-1"><strong>Descrição do local</strong></p>
+        <p class="text-dark-blue">{{ espaco.descricao }}</p>
+      </div>
+
+      <div class="row w-100">
+        <div class="col-12 col-md-4">
+          <p class="text-dark-blue mb-1"><strong>Dimensões</strong></p>
+          <p class="text-dark-blue">{{ espaco.dimensoes }}</p>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <p class="text-dark-blue mb-1"><strong>Piso</strong></p>
+          <p class="text-dark-blue">{{ espaco.piso }}</p>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <p class="text-dark-blue mb-1"><strong>Capacidade</strong></p>
+          <p class="text-dark-blue">{{ espaco.capacidade + " pessoas" }}</p>
+        </div>
+      </div>
+
+      <div>
+        <p class="text-dark-blue mb-1"><strong>Tipos de esporte</strong></p>
+        <span class="esporte" *ngFor="let e of espaco.listaEsportes">{{
+          e.nome | titlecase
+        }}</span>
+      </div>
+
+      <div class="d-flex justify-content-end">
+        <ng-container *ngIf="espaco.disponivel; else naoDisponivel">
+          <app-btn-green
+            [showIcon]="true"
+            [iconFirst]="false"
+            [icone]="faCalendar"
+            [textButton]="'Reservar Local'"
+            (emmiterClick)="solicitarReserva(espaco.id!)"
+          ></app-btn-green>
+        </ng-container>
+
+        <ng-template #naoDisponivel>
+          <div class="espaco-indisponivel">
+            <span class="me-2"> Indisponível </span>
+            <fa-icon [icon]="faCalendarX"></fa-icon>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

@@ -25,7 +25,7 @@ export class ClienteService {
 
   getDadosCliente(): Observable<Cliente> {
     return this.httpService.get<Cliente>(
-      `${env.baseUrl}clientes/cliente-logado`,
+      `${env.baseUrlMsCadastros}clientes/cliente-logado`,
       {
         headers: this.createHeaders(),
       }
@@ -36,7 +36,7 @@ export class ClienteService {
     cliente: ClienteAlteracaoRequest
   ): Observable<ClienteAlteracaoResponse> {
     return this.httpService.put<ClienteAlteracaoResponse>(
-      `${env.baseUrl}clientes`,
+      `${env.baseUrlMsCadastros}clientes`,
       JSON.stringify(cliente),
       { headers: this.createHeaders() }
     );
@@ -44,7 +44,7 @@ export class ClienteService {
 
   ativarEmail(token: EmailAtivacaoRequest): Observable<EmailAtivacaoResponse> {
     return this.httpService.put<EmailAtivacaoResponse>(
-      `${env.baseUrl}clientes/alterar-email`,
+      `${env.baseUrlMsCadastros}clientes/alterar-email`,
       JSON.stringify(token),
       { headers: this.headerWithoutToken }
     );
