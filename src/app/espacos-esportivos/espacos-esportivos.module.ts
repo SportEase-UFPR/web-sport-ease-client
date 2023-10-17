@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { EspacosEsportivosComponent } from './espacos-esportivos.component';
 import { CardEspacoEsportivoComponent } from './card-espaco-esportivo/card-espaco-esportivo.component';
 import { HttpClientModule } from '@angular/common/http';
-import { EspacosEsportivosService } from './services/espacos-esportivos.service';
+
 import { ToastrModule } from 'ngx-toastr';
 import { NgxUiLoaderConfig, NgxUiLoaderModule, POSITION, SPINNER } from 'ngx-ui-loader';
 import { SharedModule } from '../shared/shared.module';
@@ -34,8 +34,5 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     SharedModule,
     FontAwesomeModule
   ],
-  providers: [
-    EspacosEsportivosService
-  ]
 })
 export class EspacosEsportivosModule { }

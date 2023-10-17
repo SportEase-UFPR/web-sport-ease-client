@@ -59,7 +59,6 @@ export class EdicaoPerfilComponent implements OnInit, OnDestroy {
       .getDadosCliente()
       .subscribe({
         next: (result: Cliente) => {
-          console.log(result);
           this.cliente = result;
           this.formAlteracaoPerfil.patchValue({
             nome: this.cliente.nome,

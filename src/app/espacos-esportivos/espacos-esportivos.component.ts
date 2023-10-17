@@ -19,6 +19,7 @@ export class EspacosEsportivosComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.ngxService.startLoader('loader-01');
     this.eeService.listarEE().subscribe({
       next: (result: EspacoEsportivoReservaResponse[]) => {
         this.ngxService.stopLoader('loader-01');

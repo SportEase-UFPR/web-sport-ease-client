@@ -1,1 +1,133 @@
-<p>minhas-reservas works!</p>
+<ngx-ui-loader [loaderId]="'loader-01'"></ngx-ui-loader>
+
+<div class="mx-3 mt-4">
+  <h3 class="text-green font-weight-bold mb-3">Histórico de Solicitações</h3>
+  <form [formGroup]="formFiltros">
+    <div class="row w-100">
+      <div class="col-12 col-md-2">
+        <app-input-date
+          [formGroup]="formFiltros"
+          [controlName]="'dataInicial'"
+          [label]="'Data inicial'"
+          (emitterChange)="filterByDate()"
+        ></app-input-date>
+      </div>
+
+      <div class="col-12 col-md-2">
+        <app-input-date
+          [formGroup]="formFiltros"
+          [controlName]="'dataFinal'"
+          [label]="'Data final'"
+          (emitterChange)="filterByDate()"
+        ></app-input-date>
+      </div>
+
+      <div class="col-12 col-md-2">
+        <app-input-select-option
+          [formGroup]="formFiltros"
+          [controlName]="'local'"
+          [label]="'Local'"
+          (emitterChange)="filterByLocal()"
+        ></app-input-select-option>
+      </div>
+
+      <div class="col-12 col-md-2">
+        <app-input-select-option
+          [formGroup]="formFiltros"
+          [controlName]="'status'"
+          [label]="'Status'"
+          (emitterChange)="filterByStatus()"
+        ></app-input-select-option>
+      </div>
+    </div>
+  </form>
+
+  <div class="d-flex justify-content-end">
+    <app-btn-green
+      [showIcon]="true"
+      [icone]="faAdd"
+      [textButton]="'Nova reserva'"
+      (emmiterClick)="novaReserva()"
+    ></app-btn-green>
+  </div>
+
+  <div class="table-content mt-2">
+    <div class="text-center" *ngIf="minhasReservas?.length! > 5 || minhasReservasFilter?.length! > 5">
+      <pagination-controls
+        (pageChange)="p = $event"
+        previousLabel="<"
+        nextLabel=">"
+      ></pagination-controls>
+    </div>
+
+    <div class="table-scroll">
+      <div
+        *ngIf="
+          minhasReservas?.length == 0 && minhasReservasFilter?.length == 0;
+          else reservas
+        "
+      >
+        <h3 class="text-dark-blue text-center">
+          Nenhuma reserva foi feita até o momento :(
+        </h3>
+      </div>
+
+      <ng-template #reservas>
+        <table class="table">
+          <thead>
+            <tr class="text-center">
+              <th scope="col">Espaço</th>
+              <th colspan="999" scope="col">Data e Horário</th>
+              <th scope="col">Status</th>
+              <th scope="col">Ações</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr
+              class="text-center"
+              *ngFor="
+                let r of (minhasReservasFilter.length == 0
+                  ? minhasReservas
+                  : minhasReservasFilter
+                ) | paginate : { itemsPerPage: 5, currentPage: p }
+              "
+            >
+              <td>
+                <p class="mb-0 mt-2">Pista de Corrida</p>
+              </td>
+
+              <td colspan="999">
+                <p class="mb-0 mt-2">20/06/2023 - 17:00 às 18:00</p>
+              </td>
+
+              <td>
+                <p class="mb-0 mt-2">Em andamento</p>
+              </td>
+
+              <td>
+                <div class="d-flex justify-content-center">
+                  <div class="me-2">
+                    <app-btn-green
+                      [showIcon]="true"
+                      [icone]="faConfirm"
+                      [textButton]="'Confirmar uso'"
+                    ></app-btn-green>
+                  </div>
+
+                  <div>
+                    <app-btn-red
+                      [showIcon]="true"
+                      [icone]="faCancel"
+                      [textButton]="'Cancelar reserva'"
+                    ></app-btn-red>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-template>
+    </div>
+  </div>
+</div>

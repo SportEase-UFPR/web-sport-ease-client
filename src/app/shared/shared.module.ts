@@ -12,12 +12,11 @@ import { BtnBorderGreenComponent } from './components/buttons/btn-border-green/b
 import { InputSenhaComponent } from './components/inputs/input-senha/input-senha.component';
 import { InputEmailComponent } from './components/inputs/input-email/input-email.component';
 import { InputTextComponent } from './components/inputs/input-text/input-text.component';
-import { ClienteService } from './services/cliente/cliente.service';
-import { SessionStorageService } from './services/session-storage/session-storage.service';
 import { InputTextareaComponent } from './components/inputs/input-textarea/input-textarea.component';
 import { InputSelectOptionComponent } from './components/inputs/input-select-option/input-select-option.component';
 import { InputNumberComponent } from './components/inputs/input-number/input-number.component';
 import { InputDateComponent } from './components/inputs/input-date/input-date.component';
+import { BtnRedComponent } from './components/buttons/btn-red/btn-red.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +30,8 @@ import { InputDateComponent } from './components/inputs/input-date/input-date.co
     InputTextareaComponent,
     InputSelectOptionComponent,
     InputNumberComponent,
-    InputDateComponent
+    InputDateComponent,
+    BtnRedComponent,
   ],
   imports: [
     CommonModule,
@@ -51,8 +51,9 @@ import { InputDateComponent } from './components/inputs/input-date/input-date.co
     InputTextareaComponent,
     InputSelectOptionComponent,
     InputNumberComponent,
-    InputDateComponent
+    InputDateComponent,
+    BtnRedComponent,
   ],
-  providers: [provideNgxMask(), SessionStorageService, ClienteService],
+  providers: [provideNgxMask()],
 })
 export class SharedModule {}

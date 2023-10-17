@@ -1,0 +1,89 @@
+<div class="card-reserva">
+  <div class="reserva-header">
+    <h4>Reserva 001</h4>
+    <strong>Em andamento</strong>
+  </div>
+
+  <div class="reserva-body">
+    <div class="row w-100">
+      <div class="col-12 col-md-6">
+        <p><strong>Período:</strong> <span></span></p>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <p><strong>Local:</strong> <span></span></p>
+      </div>
+
+      <div class="col-12">
+        <p><strong>Quantidade de participantes:</strong> <span></span></p>
+      </div>
+    </div>
+
+    <div>
+      <p
+        (click)="motivoReserva.toggle()"
+        [attr.aria-expanded]="!motivoReservaCollapsed"
+        aria-controls="collapseExample"
+        class="motivo-reserva-collapse mb-1"
+      >
+        <strong>
+          Motivo da reserva
+          <span>
+            <fa-icon [icon]="changeIcon(motivoReservaCollapsed)"></fa-icon>
+          </span>
+        </strong>
+      </p>
+
+      <div
+        #motivoReserva="ngbCollapse"
+        [(ngbCollapse)]="motivoReservaCollapsed"
+      >
+        <div>
+          <p>Aqui vai a justificativa</p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p
+        (click)="collapse.toggle()"
+        [attr.aria-expanded]="!justificativaReservaCollapsed"
+        aria-controls="collapseExample"
+        class="motivo-reserva-collapse mb-1"
+      >
+        <strong>
+          Justificativa para reserva negada
+          <span>
+            <fa-icon
+              [icon]="changeIcon(justificativaReservaCollapsed)"
+            ></fa-icon>
+          </span>
+        </strong>
+      </p>
+
+      <div
+        #collapse="ngbCollapse"
+        [(ngbCollapse)]="justificativaReservaCollapsed"
+      >
+        <div>
+          <p>Aqui vai o motivo da reserva</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reserva-footer">
+    <app-btn-green
+      [showIcon]="true"
+      [icone]="faConfirm"
+      [textButton]="'Confirmar uso'"
+    ></app-btn-green>
+
+    <app-btn-red
+      [showIcon]="true"
+      [icone]="faCancel"
+      [textButton]="'Cancelar reserva'"
+      (emmiterClick)="onClick()"
+    ></app-btn-red>
+  </div>
+</div>

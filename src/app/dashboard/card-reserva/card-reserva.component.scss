@@ -1,0 +1,41 @@
+@import "/src/cores.scss";
+
+.card-reserva {
+  background-color: var(--branco);
+  border-radius: 15px;
+  box-shadow: 2px 4px 4px 2px var(--cinza-claro);
+  padding: 10px;
+
+  .reserva-header {
+    display: flex;
+    justify-content: space-between;
+
+    .reserva-aprovada {
+      color: var(--verde);
+    }
+
+    .reserva-solicitada {
+      color: var(--amarelo);
+    }
+
+    .reserva-negada {
+      color: var(--vermelho);
+    }
+  }
+
+  .reserva-body {
+    .motivo-reserva-collapse {
+      cursor: pointer;
+
+      span {
+        font-size: 18px;
+      }
+    }
+  }
+
+  .reserva-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+}

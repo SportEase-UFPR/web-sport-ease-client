@@ -2,7 +2,7 @@
 
 .card-conteudo {
   border-radius: 15px;
-  background-color: var(--branco-gelo);
+  background-color: var(--branco);
   box-shadow: 4px 4px 2px 0 var(--cinza-claro);
   padding: 10px;
 
@@ -17,7 +17,7 @@
   }
 
   .esporte {
-    margin: 2px 4px;
+    margin: 0 4px;
     border-radius: 25px;
     background-color: var(--verde-claro);
     color: var(--verde-escuro);
@@ -27,7 +27,7 @@
   .espaco-indisponivel{
     height: 45px;
     font-size: 18px;
-    padding: 3px;
+    padding: 3px 8px;
     color: var(--branco);
     background-color: var(--vermelho);
     border-radius: 10px;

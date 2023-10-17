@@ -1,0 +1,50 @@
+@import "/src/cores.scss";
+
+.table-content {
+  background-color: var(--branco);
+  box-shadow: 2px 2px 4px 0 var(--cinza-claro);
+  padding: 5px;
+  border-radius: 10px;
+
+  table {
+    th {
+      color: var(--cinza-claro);
+    }
+
+    td {
+      color: var(--azul-escuro);
+    }
+  }
+
+  .btn-acoes {
+    border: none;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 20px;
+    padding: 8px;
+    background-color: transparent;
+    color: var(--azul-escuro);
+  }
+
+  .table-scroll {
+    height: 45vh;
+    overflow-y: scroll;
+    background-color: var(--branco);
+    scrollbar-width: thin;
+    scrollbar-color: var(--verde) var(--branco);
+
+    &::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: var(--branco);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--verde);
+      border-radius: 20px;
+      border: 3px solid var(--branco);
+    }
+  }
+}

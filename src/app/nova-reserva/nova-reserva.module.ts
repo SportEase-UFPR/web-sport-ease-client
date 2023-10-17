@@ -11,7 +11,6 @@ import {
 } from 'ngx-ui-loader';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
-import { NovaReservaService } from './services/nova-reserva.service';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: '#0fd45e',
@@ -35,6 +34,5 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ToastrModule.forRoot(),
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
   ],
-  providers: [NovaReservaService],
 })
 export class NovaReservaModule {}

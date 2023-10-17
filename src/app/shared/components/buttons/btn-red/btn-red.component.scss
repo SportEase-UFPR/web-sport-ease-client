@@ -1,0 +1,13 @@
+@import "/src/cores.scss";
+
+.btn-red {
+  background-color: var(--vermelho);
+  color: var(--branco);
+  transition: 0.2s ease-in-out;
+
+  &:disabled {
+    transition: 0.2s ease-in-out;
+    opacity: 0.6;
+    transform: scale(1);
+  }
+}

@@ -123,6 +123,37 @@ body {
   }
 }
 
+// Estilo para o ngx-pagination
+.ngx-pagination .pagination-previous a::before,
+.ngx-pagination .pagination-previous.disabled::before,
+.ngx-pagination .pagination-next a::after,
+.ngx-pagination .pagination-next.disabled::after {
+  display: none !important;
+  content: "" !important;
+}
+
+.ngx-pagination {
+  color: var(--cinza-claro) !important;
+  font-size: 18px !important;
+
+  a {
+    background-color: transparent !important;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      transition: 0.2s ease-in-out;
+      color: var(--verde) !important;
+      transform: scale(1.3);
+    }
+  }
+
+  .current {
+    background-color: transparent !important;
+    color: var(--azul-escuro) !important;
+    border-bottom: 2px solid var(--verde) !important;
+  }
+}
+
 //Estilo do modal
 .btn-close-modal {
   border: none;

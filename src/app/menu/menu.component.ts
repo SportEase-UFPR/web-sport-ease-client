@@ -27,52 +27,30 @@ export class MenuComponent implements OnInit, DoCheck {
 
   ngDoCheck(): void {
     const url = this.router.url;
-    this.paginaAtual(url.split('/')[1]);
+    this.paginaAtual(url.split('/')[1]?.split('?')[0]);
   }
 
   paginaAtual(url: string): void {
-    const inicio = document.getElementById('inicio')?.classList;
-    const espacos = document.getElementById('espacos-esportivos')?.classList;
-    const minhasReservas =
-      document.getElementById('minhas-reservas')?.classList;
-    const solicitarReservas =
-      document.getElementById('solicitar-reserva')?.classList;
+    const menuList: { [key: string]: string } = {
+      dashboard: 'inicio',
+      'espacos-esportivos': 'espacos-esportivos',
+      'minhas-reservas': 'minhas-reservas',
+      'nova-reserva': 'solicitar-reserva',
+    };
 
-    switch (url) {
-      case 'dashboard':
-        inicio?.add('menu-actived');
-        espacos?.remove('menu-actived');
-        minhasReservas?.remove('menu-actived');
-        solicitarReservas?.remove('menu-actived');
-        break;
+    for (const item of Object.values(menuList)) {
+      const element = document.getElementById(item);
+      if (element) {
+        element.classList.remove('menu-actived');
+      }
+    }
 
-      case 'espacos-esportivos':
-        espacos?.add('menu-actived');
-        inicio?.remove('menu-actived');
-        minhasReservas?.remove('menu-actived');
-        solicitarReservas?.remove('menu-actived');
-        break;
-
-      case 'minhas-reservas':
-        minhasReservas?.add('menu-actived');
-        inicio?.remove('menu-actived');
-        espacos?.remove('menu-actived');
-        solicitarReservas?.remove('menu-actived');
-        break;
-
-      case 'nova-reserva':
-        solicitarReservas?.add('menu-actived');
-        inicio?.remove('menu-actived');
-        espacos?.remove('menu-actived');
-        minhasReservas?.remove('menu-actived');
-        break;
-
-      default:
-        inicio?.remove('menu-actived');
-        espacos?.remove('menu-actived');
-        minhasReservas?.remove('menu-actived');
-        solicitarReservas?.remove('menu-actived');
-        break;
+    const menuItem = menuList?.[url];
+    if (menuItem) {
+      const element = document.getElementById(menuItem);
+      if (element) {
+        element.classList.add('menu-actived');
+      }
     }
   }
 

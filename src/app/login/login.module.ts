@@ -10,7 +10,6 @@ import { LoginRoutingModule } from './login-routing.module';
 import { RecuperarSenhaComponent } from './recuperar-senha/recuperar-senha.component';
 import { CadastrarSenhaComponent } from './cadastrar-senha/cadastrar-senha.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { LoginService } from './services/login.service';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxUiLoaderConfig, NgxUiLoaderModule, POSITION, SPINNER } from 'ngx-ui-loader';
 
@@ -45,7 +44,6 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   ],
   exports: [
     LoginComponent
-  ],
-  providers: [LoginService]
+  ]
 })
 export class LoginModule { }

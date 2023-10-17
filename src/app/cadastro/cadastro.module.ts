@@ -10,7 +10,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { InstrucoesAtivacaoContaComponent } from './instrucoes-ativacao-conta/instrucoes-ativacao-conta.component';
 import { SharedModule } from '../shared/shared.module';
-import { CadastroService } from './services/cadastro.service';
 import { CadastroComponent } from './cadastro.component';
 import { CadastroRoutingModule } from './cadastro-routing.module';
 import { AtivacaoContaComponent } from './ativacao-conta/ativacao-conta.component';
@@ -49,8 +48,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
   ],
   providers: [
-    provideNgxMask(),
-    CadastroService
+    provideNgxMask()
   ],
 })
 export class CadastroModule {}
