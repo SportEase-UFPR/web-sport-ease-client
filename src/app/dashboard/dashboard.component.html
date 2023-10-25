@@ -30,6 +30,38 @@
   </div>
 </ng-template>
 
+<ng-template #modalConfirmarUso let-modal>
+  <div class="modal-body">
+    <div class="d-flex justify-content-between">
+      <h4 class="modal-title text-dark-blue text-center">
+        Você realmente deseja confirmar que fez o uso desta reserva?
+      </h4>
+    </div>
+
+    <div class="d-block d-md-flex mt-3 mb-2">
+      <div class="col-12 col-md-6 me-0 me-md-2 mb-2 mb-md-0 pe-2">
+        <app-btn-green
+          [textButton]="'Confirmar'"
+          [showIcon]="true"
+          [iconFirst]="true"
+          [icone]="faConfirm"
+          (emmiterClick)="confirmarReserva()"
+        ></app-btn-green>
+      </div>
+
+      <div class="col-12 col-md-6 pe-2">
+        <app-btn-red
+          [textButton]="'Cancelar'"
+          [showIcon]="true"
+          [iconFirst]="true"
+          [icone]="faClose"
+          (emmiterClick)="closeModal()"
+        ></app-btn-red>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
 <ngx-ui-loader [loaderId]="'loader-01'"></ngx-ui-loader>
 
 <div class="mx-3 mt-4">
@@ -38,10 +70,32 @@
   </h3>
 
   <div class="row w-100 justify-content-center">
-    <div class="col-12 col-md-6">
-      <app-card-reserva
-        (emmiterClick)="openModalConfirmacao(modalCancelaReserva)"
-      ></app-card-reserva>
-    </div>
+    <ng-container *ngIf="reservas.length; else semReservas">
+      <div class="col-12 col-md-6" *ngFor="let r of reservas">
+        <app-card-reserva
+          [dadosReserva]="r"
+          (emmiterClickCancelar)="openModalConfirmacao(modalCancelaReserva, r.id!)"
+          (emmiterClickUsar)="openModalConfirmacao(modalConfirmarUso, r.id!)"
+        ></app-card-reserva>
+      </div>
+    </ng-container>
+
+    <ng-template #semReservas>
+      <div class="col-12 mt-5">
+        <p class="text-center">
+          No momento você não possui nenhuma reserva em andamento, que tal
+          solicitar uma?
+        </p>
+      </div>
+
+      <div class="col-12 d-flex justify-content-center">
+        <app-btn-green
+          [textButton]="'Nova reserva'"
+          [showIcon]="true"
+          [icone]="faAdd"
+          (emmiterClick)="navigate()"
+        ></app-btn-green>
+      </div>
+    </ng-template>
   </div>
 </div>

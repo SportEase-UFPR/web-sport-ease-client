@@ -2,13 +2,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment as env } from 'src/environments/environment';
 import { SessionStorageService } from '../session-storage/session-storage.service';
-import { UsuarioSs } from '../../models/usuario-ss/usuario-ss.model';
+import { UsuarioSs } from '../../models/dto/usuario-ss/usuario-ss.model';
 import { Observable } from 'rxjs';
-import { Cliente } from '../../models/cliente/cliente';
-import { ClienteAlteracaoResponse } from '../../models/cliente-alteracao-response/cliente-alteracao-response.model';
-import { ClienteAlteracaoRequest } from '../../models/cliente-alteracao/cliente-alteracao-request.model';
-import { EmailAtivacaoRequest } from '../../models/email-ativacao-request/email-ativacao-request.model';
-import { EmailAtivacaoResponse } from '../../models/email-ativacao-response/email-ativacao-response.model';
+import { Cliente } from '../../models/dto/cliente/cliente';
+import { ClienteAlteracaoResponse } from '../../models/dto/cliente-alteracao-response/cliente-alteracao-response.model';
+import { ClienteAlteracaoRequest } from '../../models/dto/cliente-alteracao/cliente-alteracao-request.model';
+import { EmailAtivacaoRequest } from '../../models/dto/email-ativacao-request/email-ativacao-request.model';
+import { EmailAtivacaoResponse } from '../../models/dto/email-ativacao-response/email-ativacao-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +25,7 @@ export class ClienteService {
 
   getDadosCliente(): Observable<Cliente> {
     return this.httpService.get<Cliente>(
-      `${env.baseUrlMsCadastros}clientes/cliente-logado`,
+      `${env.baseUrl}clientes/cliente-logado`,
       {
         headers: this.createHeaders(),
       }
@@ -36,7 +36,7 @@ export class ClienteService {
     cliente: ClienteAlteracaoRequest
   ): Observable<ClienteAlteracaoResponse> {
     return this.httpService.put<ClienteAlteracaoResponse>(
-      `${env.baseUrlMsCadastros}clientes`,
+      `${env.baseUrl}clientes`,
       JSON.stringify(cliente),
       { headers: this.createHeaders() }
     );
@@ -44,7 +44,7 @@ export class ClienteService {
 
   ativarEmail(token: EmailAtivacaoRequest): Observable<EmailAtivacaoResponse> {
     return this.httpService.put<EmailAtivacaoResponse>(
-      `${env.baseUrlMsCadastros}clientes/alterar-email`,
+      `${env.baseUrl}clientes/alterar-email`,
       JSON.stringify(token),
       { headers: this.headerWithoutToken }
     );

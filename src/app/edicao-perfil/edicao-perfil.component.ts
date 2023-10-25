@@ -3,14 +3,14 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { ClienteService } from '../shared/services/cliente/cliente.service';
-import { Cliente } from '../shared/models/cliente/cliente';
+import { Cliente } from '../shared/models/dto/cliente/cliente';
 import { ToastrService } from 'ngx-toastr';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { Subscription } from 'rxjs';
-import { ClienteAlteracaoRequest } from '../shared/models/cliente-alteracao/cliente-alteracao-request.model';
+import { ClienteAlteracaoRequest } from '../shared/models/dto/cliente-alteracao/cliente-alteracao-request.model';
 import { ModalConfirmacaoComponent } from './modal-confirmacao/modal-confirmacao.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ClienteAlteracaoResponse } from '../shared/models/cliente-alteracao-response/cliente-alteracao-response.model';
+import { ClienteAlteracaoResponse } from '../shared/models/dto/cliente-alteracao-response/cliente-alteracao-response.model';
 
 @Component({
   selector: 'app-edicao-perfil',

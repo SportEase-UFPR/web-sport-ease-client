@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EspacosEsportivosService } from './services/espacos-esportivos.service';
-import { EspacoEsportivoReservaResponse } from '../shared/models/espaco-esportivo-reserva-response/espaco-esportivo-reserva-response.model';
+import { EspacoEsportivoReservaResponse } from '../shared/models/dto/espaco-esportivo-reserva-response/espaco-esportivo-reserva-response.model';
 import { ToastrService } from 'ngx-toastr';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 

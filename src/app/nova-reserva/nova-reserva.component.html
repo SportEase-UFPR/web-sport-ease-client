@@ -47,19 +47,10 @@
             <div *ngIf="showHorarios">
               <app-input-select-option
                 [formGroup]="formNovaReserva"
-                [controlName]="'horarioInicio'"
-                [label]="'Selecione o horário de início'"
+                [controlName]="'horario'"
+                [label]="'Selecione o horário'"
                 [items]="horariosDisponiveis"
-                (emitterChange)="listarQtdHoras()"
-              ></app-input-select-option>
-            </div>
-
-            <div *ngIf="showQtdHoras">
-              <app-input-select-option
-                [formGroup]="formNovaReserva"
-                [controlName]="'qtdHoras'"
-                [label]="'Selecione a quantidade de horas para uso'"
-                [items]="qtdHoras"
+                (emitterChange)="showMotivoReserva()"
               ></app-input-select-option>
             </div>
           </div>

@@ -1,0 +1,8 @@
+export enum StatusLocacao {
+  SOLICITADA,
+  APROVADA,
+  NEGADA,
+  CANCELADA,
+  FINALIZADA,
+  ABANDONADA
+}

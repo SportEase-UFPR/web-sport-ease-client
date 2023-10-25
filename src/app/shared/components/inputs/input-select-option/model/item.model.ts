@@ -1,6 +1,6 @@
 export class Item {
   constructor(
-    public value?: number,
+    public value?: number | string,
     public label?: string,
   ) {}
 }

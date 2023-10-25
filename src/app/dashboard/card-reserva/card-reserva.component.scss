@@ -10,15 +10,27 @@
     display: flex;
     justify-content: space-between;
 
-    .reserva-aprovada {
-      color: var(--verde);
-    }
-
-    .reserva-solicitada {
+    .SOLICITADA {
       color: var(--amarelo);
     }
 
-    .reserva-negada {
+    .APROVADA {
+      color: var(--verde);
+    }
+
+    .NEGADA {
+      color: var(--vermelho);
+    }
+
+    .CANCELADA {
+      color: var(--amarelo);
+    }
+
+    .FINALIZADA {
+      color: var(--verde);
+    }
+
+    .ABANDONADA {
       color: var(--vermelho);
     }
   }

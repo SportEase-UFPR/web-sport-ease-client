@@ -1,14 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { UsuarioSs } from 'src/app/shared/models/usuario-ss/usuario-ss.model';
+import { UsuarioSs } from 'src/app/shared/models/dto/usuario-ss/usuario-ss.model';
 import { SessionStorageService } from 'src/app/shared/services/session-storage/session-storage.service';
 import { environment as env } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { ReservaHorariosResponse } from 'src/app/shared/models/reserva-horarios-response/reserva-horarios-response.model';
-import { ReservaHorariosRequest } from 'src/app/shared/models/reserva-horarios-request/reserva-horarios-request.model';
-import { ReservaResponse } from 'src/app/shared/models/reserva-response/reserva-response.model';
-import { ReservaRequest } from 'src/app/shared/models/reserva-request/reserva-request.model';
-import { EspacoEsportivoReservaResponse as eeReservaResponse } from 'src/app/shared/models/espaco-esportivo-reserva-response/espaco-esportivo-reserva-response.model';
+import { ReservaHorariosResponse } from 'src/app/shared/models/dto/reserva-horarios-response/reserva-horarios-response.model';
+import { ReservaHorariosRequest } from 'src/app/shared/models/dto/reserva-horarios-request/reserva-horarios-request.model';
+import { ReservaResponse } from 'src/app/shared/models/dto/reserva-response/reserva-response.model';
+import { ReservaRequest } from 'src/app/shared/models/dto/reserva-request/reserva-request.model';
+import { EspacoEsportivoReservaResponse as eeReservaResponse } from 'src/app/shared/models/dto/espaco-esportivo-reserva-response/espaco-esportivo-reserva-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +30,7 @@ export class NovaReservaService {
 
   public listarEE(): Observable<eeReservaResponse[]> {
     return this.httpService.get<eeReservaResponse[]>(
-      `${env.baseUrlMsCadastros}espacos-esportivos/disponiveis`,
+      `${env.baseUrl}espacos-esportivos/disponiveis`,
       { headers: this.createHeaders() }
     );
   }
@@ -39,7 +39,7 @@ export class NovaReservaService {
     dados: ReservaHorariosRequest
   ): Observable<ReservaHorariosResponse> {
     return this.httpService.post<ReservaHorariosResponse>(
-      `${env.baseUrlMsLocacoes}locacoes/horarios-disponiveis`,
+      `${env.baseUrl}locacoes/horarios-disponiveis`,
       JSON.stringify(dados),
       { headers: this.createHeaders() }
     );
@@ -49,7 +49,7 @@ export class NovaReservaService {
     reserva: ReservaRequest
   ): Observable<ReservaResponse> {
     return this.httpService.post<ReservaResponse>(
-      `${env.baseUrlMsLocacoes}locacoes/solicitar-locacao`,
+      `${env.baseUrl}locacoes/solicitar-locacao`,
       JSON.stringify(reserva),
       { headers: this.createHeaders() }
     );

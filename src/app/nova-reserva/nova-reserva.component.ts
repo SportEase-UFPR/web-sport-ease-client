@@ -3,14 +3,15 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { NovaReservaService } from './services/nova-reserva.service';
-import { EspacoEsportivoResponse } from '../shared/models/espaco-esportivo-response/espaco-esportivo-response.model';
+import { EspacoEsportivoResponse } from '../shared/models/dto/espaco-esportivo-response/espaco-esportivo-response.model';
 import { Item } from '../shared/components/inputs/input-select-option/model/item.model';
-import { ReservaHorariosRequest } from '../shared/models/reserva-horarios-request/reserva-horarios-request.model';
-import { ReservaHorariosResponse } from '../shared/models/reserva-horarios-response/reserva-horarios-response.model';
 import { ToastrService } from 'ngx-toastr';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { ReservaRequest } from '../shared/models/reserva-request/reserva-request.model';
-import { ReservaResponse } from '../shared/models/reserva-response/reserva-response.model';
+import * as moment from 'moment';
+import { ReservaHorariosRequest } from '../shared/models/dto/reserva-horarios-request/reserva-horarios-request.model';
+import { ReservaHorariosResponse } from '../shared/models/dto/reserva-horarios-response/reserva-horarios-response.model';
+import { ReservaRequest } from '../shared/models/dto/reserva-request/reserva-request.model';
+import { ReservaResponse } from '../shared/models/dto/reserva-response/reserva-response.model';
 
 @Component({
   selector: 'app-nova-reserva',
@@ -22,23 +23,21 @@ export class NovaReservaComponent implements OnInit {
     espacoEsportivo: new FormControl(null, [Validators.required]),
     qtdPessoas: new FormControl(null, [Validators.required, Validators.min(1)]),
     data: new FormControl(null, [Validators.required]),
-    horarioInicio: new FormControl(null, [Validators.required]),
-    qtdHoras: new FormControl(null, [Validators.required]),
+    horario: new FormControl(null, [Validators.required]),
     objetivo: new FormControl(null, [Validators.required]),
   });
 
   espacosEsportivos: EspacoEsportivoResponse[] = [];
-  horarios: number[] = [];
+  horarios: string[] = [];
   nomesEE: Item[] = [];
   horariosDisponiveis: Item[] = [];
-  qtdHoras: Item[] = [];
 
   nextSteps: boolean = false;
   showHorarios: boolean = false;
-  showQtdHoras: boolean = false;
   showObjetivo: boolean = false;
 
   idEspacoQueryParam: number = 0;
+  periodoLocacao: string = '';
 
   constructor(
     private reservaService: NovaReservaService,
@@ -62,6 +61,9 @@ export class NovaReservaComponent implements OnInit {
           this.activatedRoute.queryParams.subscribe((qP) => {
             if (qP['espaco']) {
               this.idEspacoQueryParam = Number(qP['espaco']);
+              this.formNovaReserva
+                .get('espacoEsportivo')
+                ?.patchValue(this.idEspacoQueryParam);
               this.showNextSteps();
             }
           });
@@ -97,7 +99,6 @@ export class NovaReservaComponent implements OnInit {
     dataHoje.setHours(0, 0, 0, 0);
     dataEscolhida.setHours(0, 0, 0, 0);
     dataEscolhida.setDate(dataEscolhida.getDate() + 1);
-    console.log(dataHoje, dataEscolhida, form.get('data')?.value);
 
     if (dataEscolhida < dataHoje) {
       this.toastrService.warning(
@@ -111,13 +112,10 @@ export class NovaReservaComponent implements OnInit {
     } else {
       this.ngxService.startLoader('loader-01');
       this.horariosDisponiveis = [];
-      this.qtdHoras = [];
       this.showHorarios = false;
-      this.showQtdHoras = false;
 
       form.patchValue({
-        horarioInicio: null,
-        qtdHoras: null,
+        horario: null,
       });
 
       const dados: ReservaHorariosRequest = new ReservaHorariosRequest(
@@ -125,22 +123,44 @@ export class NovaReservaComponent implements OnInit {
         Number(form.get('espacoEsportivo')?.value)
       );
 
+      const setHoraiosDisponiveis = (h: string) => {
+        const horario = moment()
+          .hour(Number(h.split(':')[0]))
+          .minute(Number(h.split(':')[1]));
+
+        const value = `${horario.format('HH:mm')} - ${horario
+          .set(
+            'hour',
+            horario.hour() + Number(this.periodoLocacao?.split(':')[0])
+          )
+          .set(
+            'minute',
+            horario.minute() + Number(this.periodoLocacao?.split(':')[1])
+          )
+          .format('HH:mm')}`;
+
+        this.horariosDisponiveis.push(new Item(value, value));
+      };
+
       this.reservaService.listarHorariosDisponiveis(dados).subscribe({
         next: (result: ReservaHorariosResponse) => {
-          this.horarios = result.horaInteira!;
+          this.horarios = result.horariosDisponiveis!;
+          this.periodoLocacao = result.periodoLocacao!;
+
           if (dataEscolhida.getTime() === dataHoje.getTime()) {
             this.horarios?.forEach((h) => {
-              if (h >= new Date().getHours() + 1) {
-                this.horariosDisponiveis.push(
-                  new Item(h, `${h < 10 ? '0' + h : h}:00`)
-                );
+              const horario = moment()
+                .hour(Number(h.split(':')[0]))
+                .minute(Number(h.split(':')[1]))
+                .second(Number(h.split(':')[2]));
+
+              if (horario.hour() >= new Date().getHours() + 1) {
+                setHoraiosDisponiveis(horario.format('HH:mm'));
               }
             });
           } else {
             this.horarios?.forEach((h) => {
-              this.horariosDisponiveis.push(
-                new Item(h, `${h < 10 ? '0' + h : h}:00`)
-              );
+              setHoraiosDisponiveis(h);
             });
           }
 
@@ -166,24 +186,8 @@ export class NovaReservaComponent implements OnInit {
     }
   }
 
-  listarQtdHoras() {
+  showMotivoReserva() {
     this.ngxService.startLoader('loader-01');
-    this.qtdHoras = [];
-    this.showQtdHoras = true;
-    const horaSelecionada = Number(
-      this.formNovaReserva.get('horarioInicio')?.value
-    );
-    this.qtdHoras.push(new Item(1, '1 hora'));
-    const posicaoHorario = this.horarios.indexOf(horaSelecionada);
-
-    if (horaSelecionada + 1 === this.horarios[posicaoHorario + 1]) {
-      this.qtdHoras.push(new Item(2, '2 horas'));
-
-      if (horaSelecionada + 2 === this.horarios[posicaoHorario + 2]) {
-        this.qtdHoras.push(new Item(3, '3 horas'));
-      }
-    }
-
     this.showObjetivo = true;
     this.ngxService.stopLoader('loader-01');
   }
@@ -195,20 +199,21 @@ export class NovaReservaComponent implements OnInit {
       this.ngxService.startLoader('loader-01');
       const data = form.get('data')?.value;
 
-      const dataHoraInicio = `${data} ${Number(
-        form.get('horarioInicio')?.value
-      )}:00`;
+      const dataHoraInicio = `${data}T${form
+        .get('horario')
+        ?.value?.split('-')[0]
+        .trim()}:00`.trim();
 
-      const dataHoraFim = `${data} ${
-        Number(form.get('horarioInicio')?.value) +
-        Number(form.get('qtdHoras')?.value)
-      }:00`;
+      const dataHoraFim = `${data}T${form
+        .get('horario')
+        ?.value?.split('-')[1]
+        .trim()}:00`.trim();
 
       const novaReserva: ReservaRequest = new ReservaRequest(
         form.get('objetivo')?.value,
         Number(form.get('qtdPessoas')?.value),
-        new Date(dataHoraInicio),
-        new Date(dataHoraFim),
+        dataHoraInicio,
+        dataHoraFim,
         Number(form.get('espacoEsportivo')?.value)
       );
 

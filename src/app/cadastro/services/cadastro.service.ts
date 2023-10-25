@@ -2,8 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
-import { AtivacaoConta } from 'src/app/shared/models/ativacao-conta/ativacao-conta.model';
-import { Cliente } from 'src/app/shared/models/cliente/cliente';
+import { AtivacaoConta } from 'src/app/shared/models/dto/ativacao-conta/ativacao-conta.model';
+import { Cliente } from 'src/app/shared/models/dto/cliente/cliente';
 import { environment as env } from 'src/environments/environment';
 
 @Injectable({
@@ -18,7 +18,7 @@ export class CadastroService {
 
   cadastrar(c: Cliente): Observable<Cliente> {
     return this.httpService.post<Cliente>(
-      `${env.baseUrlMsCadastros}clientes`,
+      `${env.baseUrl}clientes`,
       JSON.stringify(c),
       {
         headers: this.header,
@@ -27,7 +27,7 @@ export class CadastroService {
   }
 
   ativarConta(token: string): Observable<AtivacaoConta> {
-    return this.httpService.put<AtivacaoConta>(`${env.baseUrlMsCadastros}usuarios/ativacao/${token}`, {
+    return this.httpService.put<AtivacaoConta>(`${env.baseUrl}usuarios/ativacao/${token}`, {
       headers: this.header,
     });
   }

@@ -1,10 +1,14 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   faAngleDown,
   faAngleUp,
   faCheck,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
+import { ReservaFeitaResponse } from 'src/app/shared/models/dto/reserva-feita-response/reserva-feita-response';
+import { StatusLocacao } from 'src/app/shared/models/enums/status-locacao/status-locacao';
+import { DashboardService } from '../services/dashboard.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-card-reserva',
@@ -18,17 +22,53 @@ export class CardReservaComponent implements OnInit {
   motivoReservaCollapsed = false;
   justificativaReservaCollapsed = false;
 
-  @Output() emmiterClick = new EventEmitter();
+  statusLocacao = StatusLocacao;
+  local: string = '';
 
-  constructor() {}
+  @Input() dadosReserva?: ReservaFeitaResponse;
 
-  ngOnInit(): void {}
+  @Output() emmiterClickCancelar = new EventEmitter();
+  @Output() emmiterClickUsar = new EventEmitter();
+
+  constructor(private dashboardService: DashboardService) {}
+
+  ngOnInit(): void {
+    this.dashboardService
+      .buscarEE(this.dadosReserva?.idEspacoEsportivo!)
+      .subscribe({
+        next: (result) => {
+          this.local = `${result.nome} - ${result.localidade}`;
+        },
+        error: (err) => {
+          this.local = '';
+        },
+      });
+  }
 
   changeIcon(isCollapsed: boolean) {
     return isCollapsed ? faAngleDown : faAngleUp;
   }
 
-  onClick() {
-    this.emmiterClick.emit();
+  cancelarReserva() {
+    this.emmiterClickCancelar.emit();
+  }
+
+  confirmarUso() {
+    this.emmiterClickUsar.emit();
+  }
+
+  statusToString(status: StatusLocacao): string {
+    return status.toString();
+  }
+
+  showConfirmacaoReserva(): boolean {
+    if (
+      moment().diff(moment(this.dadosReserva?.dataHoraInicioReserva), 'hour') >=
+      0
+    ) {
+      return true;
+    }
+
+    return false;
   }
 }

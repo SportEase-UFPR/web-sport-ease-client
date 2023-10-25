@@ -1,21 +1,37 @@
-<div class="card-reserva">
+<div class="card-reserva" *ngIf="dadosReserva">
   <div class="reserva-header">
-    <h4>Reserva 001</h4>
-    <strong>Em andamento</strong>
+    <h4>Reserva #{{ dadosReserva.id }}</h4>
+    <strong class="{{ dadosReserva.status }}"
+      >Reserva {{ statusToString(dadosReserva.status!) | titlecase }}</strong
+    >
   </div>
 
   <div class="reserva-body">
     <div class="row w-100">
-      <div class="col-12 col-md-6">
-        <p><strong>Período:</strong> <span></span></p>
+      <div class="col-12">
+        <p>
+          <strong>Período: </strong>
+          <span
+            >{{
+              dadosReserva.dataHoraInicioReserva | date : "HH:mm"
+            }}
+            às
+            {{ dadosReserva.dataHoraFimReserva | date : "HH:mm - dd/MM/yyyy" }}</span
+          >
+        </p>
       </div>
 
-      <div class="col-12 col-md-6">
-        <p><strong>Local:</strong> <span></span></p>
+      <div class="col-12" *ngIf="local">
+        <p>
+          <strong>Local: </strong> <span>{{ local | titlecase }}</span>
+        </p>
       </div>
 
       <div class="col-12">
-        <p><strong>Quantidade de participantes:</strong> <span></span></p>
+        <p>
+          <strong>Quantidade de participantes: </strong>
+          <span>{{ dadosReserva.qtdParticipantes }} pessoas</span>
+        </p>
       </div>
     </div>
 
@@ -39,12 +55,12 @@
         [(ngbCollapse)]="motivoReservaCollapsed"
       >
         <div>
-          <p>Aqui vai a justificativa</p>
+          <p>{{ dadosReserva.motivoSolicitacao }}</p>
         </div>
       </div>
     </div>
 
-    <div>
+    <div *ngIf="dadosReserva.status == statusLocacao.NEGADA">
       <p
         (click)="collapse.toggle()"
         [attr.aria-expanded]="!justificativaReservaCollapsed"
@@ -66,7 +82,7 @@
         [(ngbCollapse)]="justificativaReservaCollapsed"
       >
         <div>
-          <p>Aqui vai o motivo da reserva</p>
+          <p>{{ dadosReserva.motivoCancelamento }}</p>
         </div>
       </div>
     </div>
@@ -74,16 +90,18 @@
 
   <div class="reserva-footer">
     <app-btn-green
+    *ngIf="showConfirmacaoReserva()"
       [showIcon]="true"
       [icone]="faConfirm"
       [textButton]="'Confirmar uso'"
+      (emmiterClick)="confirmarUso()"
     ></app-btn-green>
 
     <app-btn-red
       [showIcon]="true"
       [icone]="faCancel"
       [textButton]="'Cancelar reserva'"
-      (emmiterClick)="onClick()"
+      (emmiterClick)="cancelarReserva()"
     ></app-btn-red>
   </div>
 </div>

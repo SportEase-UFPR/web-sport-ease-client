@@ -5,9 +5,15 @@ import { CardEspacoEsportivoComponent } from './card-espaco-esportivo/card-espac
 import { HttpClientModule } from '@angular/common/http';
 
 import { ToastrModule } from 'ngx-toastr';
-import { NgxUiLoaderConfig, NgxUiLoaderModule, POSITION, SPINNER } from 'ngx-ui-loader';
+import {
+  NgxUiLoaderConfig,
+  NgxUiLoaderModule,
+  POSITION,
+  SPINNER,
+} from 'ngx-ui-loader';
 import { SharedModule } from '../shared/shared.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgxMaskPipe } from 'ngx-mask';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: '#0fd45e',
@@ -22,17 +28,15 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 };
 
 @NgModule({
-  declarations: [
-    EspacosEsportivosComponent,
-    CardEspacoEsportivoComponent
-  ],
+  declarations: [EspacosEsportivosComponent, CardEspacoEsportivoComponent],
   imports: [
     CommonModule,
     HttpClientModule,
     ToastrModule.forRoot(),
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     SharedModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    NgxMaskPipe,
   ],
 })
-export class EspacosEsportivosModule { }
+export class EspacosEsportivosModule {}

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { EmailAtivacaoRequest } from 'src/app/shared/models/email-ativacao-request/email-ativacao-request.model';
+import { EmailAtivacaoRequest } from 'src/app/shared/models/dto/email-ativacao-request/email-ativacao-request.model';
 import { ClienteService } from 'src/app/shared/services/cliente/cliente.service';
 import { environment as env } from 'src/environments/environment';
 

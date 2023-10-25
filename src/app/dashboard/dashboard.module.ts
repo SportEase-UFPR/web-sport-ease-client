@@ -6,6 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 import { NgxUiLoaderConfig, NgxUiLoaderModule, POSITION, SPINNER } from 'ngx-ui-loader';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ToastrModule } from 'ngx-toastr';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: '#0fd45e',
@@ -30,7 +31,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     SharedModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     NgbCollapseModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ToastrModule.forRoot()
   ]
 })
 export class DashboardModule { }

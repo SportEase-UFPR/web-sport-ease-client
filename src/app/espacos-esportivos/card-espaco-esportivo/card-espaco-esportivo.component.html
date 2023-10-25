@@ -1,6 +1,6 @@
 <div class="my-3">
   <h5 class="text-dark-blue">{{ espaco.nome | titlecase }}</h5>
-  <div class="card-conteudo row w-100 mt-2">
+  <div class="card-conteudo row w-100 mt-2 d-flex align-items-center">
     <div class="col-12 col-md-4 text-center">
       <img
         width="340px"
@@ -29,6 +29,23 @@
         <div class="col-12 col-md-4">
           <p class="text-dark-blue mb-1"><strong>Capacidade</strong></p>
           <p class="text-dark-blue">{{ espaco.capacidade + " pessoas" }}</p>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <p class="text-dark-blue mb-1">
+            <strong>Horário de funcionamento</strong>
+          </p>
+          <p class="text-dark-blue">
+            {{ espaco.horaAbertura! | mask : "Hh:mm" }} -
+            {{ espaco.horaFechamento! | mask : "Hh:mm" }}
+          </p>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <p class="text-dark-blue mb-1"><strong>Duração da locação</strong></p>
+          <p class="text-dark-blue">
+            {{ espaco.periodoLocacao! | mask : "Hh:mm" }}
+          </p>
         </div>
       </div>
 

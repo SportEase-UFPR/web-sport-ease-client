@@ -11,7 +11,7 @@ import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
 
 import { CadastroService } from './services/cadastro.service';
-import { Cliente } from '../shared/models/cliente/cliente';
+import { Cliente } from '../shared/models/dto/cliente/cliente';
 import { Validacoes } from '../utils/validacoes';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { Subscription } from 'rxjs';

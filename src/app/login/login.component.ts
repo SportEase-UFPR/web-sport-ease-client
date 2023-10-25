@@ -5,9 +5,9 @@ import { Subscription } from 'rxjs';
 import { LoginService } from './services/login.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { LoginRequest } from '../shared/models/login-request/login-request.model';
+import { LoginRequest } from '../shared/models/dto/login-request/login-request.model';
 import { HttpErrorResponse } from '@angular/common/http';
-import { LoginResponse } from '../shared/models/login-response/login-response.model';
+import { LoginResponse } from '../shared/models/dto/login-response/login-response.model';
 
 @Component({
   selector: 'app-login',

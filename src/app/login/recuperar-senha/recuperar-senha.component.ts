@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { LoginService } from '../services/login.service';
-import { InstrucoesRecuperacaoRequest } from 'src/app/shared/models/instrucoes-recuperacao-request/instrucoes-recuperacao-request.model';
+import { InstrucoesRecuperacaoRequest } from 'src/app/shared/models/dto/instrucoes-recuperacao-request/instrucoes-recuperacao-request.model';
 import { Subscription } from 'rxjs';
 
 @Component({
