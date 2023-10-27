@@ -62,6 +62,54 @@
   </div>
 </ng-template>
 
+<ng-template #modalAvaliacao let-modal>
+  <div class="modal-body">
+    <h4 class="modal-title text-green text-center">Avalie sua reserva</h4>
+
+    <div class="my-2">
+      <form [formGroup]="formAvaliacao">
+        <div class="text-center">
+          <app-input-star-rating
+            [formGroup]="formAvaliacao"
+            [controlName]="'rating'"
+            [label]="'Nota para a reserva'"
+          ></app-input-star-rating>
+        </div>
+
+        <div class="mt-2">
+          <app-input-textarea
+            [formGroup]="formAvaliacao"
+            [controlName]="'comentario'"
+            [label]="'Caso deseje, deposite aqui sua crítica ou sugestão'"
+          ></app-input-textarea>
+        </div>
+      </form>
+
+      <div class="d-block d-md-flex mt-3 mb-2">
+        <div class="col-12 col-md-6 me-0 me-md-2 mb-2 mb-md-0 pe-2">
+          <app-btn-green
+            [textButton]="'Enviar avaliação'"
+            [showIcon]="true"
+            [iconFirst]="true"
+            [icone]="faConfirm"
+            (emmiterClick)="enviarAvaliacao()"
+          ></app-btn-green>
+        </div>
+
+        <div class="col-12 col-md-6 pe-2">
+          <app-btn-border-green
+            [textButton]="'Avaliar depois'"
+            [showIcon]="true"
+            [iconFirst]="true"
+            [icone]="faClose"
+            (emmiterClick)="closeModal()"
+          ></app-btn-border-green>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
 <ngx-ui-loader [loaderId]="'loader-01'"></ngx-ui-loader>
 
 <div class="mx-3 mt-4">

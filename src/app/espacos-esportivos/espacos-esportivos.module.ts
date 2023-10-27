@@ -14,6 +14,7 @@ import {
 import { SharedModule } from '../shared/shared.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxMaskPipe } from 'ngx-mask';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: '#0fd45e',
@@ -37,6 +38,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     SharedModule,
     FontAwesomeModule,
     NgxMaskPipe,
+    ReactiveFormsModule
   ],
 })
 export class EspacosEsportivosModule {}

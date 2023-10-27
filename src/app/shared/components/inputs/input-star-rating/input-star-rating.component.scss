@@ -1,0 +1,42 @@
+@import "src/cores.scss";
+
+#star-rating {
+  .rating-group {
+    display: inline-flex;
+  }
+
+  .rating-icon {
+    pointer-events: none;
+  }
+
+  .input-ratting {
+    position: absolute !important;
+    left: -9999px !important;
+  }
+
+  .input-ratting--none {
+    display: none;
+  }
+
+  .label-rating {
+    cursor: pointer;
+    padding: 0 0.1em;
+    font-size: 2rem;
+  }
+
+  .rating-icon--star {
+    color: var(--amarelo);
+  }
+
+  .input-ratting:checked ~ .label-rating .rating-icon--star {
+    color: var(--cinza-claro);
+  }
+
+  .rating-group:hover .label-rating .rating-icon--star {
+    color: var(--amarelo);
+  }
+
+  .input-ratting:hover ~ .label-rating .rating-icon--star {
+    color: var(--cinza-claro);
+  }
+}

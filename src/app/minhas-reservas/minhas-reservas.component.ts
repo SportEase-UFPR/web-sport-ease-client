@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
   faCheck,
@@ -12,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ReservaFeitaResponse } from '../shared/models/dto/reserva-feita-response/reserva-feita-response';
 import { StatusLocacao } from '../shared/models/enums/status-locacao/status-locacao';
 import { Item } from '../shared/components/inputs/input-select-option/model/item.model';
-import { faEye } from '@fortawesome/free-regular-svg-icons';
+import { faEye, faStar } from '@fortawesome/free-regular-svg-icons';
 import * as moment from 'moment';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -24,6 +24,11 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
   styleUrls: ['./minhas-reservas.component.scss'],
 })
 export class MinhasReservasComponent implements OnInit {
+  formAvaliacao: FormGroup = new FormGroup({
+    rating: new FormControl(-1, [Validators.required]),
+    comentario: new FormControl(null),
+  });
+
   formFiltros: FormGroup = new FormGroup({
     dataInicial: new FormControl(null),
     dataFinal: new FormControl(null),
@@ -51,6 +56,7 @@ export class MinhasReservasComponent implements OnInit {
   faCancel = faXmark;
   faEye = faEye;
   faFilterRemove = faFilterCircleXmark;
+  faStar = faStar;
 
   idReserva: number = 0;
   dadosReserva?: ReservaFeitaResponse;
@@ -101,85 +107,6 @@ export class MinhasReservasComponent implements OnInit {
   novaReserva(): void {
     this.router.navigateByUrl('/nova-reserva');
   }
-
-  // filterByDate(): void {
-  //   const form = this.formFiltros;
-  //   const dataInicial = form.get('dataInicial');
-  //   const dataFinal = form.get('dataFinal');
-
-  //   if (dataInicial?.value && dataFinal?.value) {
-  //     const dataInicialValue = moment(dataInicial?.value);
-  //     const dataFinalValue = moment(dataFinal?.value);
-
-  //     if (dataFinalValue.diff(dataInicialValue, 'hour') >= 0) {
-  //       this.ngxLoaderService.startLoader('loader-01');
-  //       this.minhasReservasFilter = [];
-  //       this.filterByLocal();
-  //       this.filterByStatus();
-
-  //       const valuesToFilter = this.minhasReservasFilter?.length
-  //         ? this.minhasReservasFilter
-  //         : this.minhasReservas;
-
-  //       this.minhasReservasFilter = valuesToFilter.filter((r) => {
-  //         const dataReserva = moment(r.dataHoraInicioReserva);
-
-  //         return (
-  //           dataReserva.isSameOrAfter(dataInicialValue, 'day') &&
-  //           dataReserva.isSameOrBefore(dataFinalValue, 'day')
-  //         );
-  //       });
-
-  //       this.ngxLoaderService.stopLoader('loader-01');
-  //     } else {
-  //       dataFinal.patchValue(null);
-  //       dataFinal.markAsTouched();
-  //       dataFinal.markAsDirty();
-  //       this.toastrService.info(
-  //         'A data final não pode ser anterior à data inicial. Por favor, selecione uma data válida',
-  //         'Período inválido'
-  //       );
-  //     }
-  //   }
-  // }
-
-  // filterByLocal(): void {
-  //   const valueFilter = this.formFiltros.get('local')?.value;
-  //   if (valueFilter) {
-  //     this.ngxLoaderService.startLoader('loader-01');
-
-  //     this.minhasReservasFilter = [];
-  //     this.filterByDate();
-  //     this.filterByStatus();
-
-  //     const valuesToFilter = this.minhasReservasFilter?.length
-  //       ? this.minhasReservasFilter
-  //       : this.minhasReservas;
-  //     this.minhasReservasFilter = valuesToFilter.filter(
-  //       (r) => r.idEspacoEsportivo === Number(valueFilter)
-  //     );
-  //     this.ngxLoaderService.stopLoader('loader-01');
-  //   }
-  // }
-
-  // filterByStatus(): void {
-  //   const valueFilter = this.formFiltros.get('status')?.value;
-  //   if (valueFilter) {
-  //     this.ngxLoaderService.startLoader('loader-01');
-
-  //     this.minhasReservasFilter = [];
-  //     this.filterByDate();
-  //     this.filterByLocal();
-
-  //     const valuesToFilter = this.minhasReservasFilter?.length
-  //       ? this.minhasReservasFilter
-  //       : this.minhasReservas;
-  //     this.minhasReservasFilter = valuesToFilter.filter(
-  //       (r) => r.status === valueFilter
-  //     );
-  //     this.ngxLoaderService.stopLoader('loader-01');
-  //   }
-  // }
 
   filterReservas(): void {
     const form = this.formFiltros;
@@ -349,4 +276,6 @@ export class MinhasReservasComponent implements OnInit {
     this.formFiltros.reset();
     this.ngxLoaderService.stopLoader('loader-01');
   }
+
+  enviarAvaliacao() {}
 }

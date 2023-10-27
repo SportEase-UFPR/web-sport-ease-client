@@ -17,6 +17,7 @@ import { InputSelectOptionComponent } from './components/inputs/input-select-opt
 import { InputNumberComponent } from './components/inputs/input-number/input-number.component';
 import { InputDateComponent } from './components/inputs/input-date/input-date.component';
 import { BtnRedComponent } from './components/buttons/btn-red/btn-red.component';
+import { InputStarRatingComponent } from './components/inputs/input-star-rating/input-star-rating.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { BtnRedComponent } from './components/buttons/btn-red/btn-red.component'
     InputNumberComponent,
     InputDateComponent,
     BtnRedComponent,
+    InputStarRatingComponent,
   ],
   imports: [
     CommonModule,
@@ -53,6 +55,7 @@ import { BtnRedComponent } from './components/buttons/btn-red/btn-red.component'
     InputNumberComponent,
     InputDateComponent,
     BtnRedComponent,
+    InputStarRatingComponent,
   ],
   providers: [provideNgxMask()],
 })

@@ -1,0 +1,75 @@
+<div id="star-rating">
+  <h5 class="text-gray">{{ label }}</h5>
+
+  <div class="rating-group" [formGroup]="formGroup">
+    <input
+      checked
+      class="input-ratting input-ratting--none"
+      name="{{ controlName }}"
+      id="rating-none"
+      value="0"
+      type="radio"
+      disabled
+    />
+
+    <label aria-label="1 estrela" class="label-rating" for="rating-1">
+      <fa-icon class="rating-icon rating-icon--star" [icon]="faStar"></fa-icon>
+    </label>
+    <input
+      formControlName="{{ controlName }}"
+      class="input-ratting"
+      name="{{ controlName }}"
+      id="rating-1"
+      value="1"
+      type="radio"
+    />
+
+    <label aria-label="2 stars" class="label-rating" for="rating-2">
+      <fa-icon class="rating-icon rating-icon--star" [icon]="faStar"></fa-icon>
+    </label>
+    <input
+      formControlName="{{ controlName }}"
+      class="input-ratting"
+      name="{{ controlName }}"
+      id="rating-2"
+      value="2"
+      type="radio"
+    />
+
+    <label aria-label="3 stars" class="label-rating" for="rating-3">
+      <fa-icon class="rating-icon rating-icon--star" [icon]="faStar"></fa-icon>
+    </label>
+    <input
+      formControlName="{{ controlName }}"
+      class="input-ratting"
+      name="{{ controlName }}"
+      id="rating-3"
+      value="3"
+      type="radio"
+    />
+
+    <label aria-label="4 stars" class="label-rating" for="rating-4">
+      <fa-icon class="rating-icon rating-icon--star" [icon]="faStar"></fa-icon>
+    </label>
+    <input
+      formControlName="{{ controlName }}"
+      class="input-ratting"
+      name="{{ controlName }}"
+      id="rating-4"
+      value="4"
+      type="radio"
+    />
+
+    <label aria-label="5 stars" class="label-rating" for="rating-5">
+      <fa-icon class="rating-icon rating-icon--star" [icon]="faStar"></fa-icon>
+    </label>
+    <input
+      formControlName="{{ controlName }}"
+      class="input-ratting"
+      name="{{ controlName }}"
+      id="rating-5"
+      value="5"
+      type="radio"
+    />
+  </div>
+</div>

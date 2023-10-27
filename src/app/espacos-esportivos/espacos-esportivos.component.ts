@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { EspacosEsportivosService } from './services/espacos-esportivos.service';
-import { EspacoEsportivoReservaResponse } from '../shared/models/dto/espaco-esportivo-reserva-response/espaco-esportivo-reserva-response.model';
 import { ToastrService } from 'ngx-toastr';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { Item } from '../shared/components/inputs/input-select-option/model/item.model';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { EspacoEsportivoResponse } from '../shared/models/dto/espaco-esportivo-response/espaco-esportivo-response.model';
 
 @Component({
   selector: 'app-espacos-esportivos',
@@ -10,7 +12,13 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
   styleUrls: ['./espacos-esportivos.component.scss'],
 })
 export class EspacosEsportivosComponent implements OnInit {
-  espacos: EspacoEsportivoReservaResponse[] = [];
+  formFilter: FormGroup = new FormGroup({
+    esporte: new FormControl(0, [Validators.required]),
+  });
+
+  espacos: EspacoEsportivoResponse[] = [];
+  espacosFiltered: EspacoEsportivoResponse[] = [];
+  esportes: Item[] = [];
 
   constructor(
     private eeService: EspacosEsportivosService,
@@ -21,10 +29,25 @@ export class EspacosEsportivosComponent implements OnInit {
   ngOnInit(): void {
     this.ngxService.startLoader('loader-01');
     this.eeService.listarEE().subscribe({
-      next: (result: EspacoEsportivoReservaResponse[]) => {
+      next: (result: EspacoEsportivoResponse[]) => {
         this.ngxService.stopLoader('loader-01');
         if (result.length > 0) {
-          this.espacos = result;
+          if (result.length > 1) {
+            this.espacos = this.ordernaEspacosAlfabetico(result);
+          } else {
+            this.espacos = result;
+          }
+
+          this.eeService.listarEsportes().subscribe({
+            next: (result) => {
+              this.esportes = result.map((e) => new Item(e.id, e.nome));
+              this.esportes.push(new Item(0, 'Todos'));
+              this.esportes.sort((a, b) => Number(a.value) - Number(b.value));
+            },
+            error: (err) => {
+              this.esportes = [];
+            },
+          });
         } else {
           this.toastrService.warning(
             'Por favor, tente novamente mais tarde',
@@ -40,6 +63,41 @@ export class EspacosEsportivosComponent implements OnInit {
         );
         console.error(err);
       },
+    });
+  }
+
+  filterByEsporte(): void {
+    this.ngxService.startLoader('loader-01');
+    const esporteEscolhido = this.formFilter.get('esporte')?.value;
+    this.espacosFiltered = [];
+
+    if (esporteEscolhido && esporteEscolhido !== 0) {
+      this.espacos.forEach((ee) => {
+        ee.listaEsportes?.forEach((e) => {
+          if (e.id === Number(esporteEscolhido)) {
+            this.espacosFiltered.push(ee);
+          }
+        });
+      });
+
+      if (this.espacosFiltered.length > 1) {
+        this.espacosFiltered = this.ordernaEspacosAlfabetico(
+          this.espacosFiltered
+        );
+      }
+    }
+
+    this.ngxService.stopLoader('loader-01');
+  }
+
+  ordernaEspacosAlfabetico(
+    array: EspacoEsportivoResponse[]
+  ): EspacoEsportivoResponse[] {
+    return array.sort((a, b) => {
+      const nomeA = a.nome?.toUpperCase()!;
+      const nomeB = b.nome?.toUpperCase()!;
+
+      return nomeA < nomeB ? -1 : nomeA > nomeB ? 1 : 0;
     });
   }
 }

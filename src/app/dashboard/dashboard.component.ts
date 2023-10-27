@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ReservaFeitaResponse } from '../shared/models/dto/reserva-feita-response/reserva-feita-response';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,12 +15,18 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
+  formAvaliacao: FormGroup = new FormGroup({
+    rating: new FormControl(-1, [Validators.required]),
+    comentario: new FormControl(null),
+  });
+
   faClose = faXmark;
   faConfirm = faCheck;
   faAdd = faAdd;
 
   reservas: ReservaFeitaResponse[] = [];
   idReserva: number = 0;
+  modalAvalicao?: any;
 
   constructor(
     private modalService: NgbModal,
@@ -49,8 +56,13 @@ export class DashboardComponent implements OnInit {
     this.ngxLoaderService.stopLoader('loader-01');
   }
 
-  openModalConfirmacao(modal: any, idReserva: number): void {
+  openModalConfirmacao(
+    modal: any,
+    idReserva: number,
+    modalAvaliacao?: any
+  ): void {
     this.idReserva = idReserva;
+    this.modalAvalicao = modalAvaliacao;
 
     this.modalService.open(modal, {
       centered: true,
@@ -100,6 +112,7 @@ export class DashboardComponent implements OnInit {
         );
         this.populate();
         this.closeModal();
+        this.openModalConfirmacao(this.modalAvalicao!, this.idReserva);
       },
       error: (err: HttpErrorResponse) => {
         switch (err.status) {
@@ -119,6 +132,10 @@ export class DashboardComponent implements OnInit {
         }
       },
     });
+  }
+
+  enviarAvaliacao(){
+    
   }
 
   navigate() {
