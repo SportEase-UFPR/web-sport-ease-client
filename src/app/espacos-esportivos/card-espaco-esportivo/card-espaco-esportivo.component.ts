@@ -5,6 +5,7 @@ import {
   faCalendarCheck,
   faCalendarXmark,
 } from '@fortawesome/free-regular-svg-icons';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { EspacoEsportivoResponse } from 'src/app/shared/models/dto/espaco-esportivo-response/espaco-esportivo-response.model';
 
 @Component({
@@ -14,9 +15,12 @@ import { EspacoEsportivoResponse } from 'src/app/shared/models/dto/espaco-esport
 })
 export class CardEspacoEsportivoComponent implements OnInit {
   @Input() espaco!: EspacoEsportivoResponse;
+  @Input() ratingMedio: string[] = ['a', 'a', 'm', 'c', 'c']
 
   faCalendar = faCalendarCheck;
   faCalendarX = faCalendarXmark;
+  faStar = faStar;
+
 
   constructor(private sanatizer: DomSanitizer, private router: Router) {}
 

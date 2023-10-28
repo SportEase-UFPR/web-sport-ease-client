@@ -18,5 +18,33 @@
     <a class="dados-cliente text-dark-blue m-0" routerLink="/editar-perfil">
       <fa-icon [icon]="faUser"></fa-icon>
     </a>
+
+    <button class="btn-notifications ms-3" (click)="toggleSidebar()">
+      <fa-icon [icon]="faBell"></fa-icon>
+      <span>8</span>
+    </button>
   </div>
 </header>
+
+<aside [ngClass]="{ hidden: isHidden }" class="sidebar sidebar-glass">
+  <div class="d-flex justify-content-between">
+    <h4 class="text-green pt-2">Notificações</h4>
+    <button class="btn-close-modal text-gray" (click)="toggleSidebar()">
+      <fa-icon [icon]="faClose"></fa-icon>
+    </button>
+  </div>
+
+  <ul class="mt-2">
+    <li class="nao-lida">
+      <p class="mb-0">Titulo</p>
+      <small>Conteudo</small>
+    </li>
+
+    <hr />
+
+    <li>
+      <p class="mb-0">Titulo</p>
+      <small>Conteudo</small>
+    </li>
+  </ul>
+</aside>

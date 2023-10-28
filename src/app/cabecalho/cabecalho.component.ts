@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { faBell } from '@fortawesome/free-regular-svg-icons';
 
-import { faUserPen } from '@fortawesome/free-solid-svg-icons';
+import { faUserPen, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-cabecalho',
@@ -9,6 +10,10 @@ import { faUserPen } from '@fortawesome/free-solid-svg-icons';
 })
 export class CabecalhoComponent implements OnInit {
   faUser = faUserPen;
+  faBell = faBell;
+  faClose = faXmark;
+
+  isHidden: boolean = false;
 
   constructor() {}
 
@@ -25,5 +30,9 @@ export class CabecalhoComponent implements OnInit {
     }
 
     return saudacao;
+  }
+
+  toggleSidebar() {
+    this.isHidden = !this.isHidden;
   }
 }

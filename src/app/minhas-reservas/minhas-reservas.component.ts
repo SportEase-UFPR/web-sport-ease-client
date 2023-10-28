@@ -197,6 +197,8 @@ export class MinhasReservasComponent implements OnInit {
     tamanho: string = 'md',
     dadosReserva?: ReservaFeitaResponse
   ): void {
+    console.log('Aqui');
+
     this.idReserva = idReserva;
     this.dadosReserva = dadosReserva;
 

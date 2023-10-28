@@ -16,12 +16,13 @@ import { MinhasReservasModule } from './minhas-reservas/minhas-reservas.module';
 import { NovaReservaModule } from './nova-reserva/nova-reserva.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { EdicaoPerfilModule } from './edicao-perfil/edicao-perfil.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CabecalhoModule } from './cabecalho/cabecalho.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MenuComponent,
-    CabecalhoComponent
+    MenuComponent
   ],
   imports: [
     BrowserModule,
@@ -32,11 +33,13 @@ import { EdicaoPerfilModule } from './edicao-perfil/edicao-perfil.module';
     EspacosEsportivosModule,
     MinhasReservasModule,
     NovaReservaModule,
+    CabecalhoModule,
     SharedModule,
     NgbModule,
     FontAwesomeModule,
     ReactiveFormsModule,
     EdicaoPerfilModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
