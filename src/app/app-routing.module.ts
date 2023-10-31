@@ -9,6 +9,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { authGuard } from './guards/auth/auth.guard';
 import { EdicaoPerfilComponent } from './edicao-perfil/edicao-perfil.component';
 import { AtivacaoEmailComponent } from './edicao-perfil/ativacao-email/ativacao-email.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
@@ -55,6 +56,11 @@ const routes: Routes = [
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',
+  },
+
+  {
+    path: '**',
+    component: PageNotFoundComponent,
   },
 ];
 

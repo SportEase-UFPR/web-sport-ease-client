@@ -18,11 +18,13 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { EdicaoPerfilModule } from './edicao-perfil/edicao-perfil.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CabecalhoModule } from './cabecalho/cabecalho.module';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MenuComponent
+    MenuComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
