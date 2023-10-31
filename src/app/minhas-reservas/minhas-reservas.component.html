@@ -343,7 +343,11 @@
                       ></app-btn-green>
                     </div>
 
-                    <div>
+                    <div
+                      *ngIf="
+                        showCancelarReserva(r.dataHoraInicioReserva!, r.status!)
+                      "
+                    >
                       <app-btn-red
                         [showIcon]="true"
                         [icone]="faCancel"

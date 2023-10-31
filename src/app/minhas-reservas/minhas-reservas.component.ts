@@ -279,5 +279,16 @@ export class MinhasReservasComponent implements OnInit {
     this.ngxLoaderService.stopLoader('loader-01');
   }
 
+  showCancelarReserva(data: string | Date, status: StatusLocacao): boolean {
+    if (
+      moment(data).diff(moment(), 'hour') >= 1 &&
+      (status === StatusLocacao.APROVADA || status === StatusLocacao.SOLICITADA)
+    ) {
+      return true;
+    }
+
+    return false;
+  }
+
   enviarAvaliacao() {}
 }

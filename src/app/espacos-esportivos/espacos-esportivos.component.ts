@@ -71,7 +71,7 @@ export class EspacosEsportivosComponent implements OnInit {
     const esporteEscolhido = this.formFilter.get('esporte');
     this.espacosFiltered = [];
 
-    if (esporteEscolhido?.value && esporteEscolhido?.value !== 0) {
+    if (esporteEscolhido?.value && Number(esporteEscolhido?.value) !== 0) {
       this.espacos.forEach((ee) => {
         ee.listaEsportes?.forEach((e) => {
           if (e.id === Number(esporteEscolhido?.value)) {
@@ -86,7 +86,10 @@ export class EspacosEsportivosComponent implements OnInit {
         );
       }
 
-      if (this.espacosFiltered.length == 0 && esporteEscolhido?.value !== 0) {
+      if (
+        this.espacosFiltered.length == 0 &&
+        Number(esporteEscolhido?.value) !== 0
+      ) {
         this.toastrService.info(
           'O esporte escolhido não se encontra em nenhum dos espaços esportivos cadastrados. Por favor, escolha outro esporte',
           'Nenhum espaço esportivo encontrado'
