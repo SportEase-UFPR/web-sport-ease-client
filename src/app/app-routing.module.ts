@@ -10,6 +10,11 @@ import { authGuard } from './guards/auth/auth.guard';
 import { EdicaoPerfilComponent } from './edicao-perfil/edicao-perfil.component';
 import { AtivacaoEmailComponent } from './edicao-perfil/ativacao-email/ativacao-email.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { CadastroComponent } from './cadastro/cadastro.component';
+import { InstrucoesAtivacaoContaComponent } from './cadastro/instrucoes-ativacao-conta/instrucoes-ativacao-conta.component';
+import { AtivacaoContaComponent } from './cadastro/ativacao-conta/ativacao-conta.component';
+import { RecuperarSenhaComponent } from './login/recuperar-senha/recuperar-senha.component';
+import { CadastrarSenhaComponent } from './login/cadastrar-senha/cadastrar-senha.component';
 
 const routes: Routes = [
   {
@@ -50,6 +55,31 @@ const routes: Routes = [
     path: 'editar-perfil',
     component: EdicaoPerfilComponent,
     canActivate: [authGuard],
+  },
+
+  {
+    path: 'autocadastro',
+    component: CadastroComponent,
+  },
+
+  {
+    path: 'confirmacao-cadastro',
+    component: InstrucoesAtivacaoContaComponent,
+  },
+
+  {
+    path: 'ativar-conta',
+    component: AtivacaoContaComponent
+  },
+
+  {
+    path: 'recuperar-senha',
+    component: RecuperarSenhaComponent
+  },
+
+  {
+    path: 'cadastrar-senha',
+    component: CadastrarSenhaComponent
   },
 
   {

@@ -6,7 +6,6 @@ import { ToastrModule } from 'ngx-toastr';
 
 import { LoginComponent } from './login.component';
 import { SharedModule } from '../shared/shared.module';
-import { LoginRoutingModule } from './login-routing.module';
 import { RecuperarSenhaComponent } from './recuperar-senha/recuperar-senha.component';
 import { CadastrarSenhaComponent } from './cadastrar-senha/cadastrar-senha.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -33,7 +32,6 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   ],
   imports: [
     CommonModule,
-    LoginRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     SharedModule,

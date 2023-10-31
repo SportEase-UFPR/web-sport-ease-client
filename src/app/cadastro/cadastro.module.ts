@@ -11,7 +11,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { InstrucoesAtivacaoContaComponent } from './instrucoes-ativacao-conta/instrucoes-ativacao-conta.component';
 import { SharedModule } from '../shared/shared.module';
 import { CadastroComponent } from './cadastro.component';
-import { CadastroRoutingModule } from './cadastro-routing.module';
 import { AtivacaoContaComponent } from './ativacao-conta/ativacao-conta.component';
 import { NgxUiLoaderConfig, NgxUiLoaderModule, PB_DIRECTION, POSITION, SPINNER } from 'ngx-ui-loader';
 
@@ -36,7 +35,6 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   imports: [
     CommonModule,
     BrowserAnimationsModule,
-    CadastroRoutingModule,
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
