@@ -5,8 +5,8 @@ import {
   faCheck,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
-import { ReservaFeitaResponse } from 'src/app/shared/models/dto/reserva-feita-response/reserva-feita-response';
-import { StatusLocacao } from 'src/app/shared/models/enums/status-locacao/status-locacao';
+import { ReservaFeitaResponse } from 'src/app/shared/models/reserva/reserva-feita-response';
+import { StatusLocacao } from 'src/app/shared/models/enums/status-locacao';
 import { DashboardService } from '../services/dashboard.service';
 import * as moment from 'moment';
 

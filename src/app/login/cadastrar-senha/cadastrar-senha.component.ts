@@ -7,7 +7,7 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { DetectarMobile } from 'src/app/utils/detectar-mobile';
 import { LoginService } from '../services/login.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CadastroSenhaRequest } from 'src/app/shared/models/dto/cadastro-senha-request/cadastro-senha-request.model';
+import { CadastroSenhaRequest } from 'src/app/shared/models/cliente/cadastro-senha-request.model';
 import { Subscription } from 'rxjs';
 
 @Component({

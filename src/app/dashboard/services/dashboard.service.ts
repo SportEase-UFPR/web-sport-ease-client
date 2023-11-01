@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { EspacoEsportivoResponse } from 'src/app/shared/models/dto/espaco-esportivo-response/espaco-esportivo-response.model';
-import { ReservaFeitaResponse } from 'src/app/shared/models/dto/reserva-feita-response/reserva-feita-response';
-import { UsuarioSs } from 'src/app/shared/models/dto/usuario-ss/usuario-ss.model';
+import { EspacoEsportivoResponse } from 'src/app/shared/models/espaco-esportivo/espaco-esportivo-response.model';
+import { ReservaFeitaResponse } from 'src/app/shared/models/reserva/reserva-feita-response';
+import { UsuarioSs } from 'src/app/shared/models/usuario-ss/usuario-ss.model';
 import { SessionStorageService } from 'src/app/shared/services/session-storage/session-storage.service';
 import { environment as env } from 'src/environments/environment';
 

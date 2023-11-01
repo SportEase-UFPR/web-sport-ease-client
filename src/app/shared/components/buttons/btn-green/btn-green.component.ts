@@ -8,6 +8,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class BtnGreenComponent implements OnInit {
   @Input() buttonDisabled: boolean = false;
   @Input() textButton: string = '';
+  @Input() type: string = '';
   @Input() showIcon: boolean = false;
   @Input() iconFirst: boolean = true;
   @Input() icone: any;

@@ -9,8 +9,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { MinhasReservasService } from './services/minhas-reservas.service';
 import { ToastrService } from 'ngx-toastr';
-import { ReservaFeitaResponse } from '../shared/models/dto/reserva-feita-response/reserva-feita-response';
-import { StatusLocacao } from '../shared/models/enums/status-locacao/status-locacao';
+import { ReservaFeitaResponse } from '../shared/models/reserva/reserva-feita-response';
+import { StatusLocacao } from '../shared/models/enums/status-locacao';
 import { Item } from '../shared/components/inputs/input-select-option/model/item.model';
 import { faEye, faStar } from '@fortawesome/free-regular-svg-icons';
 import * as moment from 'moment';

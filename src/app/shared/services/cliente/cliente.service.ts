@@ -2,13 +2,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment as env } from 'src/environments/environment';
 import { SessionStorageService } from '../session-storage/session-storage.service';
-import { UsuarioSs } from '../../models/dto/usuario-ss/usuario-ss.model';
+import { UsuarioSs } from '../../models/usuario-ss/usuario-ss.model';
 import { Observable } from 'rxjs';
-import { Cliente } from '../../models/dto/cliente/cliente';
-import { ClienteAlteracaoResponse } from '../../models/dto/cliente-alteracao-response/cliente-alteracao-response.model';
-import { ClienteAlteracaoRequest } from '../../models/dto/cliente-alteracao/cliente-alteracao-request.model';
-import { EmailAtivacaoRequest } from '../../models/dto/email-ativacao-request/email-ativacao-request.model';
-import { EmailAtivacaoResponse } from '../../models/dto/email-ativacao-response/email-ativacao-response.model';
+import { Cliente } from '../../models/cliente/cliente';
+import { ClienteAlteracaoResponse } from '../../models/cliente/cliente-alteracao-response.model';
+import { ClienteAlteracaoRequest } from '../../models/cliente/cliente-alteracao-request.model';
+import { EmailAtivacaoRequest } from '../../models/cliente/email-ativacao-request.model';
+import { EmailAtivacaoResponse } from '../../models/cliente/email-ativacao-response.model';
 
 @Injectable({
   providedIn: 'root',

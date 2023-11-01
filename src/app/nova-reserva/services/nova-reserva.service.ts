@@ -1,14 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { UsuarioSs } from 'src/app/shared/models/dto/usuario-ss/usuario-ss.model';
+import { UsuarioSs } from 'src/app/shared/models/usuario-ss/usuario-ss.model';
 import { SessionStorageService } from 'src/app/shared/services/session-storage/session-storage.service';
 import { environment as env } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { ReservaHorariosResponse } from 'src/app/shared/models/dto/reserva-horarios-response/reserva-horarios-response.model';
-import { ReservaHorariosRequest } from 'src/app/shared/models/dto/reserva-horarios-request/reserva-horarios-request.model';
-import { ReservaResponse } from 'src/app/shared/models/dto/reserva-response/reserva-response.model';
-import { ReservaRequest } from 'src/app/shared/models/dto/reserva-request/reserva-request.model';
-import { EspacoEsportivoReservaResponse as eeReservaResponse } from 'src/app/shared/models/dto/espaco-esportivo-reserva-response/espaco-esportivo-reserva-response.model';
+import { ReservaHorariosResponse } from 'src/app/shared/models/reserva/reserva-horarios-response.model';
+import { ReservaHorariosRequest } from 'src/app/shared/models/reserva/reserva-horarios-request.model';
+import { ReservaResponse } from 'src/app/shared/models/reserva/reserva-response.model';
+import { ReservaRequest } from 'src/app/shared/models/reserva/reserva-request.model';
+import { EspacoEsportivoReservaResponse as eeReservaResponse } from 'src/app/shared/models/espaco-esportivo/espaco-esportivo-reserva-response.model';
 
 @Injectable({
   providedIn: 'root',

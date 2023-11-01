@@ -42,7 +42,7 @@
         ></app-input-checkbox>
 
         <div class="mt-2" *ngIf="showInputGrr">
-          <ng-container *ngIf="isAluno else notIsAluno">
+          <ng-container *ngIf="isAluno; else notIsAluno">
             <app-input-text
               [formGroup]="formAlteracaoPerfil"
               [controlName]="'grr'"
@@ -110,6 +110,7 @@
         <div>
           <app-btn-green
             [textButton]="'Salvar'"
+            [type]="'submit'"
             (emmiterClick)="alterarDados()"
           ></app-btn-green>
         </div>

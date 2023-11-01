@@ -6,7 +6,7 @@ import {
   faCalendarXmark,
 } from '@fortawesome/free-regular-svg-icons';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { EspacoEsportivoResponse } from 'src/app/shared/models/dto/espaco-esportivo-response/espaco-esportivo-response.model';
+import { EspacoEsportivoResponse } from 'src/app/shared/models/espaco-esportivo/espaco-esportivo-response.model';
 
 @Component({
   selector: 'app-card-espaco-esportivo',

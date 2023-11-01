@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SessionStorageService } from './shared/services/session-storage/session-storage.service';
 import { environment as env } from 'src/environments/environment';
 import { LoginService } from './login/services/login.service';
-import { UsuarioSs } from './shared/models/dto/usuario-ss/usuario-ss.model';
+import { UsuarioSs } from './shared/models/usuario-ss/usuario-ss.model';
 
 @Component({
   selector: 'app-root',

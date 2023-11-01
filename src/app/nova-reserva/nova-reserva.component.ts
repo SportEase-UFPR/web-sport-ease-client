@@ -3,15 +3,15 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { NovaReservaService } from './services/nova-reserva.service';
-import { EspacoEsportivoResponse } from '../shared/models/dto/espaco-esportivo-response/espaco-esportivo-response.model';
+import { EspacoEsportivoResponse } from '../shared/models/espaco-esportivo/espaco-esportivo-response.model';
 import { Item } from '../shared/components/inputs/input-select-option/model/item.model';
 import { ToastrService } from 'ngx-toastr';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import * as moment from 'moment';
-import { ReservaHorariosRequest } from '../shared/models/dto/reserva-horarios-request/reserva-horarios-request.model';
-import { ReservaHorariosResponse } from '../shared/models/dto/reserva-horarios-response/reserva-horarios-response.model';
-import { ReservaRequest } from '../shared/models/dto/reserva-request/reserva-request.model';
-import { ReservaResponse } from '../shared/models/dto/reserva-response/reserva-response.model';
+import { ReservaHorariosRequest } from '../shared/models/reserva/reserva-horarios-request.model';
+import { ReservaHorariosResponse } from '../shared/models/reserva/reserva-horarios-response.model';
+import { ReservaRequest } from '../shared/models/reserva/reserva-request.model';
+import { ReservaResponse } from '../shared/models/reserva/reserva-response.model';
 
 @Component({
   selector: 'app-nova-reserva',

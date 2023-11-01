@@ -1,11 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { EspacoEsportivoResponse as eeResponse } from 'src/app/shared/models/dto/espaco-esportivo-response/espaco-esportivo-response.model';
-import { UsuarioSs } from 'src/app/shared/models/dto/usuario-ss/usuario-ss.model';
+import { EspacoEsportivoResponse as eeResponse } from 'src/app/shared/models/espaco-esportivo/espaco-esportivo-response.model';
+import { UsuarioSs } from 'src/app/shared/models/usuario-ss/usuario-ss.model';
 import { SessionStorageService } from 'src/app/shared/services/session-storage/session-storage.service';
 import { environment as env } from 'src/environments/environment';
-import { EsporteResponse } from 'src/app/shared/models/dto/esporte-response/esporte-response';
+import { EsporteResponse } from 'src/app/shared/models/esporte/esporte-response';
 
 @Injectable({
   providedIn: 'root',

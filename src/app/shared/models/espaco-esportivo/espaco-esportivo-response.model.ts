@@ -1,4 +1,4 @@
-import { EsporteResponse } from '../esporte-response/esporte-response';
+import { EsporteResponse } from '../esporte/esporte-response';
 
 export class EspacoEsportivoResponse {
   constructor(

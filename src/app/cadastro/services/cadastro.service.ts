@@ -2,8 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
-import { AtivacaoConta } from 'src/app/shared/models/dto/ativacao-conta/ativacao-conta.model';
-import { Cliente } from 'src/app/shared/models/dto/cliente/cliente';
+import { AtivacaoConta } from 'src/app/shared/models/cliente/ativacao-conta.model';
+import { Cliente } from 'src/app/shared/models/cliente/cliente';
 import { environment as env } from 'src/environments/environment';
 
 @Injectable({

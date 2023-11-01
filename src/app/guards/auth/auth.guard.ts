@@ -3,7 +3,7 @@ import { CanActivateFn, Router } from '@angular/router';
 
 import { SessionStorageService } from 'src/app/shared/services/session-storage/session-storage.service';
 import { environment as env } from '../../../environments/environment';
-import { UsuarioSs } from 'src/app/shared/models/dto/usuario-ss/usuario-ss.model';
+import { UsuarioSs } from 'src/app/shared/models/usuario-ss/usuario-ss.model';
 import { ToastrService } from 'ngx-toastr';
 import { Token } from 'src/app/shared/models/token/token.model';
 import { JwtDecode } from 'src/app/utils/jwt-decode';

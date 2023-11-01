@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { Item } from '../shared/components/inputs/input-select-option/model/item.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { EspacoEsportivoResponse } from '../shared/models/dto/espaco-esportivo-response/espaco-esportivo-response.model';
+import { EspacoEsportivoResponse } from '../shared/models/espaco-esportivo/espaco-esportivo-response.model';
 
 @Component({
   selector: 'app-espacos-esportivos',

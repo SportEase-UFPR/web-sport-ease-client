@@ -4,7 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { DashboardService } from './services/dashboard.service';
 import { ToastrService } from 'ngx-toastr';
-import { ReservaFeitaResponse } from '../shared/models/dto/reserva-feita-response/reserva-feita-response';
+import { ReservaFeitaResponse } from '../shared/models/reserva/reserva-feita-response';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -135,7 +135,7 @@ export class DashboardComponent implements OnInit {
   }
 
   enviarAvaliacao(){
-    
+
   }
 
   navigate() {

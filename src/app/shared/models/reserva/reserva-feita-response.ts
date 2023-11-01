@@ -1,4 +1,4 @@
-import { StatusLocacao } from '../../enums/status-locacao/status-locacao';
+import { StatusLocacao } from '../enums/status-locacao';
 
 export class ReservaFeitaResponse {
   constructor(
