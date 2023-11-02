@@ -7,7 +7,7 @@ import { EspacoEsportivoResponse } from '../shared/models/espaco-esportivo/espac
 import { Item } from '../shared/components/inputs/input-select-option/model/item.model';
 import { ToastrService } from 'ngx-toastr';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import * as moment from 'moment';
+const moment = require('moment');
 import { ReservaHorariosRequest } from '../shared/models/reserva/reserva-horarios-request.model';
 import { ReservaHorariosResponse } from '../shared/models/reserva/reserva-horarios-response.model';
 import { ReservaRequest } from '../shared/models/reserva/reserva-request.model';

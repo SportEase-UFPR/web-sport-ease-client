@@ -23,11 +23,12 @@
 
         <div *ngIf="nextSteps">
           <div>
-            <app-input-number
+            <app-input-field
               [formGroup]="formNovaReserva"
               [controlName]="'qtdPessoas'"
               [label]="'Quantidade de participantes'"
-            ></app-input-number>
+              [inputType]="'number'"
+            ></app-input-field>
           </div>
 
           <div class="mt-5">
@@ -36,12 +37,13 @@
             </div>
 
             <div>
-              <app-input-date
+              <app-input-field
                 [formGroup]="formNovaReserva"
                 [controlName]="'data'"
                 [label]="'Selecione a data'"
+                [inputType]="'date'"
                 (emitterChange)="listarHorarios()"
-              ></app-input-date>
+              ></app-input-field>
             </div>
 
             <div *ngIf="showHorarios">

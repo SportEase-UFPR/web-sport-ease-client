@@ -40,27 +40,10 @@
           </div>
 
           <ng-container *ngIf="passwordChecklist">
-            <div class="checklist">
-              <ul class="password-checklist">
-                <li
-                  [ngClass]="passwordValid('senha') ? 'tem-erros' : 'sem-erros'"
-                >
-                  <fa-icon
-                    [icon]="passwordValid('senha') ? faInvalid : faValid"
-                  ></fa-icon>
-
-                  A senha deve ter pelo menos <strong> 6 dígitos </strong>
-                </li>
-
-                <li [ngClass]="senhasDiferentes ? 'tem-erros' : 'sem-erros'">
-                  <fa-icon
-                    [icon]="senhasDiferentes ? faInvalid : faValid"
-                  ></fa-icon>
-
-                  As senhas devem ser <strong> iguais </strong>
-                </li>
-              </ul>
-            </div>
+            <app-password-checklist
+              [control]="formNovaSenha.get('senha')!"
+              [senhasDiferentes]="senhasDiferentes"
+            ></app-password-checklist>
           </ng-container>
 
           <div class="col-12 mt-2">

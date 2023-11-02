@@ -9,6 +9,7 @@ import { LoginService } from '../services/login.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CadastroSenhaRequest } from 'src/app/shared/models/cliente/cadastro-senha-request.model';
 import { Subscription } from 'rxjs';
+import { ValidacoesForm } from 'src/app/utils/validacoes-form';
 
 @Component({
   selector: 'app-cadastrar-senha',
@@ -18,7 +19,7 @@ import { Subscription } from 'rxjs';
 export class CadastrarSenhaComponent implements OnInit, OnDestroy {
   faInvalid = faXmark;
   faValid = faCheck;
-  senhasDiferentes: boolean = false;
+  senhasDiferentes: boolean = true;
   passwordChecklist: boolean = false;
   focusPasswordType?: string;
 
@@ -54,29 +55,14 @@ export class CadastrarSenhaComponent implements OnInit, OnDestroy {
         if (tokenQueryParams) this.token = tokenQueryParams;
       }
     );
-  }
 
-  ngAfterContentChecked(): void {
-    const senha = this.formNovaSenha.get('senha');
-    const confirmacaoSenha = this.formNovaSenha.get('confirmacaoSenha');
+    this.formNovaSenha
+      .get('senha')
+      ?.valueChanges.subscribe(() => this.verificarSenhas());
 
-    if (
-      senha?.value === confirmacaoSenha?.value &&
-      senha?.value !== null &&
-      confirmacaoSenha?.value !== null &&
-      senha?.value !== '' &&
-      confirmacaoSenha?.value !== ''
-    ) {
-      this.senhasDiferentes = false;
-      if (senha?.valid && confirmacaoSenha?.valid) {
-        this.passwordChecklist = false;
-      }
-    } else {
-      this.senhasDiferentes = true;
-      if (!this.passwordChecklist) {
-        this.passwordChecklist = true;
-      }
-    }
+    this.formNovaSenha
+      .get('confirmacaoSenha')
+      ?.valueChanges.subscribe(() => this.verificarSenhas());
   }
 
   ngOnDestroy(): void {
@@ -89,24 +75,14 @@ export class CadastrarSenhaComponent implements OnInit, OnDestroy {
     this.passwordChecklist = true;
   }
 
-  blurPassword() {
-    if (
-      this.formNovaSenha.get('senha')?.valid &&
-      this.formNovaSenha.get('confirmacaoSenha')?.valid &&
-      !this.senhasDiferentes
-    ) {
-      this.passwordChecklist = false;
-    }
-  }
-
-  passwordValid(campo: string): boolean {
-    if (
-      this.formNovaSenha.controls[campo].hasError('required') ||
-      this.formNovaSenha.controls[campo].hasError('minlength')
-    ) {
-      return true;
-    }
-    return false;
+  verificarSenhas() {
+    const result = ValidacoesForm.senhasValid(
+      this.formNovaSenha.get('senha')!,
+      this.formNovaSenha.get('confirmacaoSenha')!,
+      this.passwordChecklist
+    );
+    this.passwordChecklist = result;
+    this.senhasDiferentes = result;
   }
 
   recuperarSenha() {

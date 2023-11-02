@@ -1,0 +1,49 @@
+.input-toogle {
+  height: 0;
+  width: 0;
+  visibility: hidden;
+
+  &:checked {
+    + #label-input-toogle {
+      background: var(--verde);
+
+      &:after {
+        left: calc(100% - 5px);
+        transform: translateX(-100%);
+      }
+    }
+  }
+}
+
+.label-input-toogle {
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+#label-input-toogle {
+  cursor: pointer;
+  text-indent: -9999px;
+  width: 50px;
+  height: 25px;
+  background: var(--cinza);
+  display: block;
+  border-radius: 100px;
+  position: relative;
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 15px;
+    height: 15px;
+    background: var(--branco);
+    border-radius: 90px;
+    transition: 0.2s;
+  }
+
+  &:active:after {
+    width: 15px;
+  }
+}

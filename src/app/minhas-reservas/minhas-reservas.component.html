@@ -181,21 +181,23 @@
   <form [formGroup]="formFiltros">
     <div class="row w-100">
       <div class="col-12 col-md-2">
-        <app-input-date
+        <app-input-field
           [formGroup]="formFiltros"
           [controlName]="'dataInicial'"
           [label]="'Data inicial'"
+          [inputType]="'date'"
           (emitterChange)="filterReservas()"
-        ></app-input-date>
+        ></app-input-field>
       </div>
 
       <div class="col-12 col-md-2">
-        <app-input-date
+        <app-input-field
           [formGroup]="formFiltros"
           [controlName]="'dataFinal'"
           [label]="'Data final'"
+          [inputType]="'date'"
           (emitterChange)="filterReservas()"
-        ></app-input-date>
+        ></app-input-field>
       </div>
 
       <div class="col-12 col-md-2">

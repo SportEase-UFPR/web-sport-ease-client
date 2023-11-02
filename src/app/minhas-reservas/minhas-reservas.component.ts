@@ -13,7 +13,7 @@ import { ReservaFeitaResponse } from '../shared/models/reserva/reserva-feita-res
 import { StatusLocacao } from '../shared/models/enums/status-locacao';
 import { Item } from '../shared/components/inputs/input-select-option/model/item.model';
 import { faEye, faStar } from '@fortawesome/free-regular-svg-icons';
-import * as moment from 'moment';
+const moment = require('moment');
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxUiLoaderService } from 'ngx-ui-loader';

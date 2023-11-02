@@ -19,50 +19,49 @@
       <form [formGroup]="formCadastroCliente" class="p-2">
         <div class="row w-100">
           <div class="col-12">
-            <app-input-text
+            <app-input-field
               [formGroup]="formCadastroCliente"
               [controlName]="'nome'"
               [label]="'Nome completo'"
               [validacaoInput]="true"
-            ></app-input-text>
+            ></app-input-field>
           </div>
 
           <div class="col-12">
-            <app-input-email
+            <app-input-field
               [formGroup]="formCadastroCliente"
               [controlName]="'email'"
               [label]="'E-mail'"
               [validacaoInput]="true"
-            ></app-input-email>
+              [inputType]="'email'"
+            ></app-input-field>
           </div>
 
           <div class="col-12">
-            <app-input-text
+            <app-input-field
               [formGroup]="formCadastroCliente"
               [controlName]="'cpf'"
               [label]="'CPF'"
               [validacaoInput]="true"
               [mask]="'000.000.000-00'"
-              (emmiterBlur)="validarCpf()"
-            ></app-input-text>
+            ></app-input-field>
           </div>
 
           <div class="col-12">
-            <app-input-checkbox
+            <app-input-toogle
               [formGroup]="formCadastroCliente"
               [controlName]="'vinculo'"
               [label]="'Sou aluno(a) da UFPR'"
-              (emmiterChange)="showGrr()"
-            ></app-input-checkbox>
+            ></app-input-toogle>
 
             <div class="mt-2" *ngIf="showInputGrr">
-              <app-input-text
+              <app-input-field
                 [formGroup]="formCadastroCliente"
                 [controlName]="'grr'"
                 [label]="'GRR (somente os números)'"
                 [validacaoInput]="true"
                 [mask]="'00000000'"
-              ></app-input-text>
+              ></app-input-field>
             </div>
           </div>
 
@@ -89,27 +88,10 @@
           </div>
 
           <ng-container *ngIf="passwordChecklist">
-            <div class="checklist">
-              <ul class="password-checklist">
-                <li
-                  [ngClass]="passwordValid('senha') ? 'tem-erros' : 'sem-erros'"
-                >
-                  <fa-icon
-                    [icon]="passwordValid('senha') ? faInvalid : faValid"
-                  ></fa-icon>
-
-                  A senha deve ter pelo menos <strong> 6 dígitos </strong>
-                </li>
-
-                <li [ngClass]="senhasDiferentes ? 'tem-erros' : 'sem-erros'">
-                  <fa-icon
-                    [icon]="senhasDiferentes ? faInvalid : faValid"
-                  ></fa-icon>
-
-                  As senhas devem ser <strong> iguais </strong>
-                </li>
-              </ul>
-            </div>
+            <app-password-checklist
+              [control]="formCadastroCliente.get('senha')!"
+              [senhasDiferentes]="senhasDiferentes"
+            ></app-password-checklist>
           </ng-container>
 
           <div class="col-12 d-block d-md-flex justify-content-end mt-2">

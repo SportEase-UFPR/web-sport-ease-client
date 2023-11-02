@@ -15,12 +15,13 @@
       <form [formGroup]="formLogin" class="p-2">
         <div class="row w-100 justify-content-center m-0">
           <div class="col-12">
-            <app-input-email
+            <app-input-field
               [formGroup]="formLogin"
               [controlName]="'email'"
               [label]="'E-mail'"
               [validacaoInput]="true"
-            ></app-input-email>
+              [inputType]="'email'"
+            ></app-input-field>
           </div>
 
           <div class="col-12 mt-2">

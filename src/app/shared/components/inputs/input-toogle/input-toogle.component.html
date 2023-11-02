@@ -1,0 +1,16 @@
+<div [formGroup]="formGroup" class="mb-3 d-flex align-items-center">
+  <input
+    formControlName="{{ controlName }}"
+    id="{{ controlName }}"
+    name="{{ controlName }}"
+    type="checkbox"
+    class="input-toogle"
+    (click)="onClick()"
+  />
+
+  <label id="label-input-toogle" for="{{ controlName }}"></label>
+
+  <div class="ms-2">
+    <app-label [idInput]="controlName" [textLabel]="label"></app-label>
+  </div>
+</div>

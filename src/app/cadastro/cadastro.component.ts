@@ -1,9 +1,4 @@
-import {
-  AfterContentChecked,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -14,16 +9,15 @@ import { CadastroService } from './services/cadastro.service';
 import { Cliente } from '../shared/models/cliente/cliente';
 import { Validacoes } from '../utils/validacoes';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { Subscription } from 'rxjs';
+import { Subscription, distinctUntilChanged } from 'rxjs';
+import { ValidacoesForm } from '../utils/validacoes-form';
 
 @Component({
   selector: 'app-cadastro',
   templateUrl: './cadastro.component.html',
   styleUrls: ['./cadastro.component.scss'],
 })
-export class CadastroComponent
-  implements OnInit, AfterContentChecked, OnDestroy
-{
+export class CadastroComponent implements OnInit, OnDestroy {
   public formCadastroCliente: FormGroup = new FormGroup({
     nome: new FormControl(null, [Validators.required]),
     email: new FormControl(null, [Validators.required, Validators.email]),
@@ -44,7 +38,7 @@ export class CadastroComponent
   faValid = faCheck;
 
   showInputGrr: boolean = false;
-  senhasDiferentes: boolean = false;
+  senhasDiferentes: boolean = true;
   passwordChecklist: boolean = false;
 
   focusPasswordType?: string;
@@ -67,29 +61,23 @@ export class CadastroComponent
         this.formCadastroCliente.get('email')?.setValue(queryParams?.['email']);
       }
     );
-  }
 
-  ngAfterContentChecked(): void {
-    const senha = this.formCadastroCliente.get('senha');
-    const confirmacaoSenha = this.formCadastroCliente.get('confirmacaoSenha');
+    this.formCadastroCliente
+      .get('vinculo')
+      ?.valueChanges.subscribe((value) => this.showGrr(value));
 
-    if (
-      senha?.value === confirmacaoSenha?.value &&
-      senha?.value !== null &&
-      confirmacaoSenha?.value !== null &&
-      senha?.value !== '' &&
-      confirmacaoSenha?.value !== ''
-    ) {
-      this.senhasDiferentes = false;
-      if (senha?.valid && confirmacaoSenha?.valid) {
-        this.passwordChecklist = false;
-      }
-    } else {
-      this.senhasDiferentes = true;
-      if (!this.passwordChecklist) {
-        this.passwordChecklist = true;
-      }
-    }
+    this.formCadastroCliente
+      .get('cpf')
+      ?.statusChanges.pipe(distinctUntilChanged())
+      .subscribe((status) => (status === 'VALID' ? this.validarCpf() : {}));
+
+    this.formCadastroCliente
+      .get('senha')
+      ?.valueChanges.subscribe(() => this.verificarSenhas());
+
+    this.formCadastroCliente
+      .get('confirmacaoSenha')
+      ?.valueChanges.subscribe(() => this.verificarSenhas());
   }
 
   ngOnDestroy(): void {
@@ -98,34 +86,24 @@ export class CadastroComponent
     this.inscricaoRota?.unsubscribe();
   }
 
+  verificarSenhas() {
+    const result = ValidacoesForm.senhasValid(
+      this.formCadastroCliente.get('senha')!,
+      this.formCadastroCliente.get('confirmacaoSenha')!,
+      this.passwordChecklist
+    );
+    this.passwordChecklist = result;
+    this.senhasDiferentes = result;
+  }
+
   focusPassword() {
     this.passwordChecklist = true;
   }
 
-  blurPassword() {
-    if (
-      this.formCadastroCliente.get('senha')?.valid &&
-      this.formCadastroCliente.get('confirmacaoSenha')?.valid &&
-      !this.senhasDiferentes
-    ) {
-      this.passwordChecklist = false;
-    }
-  }
-
-  passwordValid(campo: string): boolean {
-    if (
-      this.formCadastroCliente.controls[campo].hasError('required') ||
-      this.formCadastroCliente.controls[campo].hasError('minlength')
-    ) {
-      return true;
-    }
-    return false;
-  }
-
-  showGrr(): void {
+  showGrr(show: boolean): void {
     const form = this.formCadastroCliente;
     const grr = form.get('grr');
-    if (form.get('vinculo')?.value) {
+    if (show) {
       this.showInputGrr = true;
       grr?.addValidators([Validators.required]);
       grr?.updateValueAndValidity();

@@ -1,18 +1,21 @@
 <div
   [formGroup]="formGroup"
-  class="mb-3"
   [ngClass]="{
     'is-invalid-input': inputValid()
   }"
+  class="mb-3"
 >
   <app-label [idInput]="controlName" [textLabel]="label"></app-label>
   <div class="d-flex">
     <input
       formControlName="{{ controlName }}"
       id="{{ controlName }}"
-      type="email"
-      class="input-basic w-100"
       name="{{ controlName }}"
+      placeholder="{{ placeholder }}"
+      [mask]="mask"
+      [type]="inputType"
+      class="input-basic input-number w-100"
+      (change)="onChange()"
     />
   </div>
 </div>

@@ -8,7 +8,7 @@ import {
 import { ReservaFeitaResponse } from 'src/app/shared/models/reserva/reserva-feita-response';
 import { StatusLocacao } from 'src/app/shared/models/enums/status-locacao';
 import { DashboardService } from '../services/dashboard.service';
-import * as moment from 'moment';
+const moment = require('moment');
 
 @Component({
   selector: 'app-card-reserva',

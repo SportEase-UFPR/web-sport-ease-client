@@ -11,6 +11,7 @@ import { ClienteAlteracaoRequest } from '../shared/models/cliente/cliente-altera
 import { ModalConfirmacaoComponent } from './modal-confirmacao/modal-confirmacao.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ClienteAlteracaoResponse } from '../shared/models/cliente/cliente-alteracao-response.model';
+import { ValidacoesForm } from '../utils/validacoes-form';
 
 @Component({
   selector: 'app-edicao-perfil',
@@ -21,9 +22,11 @@ export class EdicaoPerfilComponent implements OnInit, OnDestroy {
   public formAlteracaoPerfil: FormGroup = new FormGroup({
     nome: new FormControl(null, [Validators.required]),
     email: new FormControl(null, [Validators.required, Validators.email]),
-    cpf: new FormControl(null, [Validators.required]),
+    cpf: new FormControl({ value: null, disabled: true }, [
+      Validators.required,
+    ]),
     vinculo: new FormControl(false),
-    grr: new FormControl(null),
+    grr: new FormControl({ value: null, disabled: false }),
     senha: new FormControl(null, [
       Validators.required,
       Validators.minLength(6),
@@ -36,7 +39,7 @@ export class EdicaoPerfilComponent implements OnInit, OnDestroy {
 
   faInvalid = faXmark;
   faValid = faCheck;
-  senhasDiferentes: boolean = false;
+  senhasDiferentes: boolean = true;
   passwordChecklist: boolean = false;
   showInputGrr: boolean = false;
   isAluno: boolean = false;
@@ -63,7 +66,7 @@ export class EdicaoPerfilComponent implements OnInit, OnDestroy {
           this.formAlteracaoPerfil.patchValue({
             nome: this.cliente.nome,
             email: this.cliente.email,
-            cpf: this.maskCpf(this.cliente.cpf!),
+            cpf: this.cliente.cpf,
             grr: this.haveGrr(this.cliente.grr!),
           });
         },
@@ -71,32 +74,18 @@ export class EdicaoPerfilComponent implements OnInit, OnDestroy {
           console.error(err);
         },
       });
-  }
 
-  ngAfterContentChecked(): void {
-    const senha = this.formAlteracaoPerfil.get('senha');
-    const confirmacaoSenha = this.formAlteracaoPerfil.get('confirmacaoSenha');
+    this.formAlteracaoPerfil
+      .get('vinculo')
+      ?.valueChanges.subscribe((value) => this.showGrr(value));
 
-    if (
-      senha?.value === confirmacaoSenha?.value &&
-      senha?.value !== null &&
-      confirmacaoSenha?.value !== null &&
-      senha?.value !== '' &&
-      confirmacaoSenha?.value !== ''
-    ) {
-      this.senhasDiferentes = false;
-      if (senha?.valid && confirmacaoSenha?.valid) {
-        this.passwordChecklist = false;
-      }
-    } else {
-      this.senhasDiferentes = true;
-      if (
-        !this.passwordChecklist &&
-        (senha?.touched || confirmacaoSenha?.touched)
-      ) {
-        this.passwordChecklist = true;
-      }
-    }
+    this.formAlteracaoPerfil
+      .get('senha')
+      ?.valueChanges.subscribe(() => this.verificarSenhas());
+
+    this.formAlteracaoPerfil
+      .get('confirmacaoSenha')
+      ?.valueChanges.subscribe(() => this.verificarSenhas());
   }
 
   ngOnDestroy(): void {
@@ -104,28 +93,28 @@ export class EdicaoPerfilComponent implements OnInit, OnDestroy {
     this.inscricaoCliente?.unsubscribe();
   }
 
+  verificarSenhas() {
+    const result = ValidacoesForm.senhasValid(
+      this.formAlteracaoPerfil.get('senha')!,
+      this.formAlteracaoPerfil.get('confirmacaoSenha')!,
+      this.passwordChecklist
+    );
+    this.passwordChecklist = result;
+    this.senhasDiferentes = result;
+  }
+
   focusPassword() {
     this.passwordChecklist = true;
   }
-
-  passwordValid(campo: string): boolean {
-    if (
-      this.formAlteracaoPerfil.controls[campo].hasError('required') ||
-      this.formAlteracaoPerfil.controls[campo].hasError('minlength')
-    ) {
-      return true;
-    }
-    return false;
-  }
-
+  
   navigate(): void {
     this.router.navigateByUrl('/dashboard');
   }
 
-  showGrr(): void {
+  showGrr(show: boolean): void {
     const form = this.formAlteracaoPerfil;
     const grr = form.get('grr');
-    if (form.get('vinculo')?.value) {
+    if (show) {
       this.showInputGrr = true;
       grr?.addValidators([Validators.required]);
       grr?.updateValueAndValidity();
@@ -136,25 +125,15 @@ export class EdicaoPerfilComponent implements OnInit, OnDestroy {
     }
   }
 
-  maskCpf(cpf: string): string {
-    return (
-      cpf.slice(0, 3) +
-      '.' +
-      cpf.slice(3, 6) +
-      '.' +
-      cpf.slice(6, 9) +
-      '-' +
-      cpf.slice(9)
-    );
-  }
-
   haveGrr(grr: string | null): string | null {
     if (grr) {
       this.formAlteracaoPerfil.get('vinculo')?.setValue(true);
-      this.showGrr();
+      this.showGrr(true);
+      this.formAlteracaoPerfil.get('grr')?.disable();
       return grr;
     }
     this.isAluno = false;
+    this.formAlteracaoPerfil.get('grr')?.enable();
     this.formAlteracaoPerfil.get('vinculo')?.setValue(false);
     return null;
   }
