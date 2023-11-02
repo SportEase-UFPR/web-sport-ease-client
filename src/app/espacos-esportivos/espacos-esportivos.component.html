@@ -5,7 +5,7 @@
     Conheça os espaços esportivos
   </h3>
 
-  <div class="d-flex">
+  <div class="d-flex" *ngIf="esportes.length > 1">
     <form [formGroup]="formFilter">
       <app-input-select-option
         [formGroup]="formFilter"

@@ -40,9 +40,13 @@ export class EspacosEsportivosComponent implements OnInit {
 
           this.eeService.listarEsportes().subscribe({
             next: (result) => {
-              this.esportes = result.map((e) => new Item(e.id, e.nome));
-              this.esportes.push(new Item(0, 'Todos'));
-              this.esportes.sort((a, b) => Number(a.value) - Number(b.value));
+              if (result.length > 1) {
+                this.esportes = result.map((e) => new Item(e.id, e.nome));
+                this.esportes.push(new Item(0, 'Todos'));
+                this.esportes.sort((a, b) => Number(a.value) - Number(b.value));
+              } else {
+                this.esportes = []
+              }
             },
             error: (err) => {
               this.esportes = [];
