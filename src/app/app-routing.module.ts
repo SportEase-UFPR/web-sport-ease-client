@@ -69,22 +69,22 @@ const routes: Routes = [
 
   {
     path: 'ativar-conta',
-    component: AtivacaoContaComponent
+    component: AtivacaoContaComponent,
   },
 
   {
     path: 'recuperar-senha',
-    component: RecuperarSenhaComponent
+    component: RecuperarSenhaComponent,
   },
 
   {
     path: 'cadastrar-senha',
-    component: CadastrarSenhaComponent
+    component: CadastrarSenhaComponent,
   },
 
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
 

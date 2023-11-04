@@ -7,6 +7,7 @@ import {
 } from '@fortawesome/free-regular-svg-icons';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { EspacoEsportivoResponse } from 'src/app/shared/models/espaco-esportivo/espaco-esportivo-response.model';
+import { EspacosEsportivosService } from '../services/espacos-esportivos.service';
 
 @Component({
   selector: 'app-card-espaco-esportivo',
@@ -15,14 +16,17 @@ import { EspacoEsportivoResponse } from 'src/app/shared/models/espaco-esportivo/
 })
 export class CardEspacoEsportivoComponent implements OnInit {
   @Input() espaco!: EspacoEsportivoResponse;
-  @Input() ratingMedio: string[] = ['a', 'a', 'm', 'c', 'c']
+  @Input() ratingMedio: string[] = ['a', 'a', 'm', 'c', 'c'];
 
   faCalendar = faCalendarCheck;
   faCalendarX = faCalendarXmark;
   faStar = faStar;
 
-
-  constructor(private sanatizer: DomSanitizer, private router: Router) {}
+  constructor(
+    private sanatizer: DomSanitizer,
+    private router: Router,
+    private eeService: EspacosEsportivosService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -38,5 +42,23 @@ export class CardEspacoEsportivoComponent implements OnInit {
         espaco: id,
       },
     });
+  }
+
+  buildingStartsRating(media: number): string[] {
+    let stars = ['a', 'a', 'a', 'a', 'a'];
+    if (media <= 4.7) {
+      const parteInteira = Math.trunc(media);
+      const parteDecimal = media % 1;
+      for (let i = parteInteira; i < 5; i++) {
+        if (i == parteInteira) {
+          stars[i] =
+            parteDecimal <= 0.3 ? 'c' : parteDecimal >= 0.7 ? 'a' : 'm';
+        } else {
+          stars[i] = 'c';
+        }
+      }
+    }
+
+    return stars;
   }
 }
