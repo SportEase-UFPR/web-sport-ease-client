@@ -65,7 +65,7 @@
 <ng-template #modalDetalhes let-modal>
   <div class="modal-body">
     <div class="text-end">
-      <button class="btn-close-modal text-dark-blue" (click)="closeModal()">
+      <button class="btn-close-modal text-gray" (click)="closeModal()">
         <fa-icon [icon]="faCancel"></fa-icon>
       </button>
     </div>
@@ -74,27 +74,21 @@
       <h4 class="modal-title text-green text-center">Detalhes da reserva</h4>
     </div>
 
+    <hr class="mt-1 mb-2" />
+
     <div class="row w-100 mt-3">
-      <div class="col-12 col-md-8 my-1">
-        <strong>Data e horário da solicitação: </strong>
-        <span>
-          {{ dadosReserva?.dataHoraSolicitacao | date : "dd/MM/yyyy - HH:mm" }}
-        </span>
+      <div class="col-12 col-md-6 my-2">
+        <span class="info-title">Reserva Nº: </span
+        ><span>{{ dadosReserva?.id }} </span>
       </div>
 
-      <div class="col-12 col-md-4 my-1">
-        <strong>Numero da reserva: </strong><span>{{ dadosReserva?.id }} </span>
+      <div class="col-12 col-md-6 my-2">
+        <span class="info-title">Status: </span>
+        <span>{{ statusToString(dadosReserva?.status!) | titlecase }}</span>
       </div>
 
-      <div class="col-12 col-md-4 my-1">
-        <strong>Local: </strong
-        ><span
-          >{{ getNomeLocal(dadosReserva?.idEspacoEsportivo!) | titlecase }}
-        </span>
-      </div>
-
-      <div class="col-12 col-md-8 my-1">
-        <strong>Data e horário da reserva: </strong>
+      <div class="col-12 my-2">
+        <span class="info-title">Data e horário da reserva: </span>
         <span
           >{{
             dadosReserva?.dataHoraInicioReserva | date : "dd/MM/yyyy - HH:mm"
@@ -103,23 +97,32 @@
         >
       </div>
 
-      <div class="col-12 col-md-6 my-1">
-        <strong>Status: </strong>
-        <span>{{ statusToString(dadosReserva?.status!) | titlecase }}</span>
+      <div class="col-12 col-md-5 my-2">
+        <span class="info-title">Local: </span
+        ><span
+          >{{ getNomeLocal(dadosReserva?.idEspacoEsportivo!) | titlecase }}
+        </span>
       </div>
 
-      <div class="col-12 col-md-6 my-1">
-        <strong>Quantidade de participantes: </strong>
+      <div class="col-12 col-md-6 my-2">
+        <span class="info-title">Participantes: </span>
         <span>{{ dadosReserva?.qtdParticipantes }} pessoas</span>
       </div>
 
-      <div class="col-12 my-1">
-        <strong>Objetivo da solicitação </strong>
+      <div class="col-12 my-2">
+        <span class="info-title">Data e horário da solicitação: </span>
+        <span>
+          {{ dadosReserva?.dataHoraSolicitacao | date : "dd/MM/yyyy - HH:mm" }}
+        </span>
+      </div>
+
+      <div class="col-12 my-2">
+        <span class="info-title">Objetivo da solicitação </span>
         <span>{{ dadosReserva?.motivoSolicitacao }}</span>
       </div>
 
-      <div class="col-12 my-1" *ngIf="dadosReserva?.motivoCancelamento">
-        <strong>Motivo para negação da reserva: </strong>
+      <div class="col-12 my-2" *ngIf="dadosReserva?.motivoCancelamento">
+        <span class="info-title">Motivo para negação da reserva: </span>
         <span>{{ dadosReserva?.motivoCancelamento }}</span>
       </div>
     </div>
@@ -310,7 +313,7 @@
                         [icone]="faEye"
                         [textButton]="'Detalhes'"
                         (emmiterClick)="
-                          openModalConfirmacao(modalDetalhes, r.id!, 'lg', r)
+                          openModalConfirmacao(modalDetalhes, r.id!, 'md', r)
                         "
                       ></app-btn-border-green>
                     </div>
@@ -334,7 +337,7 @@
                       ></app-btn-green>
                     </div>
 
-                    <div class="me-2" *ngIf="false">
+                    <div class="me-2" *ngIf="r.status! == 'FINALIZADA'">
                       <app-btn-green
                         [showIcon]="true"
                         [icone]="faStar"

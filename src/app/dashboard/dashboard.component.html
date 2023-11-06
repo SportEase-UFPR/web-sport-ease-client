@@ -119,11 +119,15 @@
 
   <div class="row w-100 justify-content-center">
     <ng-container *ngIf="reservas.length; else semReservas">
-      <div class="col-12 col-md-6" *ngFor="let r of reservas">
+      <div class="col-12 col-md-6 mt-2" *ngFor="let r of reservas">
         <app-card-reserva
           [dadosReserva]="r"
-          (emmiterClickCancelar)="openModalConfirmacao(modalCancelaReserva, r.id!)"
-          (emmiterClickUsar)="openModalConfirmacao(modalConfirmarUso, r.id!)"
+          (emmiterClickCancelar)="
+            openModalConfirmacao(modalCancelaReserva, r.id!)
+          "
+          (emmiterClickUsar)="
+            openModalConfirmacao(modalConfirmarUso, r.id!, modalAvaliacao)
+          "
         ></app-card-reserva>
       </div>
     </ng-container>

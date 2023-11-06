@@ -1,35 +1,40 @@
 <div class="card-reserva" *ngIf="dadosReserva">
   <div class="reserva-header">
-    <h4>Reserva #{{ dadosReserva.id }}</h4>
-    <strong class="{{ dadosReserva.status }}"
-      >Reserva {{ statusToString(dadosReserva.status!) | titlecase }}</strong
+    <h4 class="text-green">Reserva #{{ dadosReserva.id }}</h4>
+    <span class="{{ dadosReserva.status }}"
+      >Reserva {{ statusToString(dadosReserva.status!) | titlecase }}</span
     >
   </div>
+
+  <hr class="mt-1 mb-2" />
 
   <div class="reserva-body">
     <div class="row w-100">
       <div class="col-12">
         <p>
-          <strong>Período: </strong>
+          <span class="info-title text-green">Período: </span>
           <span
-            >{{
-              dadosReserva.dataHoraInicioReserva | date : "HH:mm"
-            }}
+            >{{ dadosReserva.dataHoraInicioReserva | date : "HH:mm" }}
             às
-            {{ dadosReserva.dataHoraFimReserva | date : "HH:mm - dd/MM/yyyy" }}</span
+            {{
+              dadosReserva.dataHoraFimReserva | date : "HH:mm - dd/MM/yyyy"
+            }}</span
           >
         </p>
       </div>
 
       <div class="col-12" *ngIf="local">
         <p>
-          <strong>Local: </strong> <span>{{ local | titlecase }}</span>
+          <span class="info-title text-green">Local: </span>
+          <span>{{ local | titlecase }}</span>
         </p>
       </div>
 
       <div class="col-12">
         <p>
-          <strong>Quantidade de participantes: </strong>
+          <span class="info-title text-green"
+            >Quantidade de participantes:
+          </span>
           <span>{{ dadosReserva.qtdParticipantes }} pessoas</span>
         </p>
       </div>
@@ -42,12 +47,12 @@
         aria-controls="collapseExample"
         class="motivo-reserva-collapse mb-1"
       >
-        <strong>
+        <span class="info-title text-green">
           Motivo da reserva
           <span>
             <fa-icon [icon]="changeIcon(motivoReservaCollapsed)"></fa-icon>
           </span>
-        </strong>
+        </span>
       </p>
 
       <div
@@ -67,14 +72,14 @@
         aria-controls="collapseExample"
         class="motivo-reserva-collapse mb-1"
       >
-        <strong>
+        <span>
           Justificativa para reserva negada
           <span>
             <fa-icon
               [icon]="changeIcon(justificativaReservaCollapsed)"
             ></fa-icon>
           </span>
-        </strong>
+        </span>
       </p>
 
       <div
@@ -90,7 +95,7 @@
 
   <div class="reserva-footer">
     <app-btn-green
-    *ngIf="showConfirmacaoReserva()"
+      *ngIf="showConfirmacaoReserva()"
       [showIcon]="true"
       [icone]="faConfirm"
       [textButton]="'Confirmar uso'"

@@ -12,9 +12,13 @@ export class InputStarRatingComponent implements OnInit {
   @Input() controlName?: any;
   @Input() label: string = '';
 
+  rating: number = 0.0
+
   faStar = faStar;
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.formGroup.get('rating')?.valueChanges.subscribe((v) => this.rating = Number(v));
+  }
 }

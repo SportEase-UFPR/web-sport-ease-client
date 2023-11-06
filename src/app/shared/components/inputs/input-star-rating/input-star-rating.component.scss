@@ -3,10 +3,20 @@
 #star-rating {
   .rating-group {
     display: inline-flex;
+
+    &:hover .label-rating fa-icon {
+      color: var(--amarelo);
+    }
   }
 
   .rating-icon {
     pointer-events: none;
+    color: var(--cinza-claro);
+  }
+
+  .rating-icon-checked {
+    pointer-events: none;
+    color: var(--amarelo);
   }
 
   .input-ratting {
@@ -14,29 +24,13 @@
     left: -9999px !important;
   }
 
-  .input-ratting--none {
-    display: none;
-  }
-
   .label-rating {
     cursor: pointer;
     padding: 0 0.1em;
     font-size: 2rem;
-  }
 
-  .rating-icon--star {
-    color: var(--amarelo);
-  }
-
-  .input-ratting:checked ~ .label-rating .rating-icon--star {
-    color: var(--cinza-claro);
-  }
-
-  .rating-group:hover .label-rating .rating-icon--star {
-    color: var(--amarelo);
-  }
-
-  .input-ratting:hover ~ .label-rating .rating-icon--star {
-    color: var(--cinza-claro);
+    &:hover ~ .label-rating fa-icon {
+      color: var(--cinza-claro);
+    }
   }
 }

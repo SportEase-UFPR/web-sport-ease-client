@@ -8,6 +8,7 @@ import { ReservaFeitaResponse } from '../shared/models/reserva/reserva-feita-res
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ReservaAvaliacao } from '../shared/models/reserva/reserva-avaliacao.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -134,8 +135,42 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  enviarAvaliacao(){
+  enviarAvaliacao() {
+    const form = this.formAvaliacao;
 
+    if (form.valid) {
+      this.ngxLoaderService.startLoader('loader-01');
+      this.dashboardService
+        .avaliarResrva(
+          this.idReserva,
+          new ReservaAvaliacao(
+            Number(form.get('rating')?.value),
+            form.get('comentario')?.value
+          )
+        )
+        .subscribe({
+          next: (result) => {
+            this.toastrService.success(
+              'Avaliação da reserva realizada com sucesso',
+              'Sucesso'
+            );
+            this.closeModal();
+          },
+          error: (err) => {
+            this.toastrService.error(
+              'Por favor, tente novamente mais tarde',
+              'Erro ao enviar avaliação'
+            );
+            this.closeModal();
+          },
+        });
+      this.ngxLoaderService.stopLoader('loader-01');
+    } else {
+      this.toastrService.warning(
+        'Por favor, informe a nota para a reserva',
+        'A avaliação é obrigatória'
+      );
+    }
   }
 
   navigate() {

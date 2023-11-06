@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { EspacoEsportivoResponse } from 'src/app/shared/models/espaco-esportivo/espaco-esportivo-response.model';
+import { ReservaAvaliacao } from 'src/app/shared/models/reserva/reserva-avaliacao.model';
 import { ReservaFeitaResponse } from 'src/app/shared/models/reserva/reserva-feita-response';
 import { UsuarioSs } from 'src/app/shared/models/usuario-ss/usuario-ss.model';
 import { SessionStorageService } from 'src/app/shared/services/session-storage/session-storage.service';
@@ -58,6 +59,14 @@ export class MinhasReservasService {
     return this.httpService.put(
       `${env.baseUrl}locacoes/confirmar-uso/${idReserva}`,
       null,
+      { headers: this.createHeaders() }
+    );
+  }
+
+  public avaliarResrva(idReserva: number, dados: ReservaAvaliacao) {
+    return this.httpService.post(
+      `${env.baseUrl}locacoes/avaliar-reserva/${idReserva}`,
+      JSON.stringify(dados),
       { headers: this.createHeaders() }
     );
   }

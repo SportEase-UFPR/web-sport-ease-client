@@ -17,6 +17,7 @@ const moment = require('moment');
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { ReservaAvaliacao } from '../shared/models/reserva/reserva-avaliacao.model';
 
 @Component({
   selector: 'app-minhas-reservas',
@@ -25,7 +26,7 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 })
 export class MinhasReservasComponent implements OnInit {
   formAvaliacao: FormGroup = new FormGroup({
-    rating: new FormControl(-1, [Validators.required]),
+    rating: new FormControl(null, [Validators.required]),
     comentario: new FormControl(null),
   });
 
@@ -197,8 +198,6 @@ export class MinhasReservasComponent implements OnInit {
     tamanho: string = 'md',
     dadosReserva?: ReservaFeitaResponse
   ): void {
-    console.log('Aqui');
-
     this.idReserva = idReserva;
     this.dadosReserva = dadosReserva;
 
@@ -290,5 +289,41 @@ export class MinhasReservasComponent implements OnInit {
     return false;
   }
 
-  enviarAvaliacao() {}
+  enviarAvaliacao() {
+    const form = this.formAvaliacao;
+
+    if (form.valid) {
+      this.ngxLoaderService.startLoader('loader-01');
+      this.minhasReservasService
+        .avaliarResrva(
+          this.idReserva,
+          new ReservaAvaliacao(
+            Number(form.get('rating')?.value),
+            form.get('comentario')?.value
+          )
+        )
+        .subscribe({
+          next: (result) => {
+            this.toastrService.success(
+              'Avaliação da reserva realizada com sucesso',
+              'Sucesso'
+            );
+            this.closeModal();
+          },
+          error: (err) => {
+            this.toastrService.error(
+              'Por favor, tente novamente mais tarde',
+              'Erro ao enviar avaliação'
+            );
+            this.closeModal();
+          },
+        });
+      this.ngxLoaderService.stopLoader('loader-01');
+    } else {
+      this.toastrService.warning(
+        'Por favor, informe a nota para a reserva',
+        'A avaliação é obrigatória'
+      );
+    }
+  }
 }

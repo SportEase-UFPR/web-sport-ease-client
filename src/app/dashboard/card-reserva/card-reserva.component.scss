@@ -36,12 +36,12 @@
   }
 
   .reserva-body {
+    .info-title {
+      font-weight: 500;
+    }
+    
     .motivo-reserva-collapse {
       cursor: pointer;
-
-      span {
-        font-size: 18px;
-      }
     }
   }
 

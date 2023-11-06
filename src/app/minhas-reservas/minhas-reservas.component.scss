@@ -1,5 +1,10 @@
 @import "/src/cores.scss";
 
+.info-title {
+  font-weight: 400;
+  color: var(--verde);
+}
+
 .table-content {
   background-color: var(--branco);
   box-shadow: 2px 2px 4px 0 var(--cinza-claro);

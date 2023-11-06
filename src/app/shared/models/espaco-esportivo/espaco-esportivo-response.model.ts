@@ -15,6 +15,7 @@ export class EspacoEsportivoResponse {
     public horaAbertura?: string,
     public horaFechamento?: string,
     public periodoLocacao?: string,
-    public maxLocacaoDia?: number
+    public maxLocacaoDia?: number,
+    public mediaAvaliacoes?: number
   ) {}
 }

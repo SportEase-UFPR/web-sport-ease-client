@@ -1,9 +1,9 @@
 <div class="my-3">
   <div class="d-flex justify-content-between align-items-end">
-    <h5 class="text-dark-blue">{{ espaco.nome | titlecase }}</h5>
+    <h5 class="text-green">{{ espaco.nome | titlecase }}</h5>
 
     <div class="rating pb-2">
-      <span *ngFor="let r of buildingStartsRating(4.2)" [ngSwitch]="r">
+      <span *ngFor="let r of buildingStartsRating(espaco?.mediaAvaliacoes || 5)" [ngSwitch]="r">
         <ng-container *ngSwitchCase="'a'">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -71,28 +71,28 @@
 
     <div class="col-12 col-md-8 infos">
       <div>
-        <p class="text-dark-blue mb-1"><strong>Descrição do local</strong></p>
+        <p class="text-dark-blue mb-1"><span class="info-title">Descrição do local</span></p>
         <p class="text-dark-blue">{{ espaco.descricao }}</p>
       </div>
 
       <div class="row w-100">
         <div class="col-12 col-md-4">
-          <p class="text-dark-blue mb-1"><strong>Dimensões</strong></p>
+          <p class="text-dark-blue mb-1"><span class="info-title">Dimensões</span></p>
           <p class="text-dark-blue">{{ espaco.dimensoes }}</p>
         </div>
 
         <div class="col-12 col-md-4">
-          <p class="text-dark-blue mb-1"><strong>Piso</strong></p>
+          <p class="text-dark-blue mb-1"><span class="info-title">Piso</span></p>
           <p class="text-dark-blue">{{ espaco.piso }}</p>
         </div>
 
         <div class="col-12 col-md-4">
-          <p class="text-dark-blue mb-1"><strong>Capacidade</strong></p>
+          <p class="text-dark-blue mb-1"><span class="info-title">Capacidade</span></p>
           <p class="text-dark-blue">{{ espaco.capacidade + " pessoas" }}</p>
         </div>
 
         <div class="col-12 col-md-4">
-          <p class="text-dark-blue mb-1"><strong>Duração da locação</strong></p>
+          <p class="text-dark-blue mb-1"><span class="info-title">Duração da locação</span></p>
           <p class="text-dark-blue">
             {{ espaco.periodoLocacao! | mask : "Hh:mm" }}
           </p>
@@ -100,7 +100,7 @@
 
         <div class="col-12 col-md-6">
           <p class="text-dark-blue mb-1">
-            <strong>Horário de funcionamento</strong>
+            <span class="info-title">Horário de funcionamento</span>
           </p>
           <p class="text-dark-blue">
             {{ espaco.horaAbertura! | mask : "Hh:mm" }} -
@@ -110,7 +110,7 @@
       </div>
 
       <div>
-        <p class="text-dark-blue"><strong>Tipos de esporte</strong></p>
+        <p><span class="info-title">Tipos de esporte</span></p>
         <span class="esporte px-3" *ngFor="let e of espaco.listaEsportes">{{
           e.nome | titlecase
         }}</span>
