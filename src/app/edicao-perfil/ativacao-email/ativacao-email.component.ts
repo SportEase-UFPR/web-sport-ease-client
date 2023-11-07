@@ -31,7 +31,9 @@ export class AtivacaoEmailComponent implements OnInit, OnDestroy {
         const token = queryParams['token'];
 
         if (token) {
-          const ativacaoEmail: EmailAtivacaoRequest = new EmailAtivacaoRequest(token)
+          const ativacaoEmail: EmailAtivacaoRequest = new EmailAtivacaoRequest(
+            token
+          );
           this.inscricaoAtivacao = this.clienteService
             .ativarEmail(ativacaoEmail)
             .subscribe({
@@ -45,6 +47,9 @@ export class AtivacaoEmailComponent implements OnInit, OnDestroy {
                 this.emailAtivada = false;
               },
             });
+        } else {
+          this.ativandoEmail = false;
+          this.emailAtivada = false;
         }
       }
     );

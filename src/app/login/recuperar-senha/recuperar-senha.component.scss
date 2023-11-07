@@ -5,3 +5,11 @@
 a {
   cursor: pointer;
 }
+
+@media screen and (max-width: 425px) {
+  .card-fomulario {
+    width: 90%;
+    margin-bottom: 5px;
+    margin-top: 5px !important;
+  }
+}

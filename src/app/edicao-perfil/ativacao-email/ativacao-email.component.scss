@@ -30,3 +30,11 @@
     transform: rotate(1turn);
   }
 }
+
+@media screen and (max-width: 425px) {
+  .card-msg {
+    width: 90%;
+    margin-bottom: 5px;
+    margin-top: 5px !important;
+  }
+}

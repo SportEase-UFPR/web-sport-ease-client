@@ -12,28 +12,36 @@ import { InstrucoesAtivacaoContaComponent } from './instrucoes-ativacao-conta/in
 import { SharedModule } from '../shared/shared.module';
 import { CadastroComponent } from './cadastro.component';
 import { AtivacaoContaComponent } from './ativacao-conta/ativacao-conta.component';
-import { NgxUiLoaderConfig, NgxUiLoaderModule, PB_DIRECTION, POSITION, SPINNER } from 'ngx-ui-loader';
+import {
+  NgxUiLoaderConfig,
+  NgxUiLoaderModule,
+  PB_DIRECTION,
+  POSITION,
+  SPINNER,
+} from 'ngx-ui-loader';
+import { RouterModule } from '@angular/router';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
-  bgsColor: "#0fd45e",
+  bgsColor: '#0fd45e',
   bgsPosition: POSITION.centerCenter,
   bgsSize: 40,
   bgsType: SPINNER.ballSpinClockwise,
   fgsType: SPINNER.ballSpin,
   fgsColor: '#0fd45e',
   blur: 10,
-  overlayColor: "rgba(255,255,255,0.5)",
-  hasProgressBar: false
+  overlayColor: 'rgba(255,255,255,0.5)',
+  hasProgressBar: false,
 };
 
 @NgModule({
   declarations: [
     InstrucoesAtivacaoContaComponent,
     CadastroComponent,
-    AtivacaoContaComponent
+    AtivacaoContaComponent,
   ],
   imports: [
     CommonModule,
+    RouterModule,
     BrowserAnimationsModule,
     SharedModule,
     FormsModule,
@@ -45,8 +53,6 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ToastrModule.forRoot(),
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
   ],
-  providers: [
-    provideNgxMask()
-  ],
+  providers: [provideNgxMask()],
 })
 export class CadastroModule {}

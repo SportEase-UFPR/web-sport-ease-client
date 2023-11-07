@@ -46,6 +46,9 @@ export class AtivacaoContaComponent implements OnInit, OnDestroy {
                 this.contaAtivada = false;
               },
             });
+        } else {
+          this.ativandoConta = false;
+          this.contaAtivada = false;
         }
       }
     );

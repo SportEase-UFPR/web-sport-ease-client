@@ -8,6 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ModalConfirmacaoComponent } from './modal-confirmacao/modal-confirmacao.component';
 import { AtivacaoEmailComponent } from './ativacao-email/ativacao-email.component';
+import { RouterModule } from '@angular/router';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: "#0fd45e",
@@ -32,6 +33,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   imports: [
     CommonModule,
     SharedModule,
+    RouterModule,
     ReactiveFormsModule,
     FontAwesomeModule,
     ToastrModule.forRoot(),
