@@ -87,7 +87,17 @@ export class NovaReservaComponent implements OnInit {
 
   showNextSteps(): void {
     this.ngxService.startLoader('loader-01');
+    this.formNovaReserva.patchValue({
+      qtdPessoas: null,
+      data: null,
+      horario: null,
+      objetivo: null,
+    });
+    this.horarios = [];
+    this.horariosDisponiveis = [];
     this.nextSteps = true;
+    this.showHorarios = false;
+    this.showObjetivo = false;
     this.ngxService.stopLoader('loader-01');
   }
 

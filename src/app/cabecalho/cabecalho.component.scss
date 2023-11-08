@@ -28,13 +28,26 @@ header {
     background-color: var(--vermelho);
     color: var(--branco);
     border-radius: 50%;
-    height: 20px;
-    width: 20px;
+    height: 17px;
+    width: 17px;
+    font-size: 12px;
   }
 
   fa-icon {
     font-size: 30px;
     color: var(--azul-escuro);
+  }
+}
+
+.com-notificacao {
+  fa-icon {
+    color: var(--azul-escuro);
+  }
+}
+
+.sem-notificacao {
+  fa-icon {
+    color: var(--cinza-claro);
   }
 }
 
@@ -64,6 +77,24 @@ header {
     background-color: transparent;
     list-style: none;
     padding: 0;
+    height: 90%;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--verde) var(--branco);
+
+    &::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: var(--branco);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--verde);
+      border-radius: 20px;
+      border: 3px solid var(--branco);
+    }
   }
 
   li {

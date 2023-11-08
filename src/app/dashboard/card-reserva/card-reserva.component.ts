@@ -63,8 +63,20 @@ export class CardReservaComponent implements OnInit {
 
   showConfirmacaoReserva(): boolean {
     if (
-      moment().diff(moment(this.dadosReserva?.dataHoraInicioReserva), 'hour') >=
-      0
+      moment().diff(
+        moment(this.dadosReserva?.dataHoraInicioReserva),
+        'minutes'
+      ) >= 5
+    ) {
+      return true;
+    }
+
+    return false;
+  }
+
+  showCancelarReserva(): boolean {
+    if (
+      moment(this.dadosReserva?.dataHoraInicioReserva).diff(moment(), 'minutes') >= 15
     ) {
       return true;
     }

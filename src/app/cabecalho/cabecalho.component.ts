@@ -14,6 +14,7 @@ export class CabecalhoComponent implements OnInit {
   faClose = faXmark;
 
   isHidden: boolean = false;
+  qtdNotificaoNaoLida: number = 5
 
   constructor() {}
 

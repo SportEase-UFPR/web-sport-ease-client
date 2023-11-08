@@ -183,7 +183,7 @@ export class MinhasReservasComponent implements OnInit {
 
   showConfirmacaoReserva(data: string | Date, status: StatusLocacao): boolean {
     if (
-      moment().diff(moment(data), 'hour') >= 0 &&
+      moment().diff(moment(data), 'minutes') >= 5 &&
       status === StatusLocacao.APROVADA
     ) {
       return true;
@@ -280,7 +280,7 @@ export class MinhasReservasComponent implements OnInit {
 
   showCancelarReserva(data: string | Date, status: StatusLocacao): boolean {
     if (
-      moment(data).diff(moment(), 'hour') >= 1 &&
+      moment(data).diff(moment(), 'minutes') >= 15 &&
       (status === StatusLocacao.APROVADA || status === StatusLocacao.SOLICITADA)
     ) {
       return true;

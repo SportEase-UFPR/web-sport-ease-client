@@ -103,6 +103,7 @@
     ></app-btn-green>
 
     <app-btn-red
+      *ngIf="showCancelarReserva()"
       [showIcon]="true"
       [icone]="faCancel"
       [textButton]="'Cancelar reserva'"

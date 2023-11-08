@@ -19,9 +19,9 @@
       <fa-icon [icon]="faUser"></fa-icon>
     </a>
 
-    <button class="btn-notifications ms-3" (click)="toggleSidebar()">
+    <button class="btn-notifications ms-3" [ngClass]="qtdNotificaoNaoLida > 0 ? 'com-notificacao': 'sem-notificacao'" (click)="toggleSidebar()">
       <fa-icon [icon]="faBell"></fa-icon>
-      <span>8</span>
+      <span *ngIf="qtdNotificaoNaoLida > 0">{{ qtdNotificaoNaoLida > 9 ? '9+' : qtdNotificaoNaoLida }}</span>
     </button>
   </div>
 </header>
