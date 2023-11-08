@@ -19,14 +19,27 @@
       <fa-icon [icon]="faUser"></fa-icon>
     </a>
 
-    <button class="btn-notifications ms-3" [ngClass]="qtdNotificaoNaoLida > 0 ? 'com-notificacao': 'sem-notificacao'" (click)="toggleSidebar()">
+    <button
+      class="btn-notifications ms-3"
+      [ngClass]="
+        qtdNotificaoNaoLida > 0 ? 'com-notificacao' : 'sem-notificacao'
+      "
+      (mouseenter)="toggleSidebar()"
+      (click)="toggleSidebar()"
+    >
       <fa-icon [icon]="faBell"></fa-icon>
-      <span *ngIf="qtdNotificaoNaoLida > 0">{{ qtdNotificaoNaoLida > 9 ? '9+' : qtdNotificaoNaoLida }}</span>
+      <span *ngIf="qtdNotificaoNaoLida > 0">{{
+        qtdNotificaoNaoLida > 9 ? "9+" : qtdNotificaoNaoLida
+      }}</span>
     </button>
   </div>
 </header>
 
-<aside [ngClass]="{ hidden: isHidden }" class="sidebar sidebar-glass">
+<aside
+  (mouseleave)="toggleSidebar()"
+  [ngClass]="{ hidden: isHidden }"
+  class="sidebar sidebar-glass"
+>
   <div class="d-flex justify-content-between">
     <h4 class="text-green pt-2">Notificações</h4>
     <button class="btn-close-modal text-gray" (click)="toggleSidebar()">
@@ -35,16 +48,13 @@
   </div>
 
   <ul class="mt-2">
-    <li class="nao-lida">
-      <p class="mb-0">Titulo</p>
-      <small>Conteudo</small>
-    </li>
+    <ng-container *ngFor="let n of notificacoes; index as i">
+      <li [ngClass]="{ 'nao-lida': !n.lida }">
+        <p class="mb-0 notificacao-titulo">{{ n.titulo }}</p>
+        <small class="notificacao-conteudo">{{ n.conteudo }}</small>
+      </li>
 
-    <hr />
-
-    <li>
-      <p class="mb-0">Titulo</p>
-      <small>Conteudo</small>
-    </li>
+      <hr *ngIf="notificacoes.length !== i + 1" />
+    </ng-container>
   </ul>
 </aside>

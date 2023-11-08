@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { faBell } from '@fortawesome/free-regular-svg-icons';
 
 import { faUserPen, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { CabecalhoService } from './services/cabecalho.service';
+import { Notificacao } from '../shared/models/notificacao/notificacao.model';
 
 @Component({
   selector: 'app-cabecalho',
@@ -14,11 +16,34 @@ export class CabecalhoComponent implements OnInit {
   faClose = faXmark;
 
   isHidden: boolean = false;
-  qtdNotificaoNaoLida: number = 5
+  qtdNotificaoNaoLida: number = 0;
+  notificacoes: Notificacao[] = [];
 
-  constructor() {}
+  constructor(private cabecalhoService: CabecalhoService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.cabecalhoService.buscarNotificacoesWithInterval().subscribe({
+      next: (result) => {
+        this.notificacoes = result;
+        this.qtdNotificaoNaoLida = result.filter((n) => !n.lida).length;
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
+  }
+
+  populate(intervalo?: number) {
+    this.cabecalhoService.buscarNotificacoes().subscribe({
+      next: (result) => {
+        this.notificacoes = result;
+        this.qtdNotificaoNaoLida = result.filter((n) => !n.lida).length;
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
+  }
 
   getSaudacao(): string {
     const horaAtual = new Date().getHours();
@@ -34,6 +59,18 @@ export class CabecalhoComponent implements OnInit {
   }
 
   toggleSidebar() {
+    if (this.isHidden) {
+      this.cabecalhoService.lerNotificacoes().subscribe({
+        next: (result) => {
+          this.populate();
+        },
+        error: (err) => {
+          console.error(err);
+        },
+      });
+    } else {
+      this.populate();
+    }
     this.isHidden = !this.isHidden;
   }
 }

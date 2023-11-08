@@ -116,8 +116,13 @@
         </span>
       </div>
 
+      <div class="col-12 my-2" *ngIf="dadosReserva?.avaliacao">
+        <span class="info-title">Sua avaliação para esta reserva: </span>
+        <span>{{ dadosReserva?.avaliacao }} de 5</span>
+      </div>
+
       <div class="col-12 my-2">
-        <span class="info-title">Objetivo da solicitação </span>
+        <span class="info-title">Objetivo da solicitação: </span>
         <span>{{ dadosReserva?.motivoSolicitacao }}</span>
       </div>
 
@@ -337,7 +342,10 @@
                       ></app-btn-green>
                     </div>
 
-                    <div class="me-2" *ngIf="r.status! == 'FINALIZADA'">
+                    <div
+                      class="me-2"
+                      *ngIf="r.status! == 'FINALIZADA' && !r?.avaliacao"
+                    >
                       <app-btn-green
                         [showIcon]="true"
                         [icone]="faStar"

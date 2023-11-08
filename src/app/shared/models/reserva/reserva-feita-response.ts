@@ -12,6 +12,7 @@ export class ReservaFeitaResponse {
     public idEspacoEsportivo?: number,
     public idAdministrador?: number,
     public idCliente?: number,
-    public motivoCancelamento?: string
+    public motivoCancelamento?: string,
+    public avaliacao?: number
   ) {}
 }

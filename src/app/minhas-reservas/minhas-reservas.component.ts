@@ -309,6 +309,7 @@ export class MinhasReservasComponent implements OnInit {
               'Sucesso'
             );
             this.closeModal();
+            this.populate();
           },
           error: (err) => {
             this.toastrService.error(

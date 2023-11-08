@@ -114,6 +114,10 @@ header {
     color: var(--cinza-claro);
   }
 
+  .notificacao-conteudo::first-letter {
+    text-transform: uppercase !important;
+  }
+
   .nao-lida {
     transition: 0.2s ease-in-out;
     background-color: rgba(86, 250, 53, 0.49);
