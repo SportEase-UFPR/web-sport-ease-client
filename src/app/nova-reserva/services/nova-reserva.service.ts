@@ -9,6 +9,7 @@ import { ReservaHorariosRequest } from 'src/app/shared/models/reserva/reserva-ho
 import { ReservaResponse } from 'src/app/shared/models/reserva/reserva-response.model';
 import { ReservaRequest } from 'src/app/shared/models/reserva/reserva-request.model';
 import { EspacoEsportivoReservaResponse as eeReservaResponse } from 'src/app/shared/models/espaco-esportivo/espaco-esportivo-reserva-response.model';
+import { EspacoEsportivoResponse as eeResponse} from 'src/app/shared/models/espaco-esportivo/espaco-esportivo-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +32,13 @@ export class NovaReservaService {
   public listarEE(): Observable<eeReservaResponse[]> {
     return this.httpService.get<eeReservaResponse[]>(
       `${env.baseUrl}espacos-esportivos/disponiveis`,
+      { headers: this.createHeaders() }
+    );
+  }
+
+  public buscarEE(id: number): Observable<eeResponse> {
+    return this.httpService.get<eeResponse>(
+      `${env.baseUrl}espacos-esportivos/${id}`,
       { headers: this.createHeaders() }
     );
   }

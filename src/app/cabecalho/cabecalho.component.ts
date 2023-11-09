@@ -24,7 +24,7 @@ export class CabecalhoComponent implements OnInit {
   ngOnInit(): void {
     this.cabecalhoService.buscarNotificacoesWithInterval().subscribe({
       next: (result) => {
-        this.notificacoes = result;
+        this.notificacoes = result.sort((a, b) => b.id! - a.id!);
         this.qtdNotificaoNaoLida = result.filter((n) => !n.lida).length;
       },
       error: (err) => {
@@ -36,7 +36,7 @@ export class CabecalhoComponent implements OnInit {
   populate(intervalo?: number) {
     this.cabecalhoService.buscarNotificacoes().subscribe({
       next: (result) => {
-        this.notificacoes = result;
+        this.notificacoes = result.sort((a, b) => b.id! - a.id!);
         this.qtdNotificaoNaoLida = result.filter((n) => !n.lida).length;
       },
       error: (err) => {

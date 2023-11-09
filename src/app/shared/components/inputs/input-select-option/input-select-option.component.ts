@@ -13,7 +13,7 @@ export class InputSelectOptionComponent implements OnInit {
   @Input() controlName?: any;
   @Input() placeholder: string = '';
   @Input() label: string = '';
-  @Input() valueSelected: number = 0;
+  @Input() valueSelected: number | string = 0;
   @Input() validacaoInput: boolean = false;
   @Input() items: Item[] = [];
 

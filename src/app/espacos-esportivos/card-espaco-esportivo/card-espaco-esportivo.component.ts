@@ -8,6 +8,10 @@ import {
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { EspacoEsportivoResponse } from 'src/app/shared/models/espaco-esportivo/espaco-esportivo-response.model';
 import { EspacosEsportivosService } from '../services/espacos-esportivos.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalAvaliacoesComponent } from '../modal-avaliacoes/modal-avaliacoes.component';
+import { FeedbackReserva } from 'src/app/shared/models/reserva/feedback-reserva.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-card-espaco-esportivo',
@@ -17,6 +21,7 @@ import { EspacosEsportivosService } from '../services/espacos-esportivos.service
 export class CardEspacoEsportivoComponent implements OnInit {
   @Input() espaco!: EspacoEsportivoResponse;
   @Input() ratingMedio: string[] = ['a', 'a', 'm', 'c', 'c'];
+  avaliacoes: FeedbackReserva[] = [];
 
   faCalendar = faCalendarCheck;
   faCalendarX = faCalendarXmark;
@@ -25,7 +30,9 @@ export class CardEspacoEsportivoComponent implements OnInit {
   constructor(
     private sanatizer: DomSanitizer,
     private router: Router,
-    private eeService: EspacosEsportivosService
+    private modalService: NgbModal,
+    private eeService: EspacosEsportivosService,
+    private toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {}
@@ -60,5 +67,39 @@ export class CardEspacoEsportivoComponent implements OnInit {
     }
 
     return stars;
+  }
+
+  buscarAvaliacoes() {
+    this.avaliacoes = [];
+    this.eeService.buscarComentarios(this.espaco.id!).subscribe({
+      next: (result) => {
+        this.avaliacoes = result.filter((c) => c.comentario);
+
+        if (this.avaliacoes.length > 0) {
+          this.openModal();
+        } else {
+          this.toastrService.info(
+            `Até o momento ${this.espaco.nome} não possui avaliações`,
+            'Nenhuma avaliação encontrada'
+          );
+        }
+      },
+      error: (err) => {
+        this.toastrService.error(
+          'Por favor, tente novamente mais tarde',
+          'Erro ao buscar avaliações'
+        );
+      },
+    });
+  }
+
+  openModal(): void {
+    const modalRef = this.modalService.open(ModalAvaliacoesComponent, {
+      centered: true,
+      size: 'lg',
+    });
+
+    modalRef.componentInstance.avaliacoes = this.avaliacoes;
+    modalRef.componentInstance.nome = this.espaco.nome;
   }
 }

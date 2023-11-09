@@ -17,18 +17,31 @@
             [label]="'Selecione o local'"
             [items]="nomesEE"
             [valueSelected]="idEspacoQueryParam"
+            [validacaoInput]="true"
             (emitterChange)="showNextSteps()"
           ></app-input-select-option>
         </div>
 
+        <div>
+          <span class="esporte" *ngFor="let e of esportes">{{
+            e.nome | titlecase
+          }}</span>
+        </div>
+
         <div *ngIf="nextSteps">
-          <div>
+          <div class="mt-3">
             <app-input-field
               [formGroup]="formNovaReserva"
               [controlName]="'qtdPessoas'"
               [label]="'Quantidade de participantes'"
               [inputType]="'number'"
+              [validacaoInput]="true"
             ></app-input-field>
+
+            <small class="text-gray me-2"
+              >Quantidade mínima: {{ qtdMinima }}</small
+            >
+            <small class="text-gray">Quantidade máxima: {{ qtdMaxima }}</small>
           </div>
 
           <div class="mt-5">
@@ -42,43 +55,67 @@
                 [controlName]="'data'"
                 [label]="'Selecione a data'"
                 [inputType]="'date'"
+                [validacaoInput]="true"
                 (emitterChange)="listarHorarios()"
               ></app-input-field>
-            </div>
-
-            <div *ngIf="showHorarios">
-              <app-input-select-option
-                [formGroup]="formNovaReserva"
-                [controlName]="'horario'"
-                [label]="'Selecione o horário'"
-                [items]="horariosDisponiveis"
-                (emitterChange)="showMotivoReserva()"
-              ></app-input-select-option>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="col-12 col-lg-7" *ngIf="showObjetivo">
-        <div>
-          <h5 class="text-green">Objetivo da reserva</h5>
+      <div class="col-12 col-lg-7">
+        <div *ngIf="showHorarios">
+          <ng-container *ngIf="maxLocacao == 1; else multiplasLocacoes">
+            <app-input-select-option
+              [formGroup]="formNovaReserva"
+              [controlName]="'horario'"
+              [label]="'Selecione o horário'"
+              [items]="horariosDisponiveis"
+              [validacaoInput]="true"
+              (emitterChange)="showMotivoReserva()"
+            ></app-input-select-option>
+          </ng-container>
+
+          <ng-template #multiplasLocacoes>
+            <app-input-select-option
+              [formGroup]="formNovaReserva"
+              [controlName]="'horario'"
+              [label]="'Selecione o horário de início'"
+              [items]="horariosDisponiveis"
+              [validacaoInput]="true"
+              (emitterChange)="showHorarioFim()"
+            ></app-input-select-option>
+
+            <app-input-select-option
+              *ngIf="showHorarioFinal"
+              [formGroup]="formNovaReserva"
+              [controlName]="'horarioFim'"
+              [label]="'Selecione o horário de fim'"
+              [items]="horariosDisponiveisFim"
+              [validacaoInput]="true"
+              (emitterChange)="showMotivoReserva()"
+            ></app-input-select-option>
+          </ng-template>
         </div>
 
-        <div>
+        <div *ngIf="showObjetivo">
+          <h5 class="text-green">Objetivo da reserva</h5>
+
           <app-input-textarea
             [formGroup]="formNovaReserva"
             [controlName]="'objetivo'"
             [label]="'Motivo da solicitação'"
+            [validacaoInput]="true"
           ></app-input-textarea>
-        </div>
 
-        <div class="d-block d-md-flex">
-          <app-btn-green
-            [textButton]="'Solicitar'"
-            [type]="'submit'"
-            (emmiterClick)="solicitarReserva()"
-            [buttonDisabled]="formNovaReserva.invalid"
-          ></app-btn-green>
+          <div class="d-block d-md-flex">
+            <app-btn-green
+              [textButton]="'Solicitar'"
+              [type]="'submit'"
+              (emmiterClick)="solicitarReserva()"
+              [buttonDisabled]="formNovaReserva.invalid"
+            ></app-btn-green>
+          </div>
         </div>
       </div>
     </div>

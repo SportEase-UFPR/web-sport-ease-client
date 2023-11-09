@@ -15,6 +15,7 @@ import { SharedModule } from '../shared/shared.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxMaskPipe } from 'ngx-mask';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ModalAvaliacoesComponent } from './modal-avaliacoes/modal-avaliacoes.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: '#0fd45e',
@@ -29,7 +30,11 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 };
 
 @NgModule({
-  declarations: [EspacosEsportivosComponent, CardEspacoEsportivoComponent],
+  declarations: [
+    EspacosEsportivosComponent,
+    CardEspacoEsportivoComponent,
+    ModalAvaliacoesComponent,
+  ],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -38,7 +43,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     SharedModule,
     FontAwesomeModule,
     NgxMaskPipe,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
 })
 export class EspacosEsportivosModule {}

@@ -6,6 +6,7 @@ import { UsuarioSs } from 'src/app/shared/models/usuario-ss/usuario-ss.model';
 import { SessionStorageService } from 'src/app/shared/services/session-storage/session-storage.service';
 import { environment as env } from 'src/environments/environment';
 import { EsporteResponse } from 'src/app/shared/models/esporte/esporte-response';
+import { FeedbackReserva } from 'src/app/shared/models/reserva/feedback-reserva.model';
 
 @Injectable({
   providedIn: 'root',
@@ -36,5 +37,12 @@ export class EspacosEsportivosService {
     return this.httpService.get<EsporteResponse[]>(`${env.baseUrl}esportes`, {
       headers: this.createHeaders(),
     });
+  }
+
+  public buscarComentarios(idEspaco: number): Observable<FeedbackReserva[]> {
+    return this.httpService.get<FeedbackReserva[]>(
+      `${env.baseUrl}espacos-esportivos/comentarios/${idEspaco}`,
+      { headers: this.createHeaders() }
+    );
   }
 }

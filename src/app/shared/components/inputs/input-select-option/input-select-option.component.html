@@ -15,7 +15,7 @@
       name="{{ controlName }}"
       (change)="onChange()"
     >
-      <option disabled value="" [selected]="valueSelected == 0"></option>
+      <option disabled value="0" [selected]="valueSelected == 0"></option>
       <option
         *ngFor="let i of items"
         value="{{ i.value }}"

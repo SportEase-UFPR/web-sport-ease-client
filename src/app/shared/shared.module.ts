@@ -16,6 +16,7 @@ import { InputStarRatingComponent } from './components/inputs/input-star-rating/
 import { InputFieldComponent } from './components/inputs/input-field/input-field.component';
 import { InputToogleComponent } from './components/inputs/input-toogle/input-toogle.component';
 import { PasswordChecklistComponent } from './components/password-checklist/password-checklist.component';
+import { RatingComponent } from './components/rating/rating.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { PasswordChecklistComponent } from './components/password-checklist/pass
     InputStarRatingComponent,
     InputFieldComponent,
     InputToogleComponent,
-    PasswordChecklistComponent
+    PasswordChecklistComponent,
+    RatingComponent
   ],
   imports: [
     CommonModule,
@@ -49,7 +51,8 @@ import { PasswordChecklistComponent } from './components/password-checklist/pass
     InputStarRatingComponent,
     InputFieldComponent,
     InputToogleComponent,
-    PasswordChecklistComponent
+    PasswordChecklistComponent,
+    RatingComponent
   ],
   providers: [provideNgxMask()],
 })
