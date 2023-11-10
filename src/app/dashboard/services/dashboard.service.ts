@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { EspacoEsportivoResponse } from 'src/app/shared/models/espaco-esportivo/espaco-esportivo-response.model';
 import { ReservaAvaliacao } from 'src/app/shared/models/reserva/reserva-avaliacao.model';
 import { ReservaFeitaResponse } from 'src/app/shared/models/reserva/reserva-feita-response';
 import { UsuarioSs } from 'src/app/shared/models/usuario-ss/usuario-ss.model';
@@ -45,13 +44,6 @@ export class DashboardService {
     return this.httpService.put(
       `${env.baseUrl}locacoes/confirmar-uso/${idReserva}`,
       null,
-      { headers: this.createHeaders() }
-    );
-  }
-
-  public buscarEE(idEE: number): Observable<EspacoEsportivoResponse> {
-    return this.httpService.get<EspacoEsportivoResponse>(
-      `${env.baseUrl}espacos-esportivos/${idEE}`,
       { headers: this.createHeaders() }
     );
   }

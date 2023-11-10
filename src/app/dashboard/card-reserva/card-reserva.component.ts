@@ -32,18 +32,7 @@ export class CardReservaComponent implements OnInit {
 
   constructor(private dashboardService: DashboardService) {}
 
-  ngOnInit(): void {
-    this.dashboardService
-      .buscarEE(this.dadosReserva?.idEspacoEsportivo!)
-      .subscribe({
-        next: (result) => {
-          this.local = `${result.nome} - ${result.localidade}`;
-        },
-        error: (err) => {
-          this.local = '';
-        },
-      });
-  }
+  ngOnInit(): void {}
 
   changeIcon(isCollapsed: boolean) {
     return isCollapsed ? faAngleDown : faAngleUp;
@@ -76,7 +65,10 @@ export class CardReservaComponent implements OnInit {
 
   showCancelarReserva(): boolean {
     if (
-      moment(this.dadosReserva?.dataHoraInicioReserva).diff(moment(), 'minutes') >= 15
+      moment(this.dadosReserva?.dataHoraInicioReserva).diff(
+        moment(),
+        'minutes'
+      ) >= 15
     ) {
       return true;
     }

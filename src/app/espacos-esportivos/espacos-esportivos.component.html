@@ -5,13 +5,14 @@
     Conheça os espaços esportivos
   </h3>
 
-  <div class="d-flex" *ngIf="esportes.length > 1">
+  <div class="d-flex" *ngIf="esportes.length > 2">
     <form [formGroup]="formFilter">
       <app-input-select-option
         [formGroup]="formFilter"
         [controlName]="'esporte'"
         [label]="'Selecione o esporte'"
         [items]="esportes"
+
         (emitterChange)="filterByEsporte()"
       ></app-input-select-option>
     </form>

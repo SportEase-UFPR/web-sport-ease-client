@@ -100,7 +100,9 @@
       <div class="col-12 col-md-5 my-2">
         <span class="info-title">Local: </span
         ><span
-          >{{ getNomeLocal(dadosReserva?.idEspacoEsportivo!) | titlecase }}
+          >{{
+            dadosReserva?.nomeEspacoEsportivo + " - " + dadosReserva?.localidade
+          }}
         </span>
       </div>
 
@@ -210,6 +212,7 @@
 
       <div class="col-12 col-md-2">
         <app-input-select-option
+          *ngIf="locais.length > 1"
           [formGroup]="formFiltros"
           [controlName]="'local'"
           [label]="'Local'"
@@ -220,6 +223,7 @@
 
       <div class="col-12 col-md-2">
         <app-input-select-option
+          *ngIf="statusReservas.length > 1"
           [formGroup]="formFiltros"
           [controlName]="'status'"
           [label]="'Status das reserva'"
@@ -268,7 +272,7 @@
           class="h-100 d-flex align-items-center justify-content-center"
           *ngIf="reservas.length === 0; else reservasTemplate"
         >
-          <h3 class="text-dark-blue text-center">
+          <h3 class="text-dark-blue text-center py-5">
             Nenhuma reserva foi encontrada :(
           </h3>
         </div>
@@ -293,7 +297,7 @@
               >
                 <td>
                   <p class="mb-0 mt-2">
-                    {{ getNomeLocal(r.idEspacoEsportivo!) | titlecase }}
+                    {{ r.nomeEspacoEsportivo + " - " + r.localidade }}
                   </p>
                 </td>
 

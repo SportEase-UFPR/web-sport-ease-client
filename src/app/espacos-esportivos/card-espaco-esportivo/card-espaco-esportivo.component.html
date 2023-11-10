@@ -25,30 +25,30 @@
         <p class="text-dark-blue">{{ espaco.descricao }}</p>
       </div>
 
-      <div class="row w-100">
-        <div class="col-12 col-md-4">
-          <p class="text-dark-blue mb-1">
+      <div class="infos-grid">
+        <div>
+          <p class="mb-1">
             <span class="info-title">Dimensões</span>
           </p>
           <p class="text-dark-blue">{{ espaco.dimensoes }}</p>
         </div>
 
-        <div class="col-12 col-md-4">
-          <p class="text-dark-blue mb-1">
+        <div>
+          <p class="mb-1">
             <span class="info-title">Piso</span>
           </p>
           <p class="text-dark-blue">{{ espaco.piso }}</p>
         </div>
 
-        <div class="col-12 col-md-4">
-          <p class="text-dark-blue mb-1">
+        <div>
+          <p class="mb-1">
             <span class="info-title">Capacidade</span>
           </p>
           <p class="text-dark-blue">{{ espaco.capacidade + " pessoas" }}</p>
         </div>
 
-        <div class="col-12 col-md-4">
-          <p class="text-dark-blue mb-1">
+        <div>
+          <p class="mb-1">
             <span class="info-title">Duração da locação</span>
           </p>
           <p class="text-dark-blue">
@@ -56,14 +56,21 @@
           </p>
         </div>
 
-        <div class="col-12 col-md-6">
-          <p class="text-dark-blue mb-1">
+        <div>
+          <p class="mb-1">
             <span class="info-title">Horário de funcionamento</span>
           </p>
           <p class="text-dark-blue">
             {{ espaco.horaAbertura! | mask : "Hh:mm" }} -
             {{ espaco.horaFechamento! | mask : "Hh:mm" }}
           </p>
+        </div>
+
+        <div>
+          <p class="mb-1">
+            <span class="info-title">Local</span>
+          </p>
+          <p class="text-dark-blue">{{ espaco.localidade }}</p>
         </div>
       </div>
 

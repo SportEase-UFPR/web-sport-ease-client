@@ -10,6 +10,11 @@
     border-radius: 15px;
   }
 
+  .infos-grid {
+    display: grid;
+    grid-template-columns: auto auto auto;
+  }
+
   .infos {
     display: flex;
     flex-direction: column;

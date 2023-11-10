@@ -18,6 +18,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { ReservaAvaliacao } from '../shared/models/reserva/reserva-avaliacao.model';
+import { BuildFilter } from '../utils/build-filter';
 
 @Component({
   selector: 'app-minhas-reservas',
@@ -41,16 +42,9 @@ export class MinhasReservasComponent implements OnInit {
 
   minhasReservas: ReservaFeitaResponse[] = [];
   minhasReservasFilter?: ReservaFeitaResponse[];
-  locais: Item[] = [];
   nomesLocais: { id: number; nome: string }[] = [];
-  statusReservas: Item[] = [
-    { label: 'Solicitada', value: 'SOLICITADA' },
-    { label: 'Aprovada', value: 'APROVADA' },
-    { label: 'Negada', value: 'NEGADA' },
-    { label: 'Cancelada', value: 'CANCELADA' },
-    { label: 'Finalizada', value: 'FINALIZADA' },
-    { label: 'Abandonada', value: 'ABANDONADA' },
-  ];
+  locais: Item[] = [];
+  statusReservas: Item[] = [];
 
   faAdd = faPlus;
   faConfirm = faCheck;
@@ -72,14 +66,6 @@ export class MinhasReservasComponent implements OnInit {
 
   ngOnInit(): void {
     this.populate();
-
-    this.minhasReservasService.buscarTodosEE().subscribe({
-      next: (result) => {
-        result.forEach((ee) => {
-          this.locais.push(new Item(ee.id, ee.nome));
-        });
-      },
-    });
   }
 
   populate() {
@@ -87,13 +73,7 @@ export class MinhasReservasComponent implements OnInit {
     this.minhasReservasService.listarReservas().subscribe({
       next: (result) => {
         this.minhasReservas = this.ordernarReservasByDate(result);
-        this.minhasReservas.forEach((r) => {
-          this.minhasReservasService.buscarEE(r.idEspacoEsportivo!).subscribe({
-            next: (ee) => {
-              this.nomesLocais.push({ id: ee.id!, nome: ee.nome! });
-            },
-          });
-        });
+        this.montarFiltros();
       },
       error: (err) => {
         this.toastrService.error(
@@ -169,12 +149,6 @@ export class MinhasReservasComponent implements OnInit {
       const dataB = moment(b.dataHoraInicioReserva).valueOf();
       return dataA - dataB;
     });
-  }
-
-  getNomeLocal(id: number): string {
-    const ee = this.nomesLocais.filter((e) => e.id === id);
-
-    return ee[0]?.nome;
   }
 
   statusToString(status: StatusLocacao): string {
@@ -268,6 +242,21 @@ export class MinhasReservasComponent implements OnInit {
             break;
         }
       },
+    });
+  }
+
+  montarFiltros() {
+    this.locais = [];
+    this.statusReservas = [];
+
+    this.minhasReservas?.forEach((r) => {
+      BuildFilter.adicionarItem(
+        this.locais,
+        r.idEspacoEsportivo!,
+        r.nomeEspacoEsportivo
+      );
+
+      BuildFilter.adicionarItem(this.statusReservas, r.status!);
     });
   }
 

@@ -32,7 +32,7 @@
   }
 
   .table-scroll {
-    height: 45vh;
+    max-height: 50vh;
     overflow-y: scroll;
     background-color: var(--branco);
     scrollbar-width: thin;

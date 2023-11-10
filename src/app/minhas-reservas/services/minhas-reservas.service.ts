@@ -33,13 +33,6 @@ export class MinhasReservasService {
     );
   }
 
-  public buscarEE(idEE: number): Observable<EspacoEsportivoResponse> {
-    return this.httpService.get<EspacoEsportivoResponse>(
-      `${env.baseUrl}espacos-esportivos/${idEE}`,
-      { headers: this.createHeaders() }
-    );
-  }
-
   public buscarTodosEE(): Observable<EspacoEsportivoResponse[]> {
     return this.httpService.get<EspacoEsportivoResponse[]>(
       `${env.baseUrl}espacos-esportivos`,

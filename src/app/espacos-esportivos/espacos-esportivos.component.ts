@@ -5,6 +5,7 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { Item } from '../shared/components/inputs/input-select-option/model/item.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EspacoEsportivoResponse } from '../shared/models/espaco-esportivo/espaco-esportivo-response.model';
+import { BuildFilter } from '../utils/build-filter';
 
 @Component({
   selector: 'app-espacos-esportivos',
@@ -13,7 +14,7 @@ import { EspacoEsportivoResponse } from '../shared/models/espaco-esportivo/espac
 })
 export class EspacosEsportivosComponent implements OnInit {
   formFilter: FormGroup = new FormGroup({
-    esporte: new FormControl(0, [Validators.required]),
+    esporte: new FormControl(-1, [Validators.required]),
   });
 
   espacos: EspacoEsportivoResponse[] = [];
@@ -34,24 +35,17 @@ export class EspacosEsportivosComponent implements OnInit {
         if (result.length > 0) {
           if (result.length > 1) {
             this.espacos = this.ordernaEspacosAlfabetico(result);
+
+            this.esportes = [];
+            BuildFilter.adicionarItem(this.esportes, -1, 'Todos');
+            this.espacos.forEach((ee) => {
+              ee.listaEsportes?.forEach((e) => {
+                BuildFilter.adicionarItem(this.esportes, e.id!, e.nome);
+              });
+            });
           } else {
             this.espacos = result;
           }
-
-          this.eeService.listarEsportes().subscribe({
-            next: (result) => {
-              if (result.length > 1) {
-                this.esportes = result.map((e) => new Item(e.id, e.nome));
-                this.esportes.push(new Item(0, 'Todos'));
-                this.esportes.sort((a, b) => Number(a.value) - Number(b.value));
-              } else {
-                this.esportes = []
-              }
-            },
-            error: (err) => {
-              this.esportes = [];
-            },
-          });
         } else {
           this.toastrService.warning(
             'Por favor, tente novamente mais tarde',
@@ -75,7 +69,7 @@ export class EspacosEsportivosComponent implements OnInit {
     const esporteEscolhido = this.formFilter.get('esporte');
     this.espacosFiltered = [];
 
-    if (esporteEscolhido?.value && Number(esporteEscolhido?.value) !== 0) {
+    if (esporteEscolhido?.value && Number(esporteEscolhido?.value) !== -1) {
       this.espacos.forEach((ee) => {
         ee.listaEsportes?.forEach((e) => {
           if (e.id === Number(esporteEscolhido?.value)) {
@@ -88,17 +82,6 @@ export class EspacosEsportivosComponent implements OnInit {
         this.espacosFiltered = this.ordernaEspacosAlfabetico(
           this.espacosFiltered
         );
-      }
-
-      if (
-        this.espacosFiltered.length == 0 &&
-        Number(esporteEscolhido?.value) !== 0
-      ) {
-        this.toastrService.info(
-          'O esporte escolhido não se encontra em nenhum dos espaços esportivos cadastrados. Por favor, escolha outro esporte',
-          'Nenhum espaço esportivo encontrado'
-        );
-        esporteEscolhido.patchValue(0);
       }
     }
 
