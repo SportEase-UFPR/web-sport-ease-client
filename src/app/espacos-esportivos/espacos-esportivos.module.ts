@@ -16,6 +16,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxMaskPipe } from 'ngx-mask';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ModalAvaliacoesComponent } from './modal-avaliacoes/modal-avaliacoes.component';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: '#0fd45e',
@@ -44,6 +45,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     FontAwesomeModule,
     NgxMaskPipe,
     ReactiveFormsModule,
+    NgxSkeletonLoaderModule
   ],
 })
 export class EspacosEsportivosModule {}

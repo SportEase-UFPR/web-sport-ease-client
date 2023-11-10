@@ -257,130 +257,184 @@
     ></app-btn-green>
   </div>
 
-  <ng-container *ngIf="minhasReservasFilter || minhasReservas as reservas">
+  <ng-container *ngIf="minhasReservas == undefined; else noSkeleton">
     <div class="table-content mt-2">
-      <div class="text-center" *ngIf="reservas.length > 5">
-        <pagination-controls
-          (pageChange)="p = $event"
-          previousLabel="<"
-          nextLabel=">"
-        ></pagination-controls>
-      </div>
-
-      <div class="table-scroll">
-        <div
-          class="h-100 d-flex align-items-center justify-content-center"
-          *ngIf="reservas.length === 0; else reservasTemplate"
-        >
-          <h3 class="text-dark-blue text-center py-5">
-            Nenhuma reserva foi encontrada :(
-          </h3>
-        </div>
-
-        <ng-template #reservasTemplate>
-          <table class="table">
-            <thead>
-              <tr class="text-center">
-                <th scope="col">Espaço</th>
-                <th colspan="999" scope="col">Data e Horário</th>
-                <th scope="col">Status</th>
-                <th scope="col">Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                class="text-center"
-                *ngFor="
-                  let r of reservas
-                    | paginate : { itemsPerPage: 5, currentPage: p }
-                "
-              >
-                <td>
-                  <p class="mb-0 mt-2">
-                    {{ r.nomeEspacoEsportivo + " - " + r.localidade }}
-                  </p>
-                </td>
-
-                <td colspan="999">
-                  <p class="mb-0 mt-2">
-                    {{ r.dataHoraInicioReserva | date : "dd/MM/yyyy - HH:mm" }}
-                    às {{ r.dataHoraFimReserva | date : "HH:mm" }}
-                  </p>
-                </td>
-
-                <td>
-                  <p class="mb-0 mt-2">
-                    {{ statusToString(r.status!) | titlecase }}
-                  </p>
-                </td>
-
-                <td>
-                  <div class="d-flex justify-content-center">
-                    <div class="me-2">
-                      <app-btn-border-green
-                        [showIcon]="true"
-                        [icone]="faEye"
-                        [textButton]="'Detalhes'"
-                        (emmiterClick)="
-                          openModalConfirmacao(modalDetalhes, r.id!, 'md', r)
-                        "
-                      ></app-btn-border-green>
-                    </div>
-
-                    <div
-                      class="me-2"
-                      *ngIf="
-                        showConfirmacaoReserva(
-                          r.dataHoraInicioReserva!,
-                          r.status!
-                        )
-                      "
-                    >
-                      <app-btn-green
-                        [showIcon]="true"
-                        [icone]="faConfirm"
-                        [textButton]="'Usei'"
-                        (emmiterClick)="
-                          openModalConfirmacao(modalConfirmarUso, r.id!)
-                        "
-                      ></app-btn-green>
-                    </div>
-
-                    <div
-                      class="me-2"
-                      *ngIf="r.status! == 'FINALIZADA' && !r?.avaliacao"
-                    >
-                      <app-btn-green
-                        [showIcon]="true"
-                        [icone]="faStar"
-                        [textButton]="'Avaliar'"
-                        (emmiterClick)="
-                          openModalConfirmacao(modalAvaliacao, r.id!)
-                        "
-                      ></app-btn-green>
-                    </div>
-
-                    <div
-                      *ngIf="
-                        showCancelarReserva(r.dataHoraInicioReserva!, r.status!)
-                      "
-                    >
-                      <app-btn-red
-                        [showIcon]="true"
-                        [icone]="faCancel"
-                        [textButton]="'Cancelar'"
-                        (emmiterClick)="
-                          openModalConfirmacao(modalCancelaReserva, r.id!)
-                        "
-                      ></app-btn-red>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </ng-template>
-      </div>
+      <table class="table">
+        <thead>
+          <tr class="text-center">
+            <th scope="col">Espaço</th>
+            <th scope="col">Data e Horário</th>
+            <th scope="col">Status</th>
+            <th scope="col">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let i of [0, 1, 2, 4]">
+            <td>
+              <ngx-skeleton-loader
+                count="1"
+                appearance="line"
+                [theme]="{ background: '#73779144' }"
+              ></ngx-skeleton-loader>
+            </td>
+            <td>
+              <ngx-skeleton-loader
+                count="1"
+                appearance="line"
+                [theme]="{ background: '#73779144' }"
+              ></ngx-skeleton-loader>
+            </td>
+            <td>
+              <ngx-skeleton-loader
+                count="1"
+                appearance="line"
+                [theme]="{ background: '#73779144' }"
+              ></ngx-skeleton-loader>
+            </td>
+            <td>
+              <ngx-skeleton-loader
+                count="1"
+                appearance="line"
+                [theme]="{ background: '#73779144' }"
+              ></ngx-skeleton-loader>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </ng-container>
+
+  <ng-template #noSkeleton>
+    <ng-container *ngIf="minhasReservasFilter || minhasReservas as reservas">
+      <div class="table-content mt-2">
+        <div class="text-center" *ngIf="reservas.length > 5">
+          <pagination-controls
+            (pageChange)="p = $event"
+            previousLabel="<"
+            nextLabel=">"
+          ></pagination-controls>
+        </div>
+
+        <div class="table-scroll">
+          <div
+            class="h-100 d-flex align-items-center justify-content-center"
+            *ngIf="reservas.length === 0; else reservasTemplate"
+          >
+            <h3 class="text-dark-blue text-center py-5">
+              Nenhuma reserva foi encontrada :(
+            </h3>
+          </div>
+
+          <ng-template #reservasTemplate>
+            <table class="table">
+              <thead>
+                <tr class="text-center">
+                  <th scope="col">Espaço</th>
+                  <th colspan="999" scope="col">Data e Horário</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="text-center"
+                  *ngFor="
+                    let r of reservas
+                      | paginate : { itemsPerPage: 5, currentPage: p }
+                  "
+                >
+                  <td>
+                    <p class="mb-0 mt-2">
+                      {{ r.nomeEspacoEsportivo + " - " + r.localidade }}
+                    </p>
+                  </td>
+
+                  <td colspan="999">
+                    <p class="mb-0 mt-2">
+                      {{
+                        r.dataHoraInicioReserva | date : "dd/MM/yyyy - HH:mm"
+                      }}
+                      às {{ r.dataHoraFimReserva | date : "HH:mm" }}
+                    </p>
+                  </td>
+
+                  <td>
+                    <p class="mb-0 mt-2">
+                      {{ statusToString(r.status!) | titlecase }}
+                    </p>
+                  </td>
+
+                  <td>
+                    <div class="d-flex justify-content-center">
+                      <div class="me-2">
+                        <app-btn-border-green
+                          [showIcon]="true"
+                          [icone]="faEye"
+                          [textButton]="'Detalhes'"
+                          (emmiterClick)="
+                            openModalConfirmacao(modalDetalhes, r.id!, 'md', r)
+                          "
+                        ></app-btn-border-green>
+                      </div>
+
+                      <div
+                        class="me-2"
+                        *ngIf="
+                          showConfirmacaoReserva(
+                            r.dataHoraInicioReserva!,
+                            r.status!
+                          )
+                        "
+                      >
+                        <app-btn-green
+                          [showIcon]="true"
+                          [icone]="faConfirm"
+                          [textButton]="'Usei'"
+                          (emmiterClick)="
+                            openModalConfirmacao(modalConfirmarUso, r.id!)
+                          "
+                        ></app-btn-green>
+                      </div>
+
+                      <div
+                        class="me-2"
+                        *ngIf="r.status! == 'FINALIZADA' && !r?.avaliacao"
+                      >
+                        <app-btn-green
+                          [showIcon]="true"
+                          [icone]="faStar"
+                          [textButton]="'Avaliar'"
+                          (emmiterClick)="
+                            openModalConfirmacao(modalAvaliacao, r.id!)
+                          "
+                        ></app-btn-green>
+                      </div>
+
+                      <div
+                        *ngIf="
+                          showCancelarReserva(
+                            r.dataHoraInicioReserva!,
+                            r.status!
+                          )
+                        "
+                      >
+                        <app-btn-red
+                          [showIcon]="true"
+                          [icone]="faCancel"
+                          [textButton]="'Cancelar'"
+                          (emmiterClick)="
+                            openModalConfirmacao(modalCancelaReserva, r.id!)
+                          "
+                        ></app-btn-red>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </ng-template>
+        </div>
+      </div>
+    </ng-container>
+  </ng-template>
 </div>

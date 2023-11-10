@@ -40,7 +40,7 @@ export class MinhasReservasComponent implements OnInit {
 
   p: number = 1;
 
-  minhasReservas: ReservaFeitaResponse[] = [];
+  minhasReservas?: ReservaFeitaResponse[];
   minhasReservasFilter?: ReservaFeitaResponse[];
   nomesLocais: { id: number; nome: string }[] = [];
   locais: Item[] = [];
@@ -69,20 +69,19 @@ export class MinhasReservasComponent implements OnInit {
   }
 
   populate() {
-    this.ngxLoaderService.startLoader('loader-01');
     this.minhasReservasService.listarReservas().subscribe({
       next: (result) => {
         this.minhasReservas = this.ordernarReservasByDate(result);
         this.montarFiltros();
       },
       error: (err) => {
+        this.minhasReservas = [];
         this.toastrService.error(
           'Por favor, tente novamente mais tarde',
           'Erro ao buscar suas reservas'
         );
       },
     });
-    this.ngxLoaderService.stopLoader('loader-01');
   }
 
   novaReserva(): void {
@@ -104,7 +103,7 @@ export class MinhasReservasComponent implements OnInit {
 
       if (dataFinalValue.diff(dataInicialValue, 'hour') >= 0) {
         this.ngxLoaderService.startLoader('loader-01');
-        filteredReservas = filteredReservas.filter((r) => {
+        filteredReservas = filteredReservas?.filter((r) => {
           const dataReserva = moment(r.dataHoraInicioReserva);
 
           return (
@@ -124,7 +123,7 @@ export class MinhasReservasComponent implements OnInit {
 
     if (localFilter) {
       this.ngxLoaderService.startLoader('loader-01');
-      filteredReservas = filteredReservas.filter(
+      filteredReservas = filteredReservas?.filter(
         (r) => r.idEspacoEsportivo === Number(localFilter)
       );
       this.ngxLoaderService.stopLoader('loader-01');
@@ -132,13 +131,13 @@ export class MinhasReservasComponent implements OnInit {
 
     if (statusFilter) {
       this.ngxLoaderService.startLoader('loader-01');
-      filteredReservas = filteredReservas.filter(
+      filteredReservas = filteredReservas?.filter(
         (r) => r.status === statusFilter
       );
       this.ngxLoaderService.stopLoader('loader-01');
     }
 
-    this.minhasReservasFilter = this.ordernarReservasByDate(filteredReservas);
+    this.minhasReservasFilter = this.ordernarReservasByDate(filteredReservas!);
   }
 
   ordernarReservasByDate(
@@ -186,6 +185,7 @@ export class MinhasReservasComponent implements OnInit {
   }
 
   cancelarReserva() {
+    this.ngxLoaderService.startLoader('loader-01');
     this.minhasReservasService.cancelarReserva(this.idReserva).subscribe({
       next: (result) => {
         this.toastrService.success(
@@ -213,9 +213,11 @@ export class MinhasReservasComponent implements OnInit {
         }
       },
     });
+    this.ngxLoaderService.stopLoader('loader-01');
   }
 
   confirmarReserva() {
+    this.ngxLoaderService.startLoader('loader-01');
     this.minhasReservasService.confirmarUsoReserva(this.idReserva).subscribe({
       next: (result) => {
         this.toastrService.success(
@@ -243,6 +245,7 @@ export class MinhasReservasComponent implements OnInit {
         }
       },
     });
+    this.ngxLoaderService.stopLoader('loader-01');
   }
 
   montarFiltros() {

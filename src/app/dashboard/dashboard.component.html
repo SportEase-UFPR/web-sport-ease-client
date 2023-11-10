@@ -118,36 +118,65 @@
   </h3>
 
   <div class="row w-100 justify-content-center">
-    <ng-container *ngIf="reservas.length; else semReservas">
-      <div class="col-12 col-md-6 mt-2" *ngFor="let r of reservas">
-        <app-card-reserva
-          [dadosReserva]="r"
-          (emmiterClickCancelar)="
-            openModalConfirmacao(modalCancelaReserva, r.id!)
-          "
-          (emmiterClickUsar)="
-            openModalConfirmacao(modalConfirmarUso, r.id!, modalAvaliacao)
-          "
-        ></app-card-reserva>
+    <ng-container *ngIf="reservas == undefined; else noSkeleton">
+      <div class="col-12 col-md-6 mt-3" *ngFor="let i of [0, 1]">
+        <ngx-skeleton-loader
+          count="1"
+          appearance="line"
+          [theme]="{ background: '#73779144' }"
+        ></ngx-skeleton-loader>
+        <hr class="mt-1 mb-3" />
+        <ngx-skeleton-loader
+          count="3"
+          appearance="line"
+          [theme]="{ background: '#73779144' }"
+        ></ngx-skeleton-loader>
+        <div class="my-3"></div>
+
+        <div class="d-flex justify-content-end">
+          <div class="w-50">
+            <ngx-skeleton-loader
+              count="1"
+              appearance="line"
+              [theme]="{ background: '#73779144' }"
+            ></ngx-skeleton-loader>
+          </div>
+        </div>
       </div>
     </ng-container>
 
-    <ng-template #semReservas>
-      <div class="col-12 mt-5">
-        <p class="text-center">
-          No momento você não possui nenhuma reserva em andamento, que tal
-          solicitar uma?
-        </p>
-      </div>
+    <ng-template #noSkeleton>
+      <ng-container *ngIf="reservas?.length; else semReservas">
+        <div class="col-12 col-md-6 mt-2" *ngFor="let r of reservas">
+          <app-card-reserva
+            [dadosReserva]="r"
+            (emmiterClickCancelar)="
+              openModalConfirmacao(modalCancelaReserva, r.id!)
+            "
+            (emmiterClickUsar)="
+              openModalConfirmacao(modalConfirmarUso, r.id!, modalAvaliacao)
+            "
+          ></app-card-reserva>
+        </div>
+      </ng-container>
 
-      <div class="col-12 d-flex justify-content-center">
-        <app-btn-green
-          [textButton]="'Nova reserva'"
-          [showIcon]="true"
-          [icone]="faAdd"
-          (emmiterClick)="navigate()"
-        ></app-btn-green>
-      </div>
+      <ng-template #semReservas>
+        <div class="col-12 mt-5">
+          <p class="text-center">
+            No momento você não possui nenhuma reserva em andamento, que tal
+            solicitar uma?
+          </p>
+        </div>
+
+        <div class="col-12 d-flex justify-content-center">
+          <app-btn-green
+            [textButton]="'Nova reserva'"
+            [showIcon]="true"
+            [icone]="faAdd"
+            (emmiterClick)="navigate()"
+          ></app-btn-green>
+        </div>
+      </ng-template>
     </ng-template>
   </div>
 </div>

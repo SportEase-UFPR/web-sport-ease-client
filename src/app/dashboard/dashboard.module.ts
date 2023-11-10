@@ -8,6 +8,7 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToastrModule } from 'ngx-toastr';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: '#0fd45e',
@@ -34,7 +35,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     NgbCollapseModule,
     FontAwesomeModule,
     ToastrModule.forRoot(),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxSkeletonLoaderModule
   ]
 })
 export class DashboardModule { }

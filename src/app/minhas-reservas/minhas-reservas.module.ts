@@ -13,6 +13,7 @@ import {
 import { ToastrModule } from 'ngx-toastr';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: '#0fd45e',
@@ -35,7 +36,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ToastrModule.forRoot(),
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     FontAwesomeModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgxSkeletonLoaderModule
   ],
 })
 export class MinhasReservasModule {}

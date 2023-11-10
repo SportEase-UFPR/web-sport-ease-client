@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit {
   faConfirm = faCheck;
   faAdd = faAdd;
 
-  reservas: ReservaFeitaResponse[] = [];
+  reservas?: ReservaFeitaResponse[];
   idReserva: number = 0;
   modalAvalicao?: any;
 
@@ -42,19 +42,18 @@ export class DashboardComponent implements OnInit {
   }
 
   populate(): void {
-    this.ngxLoaderService.startLoader('loader-01');
     this.dashboardService.listarReservasAndamento().subscribe({
       next: (result) => {
         this.reservas = result;
       },
       error: (err) => {
+        this.reservas = [];
         this.toastrService.warning(
           'Por favor, tente novamente em alguns instantes',
           'Não foi possível buscar suas reservas'
         );
       },
     });
-    this.ngxLoaderService.stopLoader('loader-01');
   }
 
   openModalConfirmacao(
@@ -75,6 +74,7 @@ export class DashboardComponent implements OnInit {
   }
 
   cancelarReserva() {
+    this.ngxLoaderService.startLoader('loader-01');
     this.dashboardService.cancelarReserva(this.idReserva).subscribe({
       next: (result) => {
         this.toastrService.success(
@@ -102,9 +102,11 @@ export class DashboardComponent implements OnInit {
         }
       },
     });
+    this.ngxLoaderService.stopLoader('loader-01');
   }
 
   confirmarReserva() {
+    this.ngxLoaderService.startLoader('loader-01');
     this.dashboardService.confirmarUsoReserva(this.idReserva).subscribe({
       next: (result) => {
         this.toastrService.success(
@@ -133,6 +135,7 @@ export class DashboardComponent implements OnInit {
         }
       },
     });
+    this.ngxLoaderService.stopLoader('loader-01');
   }
 
   enviarAvaliacao() {

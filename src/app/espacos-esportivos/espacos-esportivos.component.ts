@@ -17,7 +17,7 @@ export class EspacosEsportivosComponent implements OnInit {
     esporte: new FormControl(-1, [Validators.required]),
   });
 
-  espacos: EspacoEsportivoResponse[] = [];
+  espacos?: EspacoEsportivoResponse[];
   espacosFiltered: EspacoEsportivoResponse[] = [];
   esportes: Item[] = [];
 
@@ -28,10 +28,8 @@ export class EspacosEsportivosComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.ngxService.startLoader('loader-01');
     this.eeService.listarEE().subscribe({
       next: (result: EspacoEsportivoResponse[]) => {
-        this.ngxService.stopLoader('loader-01');
         if (result.length > 0) {
           if (result.length > 1) {
             this.espacos = this.ordernaEspacosAlfabetico(result);
@@ -47,6 +45,7 @@ export class EspacosEsportivosComponent implements OnInit {
             this.espacos = result;
           }
         } else {
+          this.espacos = [];
           this.toastrService.warning(
             'Por favor, tente novamente mais tarde',
             'Nenhum espaço esportivo cadastrado'
@@ -54,7 +53,7 @@ export class EspacosEsportivosComponent implements OnInit {
         }
       },
       error: (err) => {
-        this.ngxService.stopLoader('loader-01');
+        this.espacos = [];
         this.toastrService.error(
           'Por favor, tente novamente mais tarde',
           'Falha ao buscar os espaços esportivos'
@@ -70,7 +69,7 @@ export class EspacosEsportivosComponent implements OnInit {
     this.espacosFiltered = [];
 
     if (esporteEscolhido?.value && Number(esporteEscolhido?.value) !== -1) {
-      this.espacos.forEach((ee) => {
+      this.espacos?.forEach((ee) => {
         ee.listaEsportes?.forEach((e) => {
           if (e.id === Number(esporteEscolhido?.value)) {
             this.espacosFiltered.push(ee);
