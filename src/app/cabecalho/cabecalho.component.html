@@ -35,10 +35,7 @@
   </div>
 </header>
 
-<aside
-  [ngClass]="{ hidden: isHidden }"
-  class="sidebar sidebar-glass"
->
+<aside [ngClass]="{ hidden: isHidden }" class="sidebar sidebar-glass">
   <div class="d-flex justify-content-between">
     <h4 class="text-green pt-2">Notificações</h4>
     <button class="btn-close-modal text-gray" (click)="toggleSidebar()">
@@ -47,13 +44,48 @@
   </div>
 
   <ul class="mt-2">
-    <ng-container *ngFor="let n of notificacoes; index as i">
-      <li [ngClass]="{ 'nao-lida': !n.lida }">
-        <p class="mb-0 notificacao-titulo">{{ n.titulo }}</p>
-        <small class="notificacao-conteudo">{{ n.conteudo }}</small>
-      </li>
+    <ng-container *ngIf="notificacoes == undefined; else noSkeleton">
+      <li class="my-2" *ngFor="let i of [0, 1, 2]">
+        <ngx-skeleton-loader
+          count="1"
+          appearance="line"
+          [theme]="{ background: '#73779144', height: '12px' }"
+        ></ngx-skeleton-loader>
 
-      <hr *ngIf="notificacoes.length !== i + 1" />
+        <div class="mt-2"></div>
+
+        <ngx-skeleton-loader
+          count="1"
+          appearance="line"
+          [theme]="{ background: '#73779144', height: '12px' }"
+        ></ngx-skeleton-loader>
+
+        <div class="w-50">
+          <ngx-skeleton-loader
+            count="1"
+            appearance="line"
+            [theme]="{ background: '#73779144', height: '12px' }"
+          ></ngx-skeleton-loader>
+        </div>
+
+        <hr *ngIf="i !== 2" />
+      </li>
     </ng-container>
+
+    <ng-template #noSkeleton>
+      <ng-container *ngFor="let n of notificacoes; index as i">
+        <li [ngClass]="{ 'nao-lida': n.lida }">
+          <div class="d-flex justify-content-between">
+            <p class="mb-0 notificacao-titulo">{{ n.titulo }}</p>
+            <small class="text-gray">{{
+              showHoraNotificacao(n.dataHora!)
+            }}</small>
+          </div>
+          <small class="notificacao-conteudo">{{ n.conteudo }}</small>
+        </li>
+
+        <hr *ngIf="notificacoes?.length !== i + 1" />
+      </ng-container>
+    </ng-template>
   </ul>
 </aside>

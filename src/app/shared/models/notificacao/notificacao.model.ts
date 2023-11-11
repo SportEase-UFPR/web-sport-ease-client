@@ -4,6 +4,7 @@ export class Notificacao {
     public idCliente?: number,
     public titulo?: string,
     public conteudo?: string,
-    public lida?: boolean
+    public lida?: boolean,
+    public dataHora?: Date | string
   ) {}
 }

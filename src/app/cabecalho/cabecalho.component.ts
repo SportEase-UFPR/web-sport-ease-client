@@ -4,6 +4,7 @@ import { faBell } from '@fortawesome/free-regular-svg-icons';
 import { faUserPen, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { CabecalhoService } from './services/cabecalho.service';
 import { Notificacao } from '../shared/models/notificacao/notificacao.model';
+const moment = require('moment');
 
 @Component({
   selector: 'app-cabecalho',
@@ -17,29 +18,33 @@ export class CabecalhoComponent implements OnInit {
 
   isHidden: boolean = false;
   qtdNotificaoNaoLida: number = 0;
-  notificacoes: Notificacao[] = [];
+  notificacoes?: Notificacao[];
 
   constructor(private cabecalhoService: CabecalhoService) {}
 
   ngOnInit(): void {
+    this.notificacoes = undefined;
     this.cabecalhoService.buscarNotificacoesWithInterval().subscribe({
       next: (result) => {
         this.notificacoes = result.sort((a, b) => b.id! - a.id!);
         this.qtdNotificaoNaoLida = result.filter((n) => !n.lida).length;
       },
       error: (err) => {
+        this.notificacoes = [];
         console.error(err);
       },
     });
   }
 
-  populate(intervalo?: number) {
+  populate() {
+    this.notificacoes = undefined;
     this.cabecalhoService.buscarNotificacoes().subscribe({
       next: (result) => {
         this.notificacoes = result.sort((a, b) => b.id! - a.id!);
         this.qtdNotificaoNaoLida = result.filter((n) => !n.lida).length;
       },
       error: (err) => {
+        this.notificacoes = [];
         console.error(err);
       },
     });
@@ -72,5 +77,28 @@ export class CabecalhoComponent implements OnInit {
       this.populate();
     }
     this.isHidden = !this.isHidden;
+  }
+
+  showHoraNotificacao(hora: Date | string): string {
+    const diffMinutes = moment().diff(hora, 'minutes');
+    const diffHours = moment().diff(hora, 'hours');
+    const diffDays = moment().diff(hora, 'days');
+    const diffWeeks = moment().diff(hora, 'weeks');
+    const diffMonths = moment().diff(hora, 'months');
+    const diffYears = moment().diff(hora, 'years');
+
+    if (diffMinutes < 60) {
+      return `${diffMinutes}min`;
+    } else if (diffHours < 24) {
+      return `${diffHours}h`;
+    } else if (diffDays < 7) {
+      return `${diffDays}d`;
+    } else if (diffWeeks < 4) {
+      return `${diffWeeks}s`;
+    } else if (diffMonths < 12) {
+      return `${diffMonths}mês`;
+    } else {
+      return `${diffYears}a`;
+    }
   }
 }
