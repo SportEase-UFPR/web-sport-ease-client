@@ -16,13 +16,13 @@
       align-items: flex-start;
       justify-content: space-between;
 
-      .autor {
-        color: var(--verde);
-      }
-
       .data {
         color: var(--cinza-claro);
       }
+    }
+
+    .comentario {
+      font-style: italic;
     }
   }
 }
