@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.inscricaoLogin = this.loginService.login(dados).subscribe({
         next: (result: LoginResponse) => {
           this.ngxLoaderService.stopLoader('loader-01');
-          this.loginService.setUsuarioLogado(result)
+          this.loginService.setUsuarioLogado(result);
           this.router.navigateByUrl('/dashboard');
         },
         error: (err: HttpErrorResponse) => {
@@ -88,7 +88,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
             case 412:
               this.toastrService.error(
-                'Está conta não está ativa.',
+                `${err.error.message}`,
                 'Não foi possível realizar o login'
               );
               break;

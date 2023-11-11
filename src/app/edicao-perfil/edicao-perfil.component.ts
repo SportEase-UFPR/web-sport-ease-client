@@ -106,7 +106,7 @@ export class EdicaoPerfilComponent implements OnInit, OnDestroy {
   focusPassword() {
     this.passwordChecklist = true;
   }
-  
+
   navigate(): void {
     this.router.navigateByUrl('/dashboard');
   }
@@ -149,14 +149,16 @@ export class EdicaoPerfilComponent implements OnInit, OnDestroy {
     if (
       nome !== this.cliente.nome ||
       email !== this.cliente.email ||
-      // vinculo !== this.cliente.alunoUFPR ||
-      // grr !== this.cliente.grr ||
+      vinculo !== this.cliente.alunoUFPR ||
+      grr !== this.cliente.grr ||
       senha !== this.cliente.senha
     ) {
       const dadosCliente: ClienteAlteracaoRequest = new ClienteAlteracaoRequest(
         nome,
         email,
-        senha ? senha : null
+        senha ? senha : null,
+        vinculo,
+        vinculo ? `GRR${grr}` : null
       );
 
       this.inscricaoAtualizacao = this.clienteService
