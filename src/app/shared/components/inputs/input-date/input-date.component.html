@@ -1,0 +1,27 @@
+<div [formGroup]="formGroup" class="mb-3" *ngIf="enabledDays.length > 0">
+  <app-label [idInput]="controlName" [textLabel]="label"></app-label>
+  <div
+    class="d-flex input-date-content"
+    [ngClass]="{
+      'is-invalid-input-date': inputValid()
+    }"
+  >
+    <input
+      type="text"
+      class="input-date w-100"
+      formControlName="{{ controlName }}"
+      id="{{ controlName }}"
+      name="{{ controlName }}"
+      [matDatepicker]="picker"
+      [min]="minDate"
+      [matDatepickerFilter]="dateFilter"
+      (focus)="picker.open()"
+      (click)="picker.open()"
+      readonly
+    />
+    <mat-datepicker #picker></mat-datepicker>
+    <button (click)="picker.open()" class="btn-date pe-2" type="submit">
+      <fa-icon [icon]="faCalendar"></fa-icon>
+    </button>
+  </div>
+</div>

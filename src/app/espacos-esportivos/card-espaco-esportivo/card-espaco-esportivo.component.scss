@@ -15,6 +15,10 @@
     grid-template-columns: auto auto auto;
   }
 
+  .daysOfWeek {
+    grid-column: span 2;
+  }
+
   .infos {
     display: flex;
     flex-direction: column;

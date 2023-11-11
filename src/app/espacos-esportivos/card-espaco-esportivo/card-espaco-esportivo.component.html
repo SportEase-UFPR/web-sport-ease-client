@@ -28,6 +28,30 @@
       <div class="infos-grid">
         <div>
           <p class="mb-1">
+            <span class="info-title">Capacidade mínima</span>
+          </p>
+          <p class="text-dark-blue">
+            {{
+              espaco.capacidadeMin +
+                (espaco.capacidadeMin! > 1 ? " Pessoas" : " Pessoa")
+            }}
+          </p>
+        </div>
+
+        <div>
+          <p class="mb-1">
+            <span class="info-title">Capacidade máxima</span>
+          </p>
+          <p class="text-dark-blue">
+            {{
+              espaco.capacidadeMax +
+                (espaco.capacidadeMax! > 1 ? " Pessoas" : " Pessoa")
+            }}
+          </p>
+        </div>
+
+        <div>
+          <p class="mb-1">
             <span class="info-title">Dimensões</span>
           </p>
           <p class="text-dark-blue">{{ espaco.dimensoes }}</p>
@@ -42,9 +66,9 @@
 
         <div>
           <p class="mb-1">
-            <span class="info-title">Capacidade</span>
+            <span class="info-title">Local</span>
           </p>
-          <p class="text-dark-blue">{{ espaco.capacidade + " pessoas" }}</p>
+          <p class="text-dark-blue">{{ espaco.localidade }}</p>
         </div>
 
         <div>
@@ -66,11 +90,19 @@
           </p>
         </div>
 
-        <div>
+        <div class="daysOfWeek">
           <p class="mb-1">
-            <span class="info-title">Local</span>
+            <span class="info-title">Dias de funcionamento</span>
           </p>
-          <p class="text-dark-blue">{{ espaco.localidade }}</p>
+          <span
+            class="text-dark-blue"
+            *ngFor="let d of espaco.diasFuncionamento; index as i"
+          >
+            {{
+              daysOfWeek[d] +
+                (espaco.diasFuncionamento?.length! > i + 1 ? "," : ".")
+            }}
+          </span>
         </div>
       </div>
 

@@ -8,7 +8,6 @@ export class EspacoEsportivoResponse {
     public localidade?: string,
     public piso?: string,
     public dimensoes?: string,
-    public capacidade?: number,
     public disponivel?: boolean,
     public listaEsportes?: EsporteResponse[],
     public imagemBase64?: string,
@@ -16,6 +15,9 @@ export class EspacoEsportivoResponse {
     public horaFechamento?: string,
     public periodoLocacao?: string,
     public maxLocacaoDia?: number,
-    public mediaAvaliacoes?: number
+    public mediaAvaliacoes?: number,
+    public capacidadeMax?: number,
+    public capacidadeMin?: number,
+    public diasFuncionamento?: number[]
   ) {}
 }

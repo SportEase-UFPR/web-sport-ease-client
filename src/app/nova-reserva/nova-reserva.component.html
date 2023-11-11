@@ -50,14 +50,13 @@
             </div>
 
             <div>
-              <app-input-field
+              <app-input-date
                 [formGroup]="formNovaReserva"
                 [controlName]="'data'"
                 [label]="'Selecione a data'"
-                [inputType]="'date'"
+                [enabledDays]="enabledDays"
                 [validacaoInput]="true"
-                (emitterChange)="listarHorarios()"
-              ></app-input-field>
+              ></app-input-date>
             </div>
           </div>
         </div>

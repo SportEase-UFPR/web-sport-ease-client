@@ -23,31 +23,31 @@ export class CabecalhoComponent implements OnInit {
   constructor(private cabecalhoService: CabecalhoService) {}
 
   ngOnInit(): void {
-    this.notificacoes = undefined;
-    this.cabecalhoService.buscarNotificacoesWithInterval().subscribe({
-      next: (result) => {
-        this.notificacoes = result.sort((a, b) => b.id! - a.id!);
-        this.qtdNotificaoNaoLida = result.filter((n) => !n.lida).length;
-      },
-      error: (err) => {
-        this.notificacoes = [];
-        console.error(err);
-      },
-    });
+    // this.notificacoes = undefined;
+    // this.cabecalhoService.buscarNotificacoesWithInterval().subscribe({
+    //   next: (result) => {
+    //     this.notificacoes = result.sort((a, b) => b.id! - a.id!);
+    //     this.qtdNotificaoNaoLida = result.filter((n) => !n.lida).length;
+    //   },
+    //   error: (err) => {
+    //     this.notificacoes = [];
+    //     console.error(err);
+    //   },
+    // });
   }
 
   populate() {
-    this.notificacoes = undefined;
-    this.cabecalhoService.buscarNotificacoes().subscribe({
-      next: (result) => {
-        this.notificacoes = result.sort((a, b) => b.id! - a.id!);
-        this.qtdNotificaoNaoLida = result.filter((n) => !n.lida).length;
-      },
-      error: (err) => {
-        this.notificacoes = [];
-        console.error(err);
-      },
-    });
+    // this.notificacoes = undefined;
+    // this.cabecalhoService.buscarNotificacoes().subscribe({
+    //   next: (result) => {
+    //     this.notificacoes = result.sort((a, b) => b.id! - a.id!);
+    //     this.qtdNotificaoNaoLida = result.filter((n) => !n.lida).length;
+    //   },
+    //   error: (err) => {
+    //     this.notificacoes = [];
+    //     console.error(err);
+    //   },
+    // });
   }
 
   getSaudacao(): string {

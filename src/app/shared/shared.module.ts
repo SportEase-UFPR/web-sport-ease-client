@@ -17,6 +17,8 @@ import { InputFieldComponent } from './components/inputs/input-field/input-field
 import { InputToogleComponent } from './components/inputs/input-toogle/input-toogle.component';
 import { PasswordChecklistComponent } from './components/password-checklist/password-checklist.component';
 import { RatingComponent } from './components/rating/rating.component';
+import { InputDateComponent } from './components/inputs/input-date/input-date.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { RatingComponent } from './components/rating/rating.component';
     InputFieldComponent,
     InputToogleComponent,
     PasswordChecklistComponent,
-    RatingComponent
+    RatingComponent,
+    InputDateComponent
   ],
   imports: [
     CommonModule,
@@ -40,6 +43,7 @@ import { RatingComponent } from './components/rating/rating.component';
     NgxMaskDirective,
     NgxMaskPipe,
     FontAwesomeModule,
+    MatDatepickerModule
   ],
   exports: [
     InputSenhaComponent,
@@ -52,7 +56,8 @@ import { RatingComponent } from './components/rating/rating.component';
     InputFieldComponent,
     InputToogleComponent,
     PasswordChecklistComponent,
-    RatingComponent
+    RatingComponent,
+    InputDateComponent
   ],
   providers: [provideNgxMask()],
 })

@@ -20,8 +20,17 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CardEspacoEsportivoComponent implements OnInit {
   @Input() espaco!: EspacoEsportivoResponse;
-  @Input() ratingMedio: string[] = ['a', 'a', 'm', 'c', 'c'];
   avaliacoes: FeedbackReserva[] = [];
+
+  daysOfWeek: string[] = [
+    'Domingo',
+    'Segunda',
+    'Terça',
+    'Quarta',
+    'Quinta',
+    'Sexta',
+    'Sábado',
+  ];
 
   faCalendar = faCalendarCheck;
   faCalendarX = faCalendarXmark;
