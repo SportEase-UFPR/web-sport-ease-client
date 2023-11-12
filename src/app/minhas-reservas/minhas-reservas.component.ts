@@ -19,6 +19,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { ReservaAvaliacao } from '../shared/models/reserva/reserva-avaliacao.model';
 import { BuildFilter } from '../utils/build-filter';
+import { distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-minhas-reservas',
@@ -69,13 +70,19 @@ export class MinhasReservasComponent implements OnInit {
   ngOnInit(): void {
     this.populate();
 
-    this.formFiltros.get('dataInicial')?.valueChanges.subscribe((v) => {
-      (this.minDate = new Date(v)), this.filterReservas();
-    });
+    this.formFiltros
+      .get('dataInicial')
+      ?.valueChanges.pipe(distinctUntilChanged())
+      .subscribe((v) => {
+        (this.minDate = new Date(v)), this.filterReservas();
+      });
 
-    this.formFiltros.get('dataFinal')?.valueChanges.subscribe((v) => {
-      (this.maxDate = new Date(v)), this.filterReservas();
-    });
+    this.formFiltros
+      .get('dataFinal')
+      ?.valueChanges.pipe(distinctUntilChanged())
+      .subscribe((v) => {
+        (this.maxDate = new Date(v)), this.filterReservas();
+      });
   }
 
   populate() {
@@ -277,6 +284,8 @@ export class MinhasReservasComponent implements OnInit {
     this.ngxLoaderService.startLoader('loader-01');
     this.minhasReservasFilter = undefined;
     this.formFiltros.reset();
+    this.minDate = undefined;
+    this.maxDate = undefined;
     this.ngxLoaderService.stopLoader('loader-01');
   }
 
