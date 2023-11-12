@@ -129,8 +129,13 @@
       </div>
 
       <div class="col-12 my-2" *ngIf="dadosReserva?.motivoCancelamento">
-        <span class="info-title">Motivo para negação da reserva: </span>
+        <span class="info-title">Motivo de negação da reserva: </span>
         <span>{{ dadosReserva?.motivoCancelamento }}</span>
+      </div>
+
+      <div class="col-12 my-2" *ngIf="dadosReserva?.motivoEncerramento">
+        <span class="info-title">Motivo de encerramento da reserva: </span>
+        <span>{{ dadosReserva?.motivoEncerramento }}</span>
       </div>
     </div>
   </div>

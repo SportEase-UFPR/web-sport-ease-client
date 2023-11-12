@@ -88,7 +88,7 @@ export class MinhasReservasComponent implements OnInit {
   populate() {
     this.minhasReservasService.listarReservas().subscribe({
       next: (result) => {
-        this.minhasReservas = this.ordernarReservasByDate(result);
+        this.minhasReservas = this.ordernarReservasById(result);
         this.montarFiltros();
       },
       error: (err) => {
@@ -154,16 +154,16 @@ export class MinhasReservasComponent implements OnInit {
       this.ngxLoaderService.stopLoader('loader-01');
     }
 
-    this.minhasReservasFilter = this.ordernarReservasByDate(filteredReservas!);
+    this.minhasReservasFilter = this.ordernarReservasById(filteredReservas!);
   }
 
-  ordernarReservasByDate(
+  ordernarReservasById(
     reservas: ReservaFeitaResponse[]
   ): ReservaFeitaResponse[] {
     return reservas.sort((a, b) => {
       const dataA = moment(a.dataHoraInicioReserva).valueOf();
       const dataB = moment(b.dataHoraInicioReserva).valueOf();
-      return dataA - dataB;
+      return dataB - dataA;
     });
   }
 
@@ -282,8 +282,8 @@ export class MinhasReservasComponent implements OnInit {
 
   limparFiltros() {
     this.ngxLoaderService.startLoader('loader-01');
-    this.minhasReservasFilter = undefined;
     this.formFiltros.reset();
+    this.minhasReservasFilter = undefined;
     this.minDate = undefined;
     this.maxDate = undefined;
     this.ngxLoaderService.stopLoader('loader-01');
