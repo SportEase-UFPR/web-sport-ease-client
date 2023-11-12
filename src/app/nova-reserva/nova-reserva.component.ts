@@ -12,6 +12,7 @@ import { ReservaRequest } from '../shared/models/reserva/reserva-request.model';
 import { ReservaResponse } from '../shared/models/reserva/reserva-response.model';
 import { EsporteResponse } from '../shared/models/esporte/esporte-response';
 import { EspacoEsportivoReservaResponse } from '../shared/models/espaco-esportivo/espaco-esportivo-reserva-response.model';
+import { HttpErrorResponse } from '@angular/common/http';
 const moment = require('moment');
 
 @Component({
@@ -310,10 +311,10 @@ export class NovaReservaComponent implements OnInit {
           );
           this.router.navigateByUrl('/dashboard');
         },
-        error: (err) => {
+        error: (err: HttpErrorResponse) => {
           this.ngxService.stopLoader('loader-01');
           this.toastrService.error(
-            'Por favor, tente novamnete mais tarde',
+            err.error.message ?? 'Por favor, tente novamnete mais tarde',
             'Erro ao solicitar reserva'
           );
         },
