@@ -13,6 +13,10 @@
     padding: 0 10px;
     color: var(--azul-escuro);
     box-shadow: none;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   .btn-date {
@@ -24,7 +28,6 @@
     font-weight: 500;
     height: 45px;
     padding: 8px;
-    width: 10%;
     box-shadow: none;
   }
 }

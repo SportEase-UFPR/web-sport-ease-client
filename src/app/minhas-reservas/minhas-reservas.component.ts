@@ -45,6 +45,8 @@ export class MinhasReservasComponent implements OnInit {
   nomesLocais: { id: number; nome: string }[] = [];
   locais: Item[] = [];
   statusReservas: Item[] = [];
+  minDate?: Date;
+  maxDate?: Date;
 
   faAdd = faPlus;
   faConfirm = faCheck;
@@ -66,6 +68,14 @@ export class MinhasReservasComponent implements OnInit {
 
   ngOnInit(): void {
     this.populate();
+
+    this.formFiltros.get('dataInicial')?.valueChanges.subscribe((v) => {
+      (this.minDate = new Date(v)), this.filterReservas();
+    });
+
+    this.formFiltros.get('dataFinal')?.valueChanges.subscribe((v) => {
+      (this.maxDate = new Date(v)), this.filterReservas();
+    });
   }
 
   populate() {
@@ -98,8 +108,8 @@ export class MinhasReservasComponent implements OnInit {
     let filteredReservas = this.minhasReservas;
 
     if (dataInicial?.value && dataFinal?.value) {
-      const dataInicialValue = moment(dataInicial?.value);
-      const dataFinalValue = moment(dataFinal?.value);
+      const dataInicialValue = moment(dataInicial?.value).startOf('day');
+      const dataFinalValue = moment(dataFinal?.value).startOf('day');
 
       if (dataFinalValue.diff(dataInicialValue, 'hour') >= 0) {
         this.ngxLoaderService.startLoader('loader-01');

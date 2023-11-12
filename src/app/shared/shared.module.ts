@@ -19,6 +19,7 @@ import { PasswordChecklistComponent } from './components/password-checklist/pass
 import { RatingComponent } from './components/rating/rating.component';
 import { InputDateComponent } from './components/inputs/input-date/input-date.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     NgxMaskDirective,
     NgxMaskPipe,
     FontAwesomeModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   exports: [
     InputSenhaComponent,

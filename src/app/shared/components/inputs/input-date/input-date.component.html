@@ -6,22 +6,53 @@
       'is-invalid-input-date': inputValid()
     }"
   >
-    <input
-      type="text"
-      class="input-date w-100"
-      formControlName="{{ controlName }}"
-      id="{{ controlName }}"
-      name="{{ controlName }}"
-      [matDatepicker]="picker"
-      [min]="minDate"
-      [matDatepickerFilter]="dateFilter"
-      (focus)="picker.open()"
-      (click)="picker.open()"
-      readonly
-    />
-    <mat-datepicker #picker></mat-datepicker>
-    <button (click)="picker.open()" class="btn-date pe-2" type="submit">
-      <fa-icon [icon]="faCalendar"></fa-icon>
-    </button>
+    <ng-container *ngIf="haveMaxDate; else notHave">
+      <input
+        type="text"
+        class="input-date w-100"
+        formControlName="{{ controlName }}"
+        id="{{ controlName }}"
+        name="{{ controlName }}"
+        placeholder="{{ placeholder }}"
+        [matDatepicker]="pickerHave"
+        [min]="haveMinDate ? minDate : null"
+        [max]="maxDate"
+        [matDatepickerFilter]="dateFilter"
+        (focus)="pickerHave.open()"
+        (click)="pickerHave.open()"
+        readonly
+      />
+      <mat-datepicker #pickerHave></mat-datepicker>
+
+      <button (click)="pickerHave.open()" class="btn-date pe-2" type="submit">
+        <fa-icon [icon]="faCalendar"></fa-icon>
+      </button>
+    </ng-container>
+
+    <ng-template #notHave>
+      <input
+        type="text"
+        class="input-date w-100"
+        formControlName="{{ controlName }}"
+        id="{{ controlName }}"
+        name="{{ controlName }}"
+        placeholder="{{ placeholder }}"
+        [matDatepicker]="pickerNotHave"
+        [min]="haveMinDate ? minDate : null"
+        [matDatepickerFilter]="dateFilter"
+        (focus)="pickerNotHave.open()"
+        (click)="pickerNotHave.open()"
+        readonly
+      />
+      <mat-datepicker #pickerNotHave></mat-datepicker>
+
+      <button
+        (click)="pickerNotHave.open()"
+        class="btn-date pe-2"
+        type="submit"
+      >
+        <fa-icon [icon]="faCalendar"></fa-icon>
+      </button>
+    </ng-template>
   </div>
 </div>

@@ -191,23 +191,23 @@
   <form [formGroup]="formFiltros">
     <div class="row w-100">
       <div class="col-12 col-md-2">
-        <app-input-field
+        <app-input-date
           [formGroup]="formFiltros"
           [controlName]="'dataInicial'"
           [label]="'Data inicial'"
-          [inputType]="'date'"
-          (emitterChange)="filterReservas()"
-        ></app-input-field>
+          [haveMaxDate]="maxDate ? true : false"
+          [maxDate]="maxDate ?? null"
+        ></app-input-date>
       </div>
 
       <div class="col-12 col-md-2">
-        <app-input-field
+        <app-input-date
           [formGroup]="formFiltros"
           [controlName]="'dataFinal'"
           [label]="'Data final'"
-          [inputType]="'date'"
-          (emitterChange)="filterReservas()"
-        ></app-input-field>
+          [haveMinDate]="minDate ? true : false"
+          [minDate]="minDate ?? null"
+        ></app-input-date>
       </div>
 
       <div class="col-12 col-md-2">
@@ -320,7 +320,7 @@
             class="h-100 d-flex align-items-center justify-content-center"
             *ngIf="reservas.length === 0; else reservasTemplate"
           >
-            <h3 class="text-dark-blue text-center py-5">
+            <h3 class="text-gray text-center py-5">
               Nenhuma reserva foi encontrada :(
             </h3>
           </div>

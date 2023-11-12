@@ -30,8 +30,8 @@
       color: var(--verde);
     }
 
-    .ABANDONADA {
-      color: var(--vermelho);
+    .ENCERRADA {
+      color: var(--cinza-claro);
     }
   }
 
@@ -39,7 +39,7 @@
     .info-title {
       font-weight: 500;
     }
-    
+
     .motivo-reserva-collapse {
       cursor: pointer;
     }
