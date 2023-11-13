@@ -6,7 +6,7 @@ import { ClienteService } from '../shared/services/cliente/cliente.service';
 import { Cliente } from '../shared/models/cliente/cliente';
 import { ToastrService } from 'ngx-toastr';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { Subject, Subscription, take, takeUntil } from 'rxjs';
+import { Subject, take, takeUntil } from 'rxjs';
 import { ClienteAlteracaoRequest } from '../shared/models/cliente/cliente-alteracao-request.model';
 import { ModalConfirmacaoComponent } from './modal-confirmacao/modal-confirmacao.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';

@@ -8,7 +8,7 @@ import { DetectarMobile } from 'src/app/utils/detectar-mobile';
 import { LoginService } from '../services/login.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CadastroSenhaRequest } from 'src/app/shared/models/cliente/cadastro-senha-request.model';
-import { Subject, Subscription, take, takeUntil } from 'rxjs';
+import { Subject, take, takeUntil } from 'rxjs';
 import { ValidacoesForm } from 'src/app/utils/validacoes-form';
 
 @Component({

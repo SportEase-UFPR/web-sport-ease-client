@@ -11,7 +11,6 @@ import { Validacoes } from '../utils/validacoes';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import {
   Subject,
-  Subscription,
   distinctUntilChanged,
   take,
   takeUntil,

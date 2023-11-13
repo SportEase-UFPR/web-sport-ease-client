@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DetectarMobile } from 'src/app/utils/detectar-mobile';
 import { environment as env } from 'src/environments/environment';
 import { CadastroService } from '../services/cadastro.service';
-import { Subscription, take } from 'rxjs';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-ativacao-conta',

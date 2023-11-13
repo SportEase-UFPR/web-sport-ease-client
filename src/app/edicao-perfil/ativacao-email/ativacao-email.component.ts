@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, take } from 'rxjs';
+import { take } from 'rxjs';
 import { EmailAtivacaoRequest } from 'src/app/shared/models/cliente/email-ativacao-request.model';
 import { ClienteService } from 'src/app/shared/services/cliente/cliente.service';
 import { environment as env } from 'src/environments/environment';
@@ -14,8 +14,6 @@ export class AtivacaoEmailComponent implements OnInit, OnDestroy {
   ativandoEmail: boolean = true;
   emailAtivada: boolean = false;
   email = env.email;
-  inscricaoRota!: Subscription;
-  inscricaoAtivacao!: Subscription;
 
   constructor(
     private router: Router,
@@ -26,7 +24,7 @@ export class AtivacaoEmailComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     document.body.classList.add('display-centered');
 
-    this.inscricaoRota = this.activatedRoute.queryParams
+    this.activatedRoute.queryParams
       .pipe(take(1))
       .subscribe((queryParams) => {
         const token = queryParams['token'];
@@ -35,7 +33,7 @@ export class AtivacaoEmailComponent implements OnInit, OnDestroy {
           const ativacaoEmail: EmailAtivacaoRequest = new EmailAtivacaoRequest(
             token
           );
-          this.inscricaoAtivacao = this.clienteService
+          this.clienteService
             .ativarEmail(ativacaoEmail)
             .pipe(take(1))
             .subscribe({
@@ -58,8 +56,6 @@ export class AtivacaoEmailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     document.body.classList.remove('display-centered');
-    this.inscricaoAtivacao?.unsubscribe();
-    this.inscricaoRota?.unsubscribe();
   }
 
   navigate() {
