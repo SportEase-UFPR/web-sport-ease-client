@@ -180,7 +180,8 @@ export class EdicaoPerfilComponent implements OnInit, OnDestroy {
           error: (err) => {
             this.ngxService.stopLoader('loader-01');
             this.toastrService.error(
-              'Não foi possível atualziar o cadastro. Tente novamente mais tarde',
+              err.error.message ??
+                'Não foi possível atualziar o cadastro. Tente novamente mais tarde',
               'Falha ao atualziar os dados'
             );
           },
