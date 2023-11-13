@@ -12,6 +12,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalAvaliacoesComponent } from '../modal-avaliacoes/modal-avaliacoes.component';
 import { FeedbackReserva } from 'src/app/shared/models/reserva/feedback-reserva.model';
 import { ToastrService } from 'ngx-toastr';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-card-espaco-esportivo',
@@ -93,9 +94,9 @@ export class CardEspacoEsportivoComponent implements OnInit {
           );
         }
       },
-      error: (err) => {
-        this.toastrService.error(
-          'Por favor, tente novamente mais tarde',
+      error: (err: HttpErrorResponse) => {
+        this.toastrService.warning(
+          err.error.message ?? 'Por favor, tente novamente mais tarde',
           'Erro ao buscar avaliações'
         );
       },
