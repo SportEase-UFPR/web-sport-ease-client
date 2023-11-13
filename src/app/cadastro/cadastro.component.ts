@@ -9,7 +9,13 @@ import { CadastroService } from './services/cadastro.service';
 import { Cliente } from '../shared/models/cliente/cliente';
 import { Validacoes } from '../utils/validacoes';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { Subscription, distinctUntilChanged } from 'rxjs';
+import {
+  Subject,
+  Subscription,
+  distinctUntilChanged,
+  take,
+  takeUntil,
+} from 'rxjs';
 import { ValidacoesForm } from '../utils/validacoes-form';
 
 @Component({
@@ -43,8 +49,10 @@ export class CadastroComponent implements OnInit, OnDestroy {
 
   focusPasswordType?: string;
 
-  inscricaoRota!: Subscription;
-  inscricaoCadastro!: Subscription;
+  vinculo$ = new Subject();
+  cpf$ = new Subject();
+  senha$ = new Subject();
+  confirmacaoSenha$ = new Subject();
 
   constructor(
     private router: Router,
@@ -56,34 +64,42 @@ export class CadastroComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     document.body.classList.add('display-centered');
-    this.inscricaoRota = this.activatedRoute.queryParams.subscribe(
-      (queryParams) => {
-        this.formCadastroCliente.get('email')?.setValue(queryParams?.['email']);
-      }
-    );
+    this.activatedRoute.queryParams.pipe(take(1)).subscribe((queryParams) => {
+      this.formCadastroCliente.get('email')?.setValue(queryParams?.['email']);
+    });
 
     this.formCadastroCliente
       .get('vinculo')
-      ?.valueChanges.subscribe((value) => this.showGrr(value));
+      ?.valueChanges.pipe(takeUntil(this.vinculo$))
+      .subscribe((value) => this.showGrr(value));
 
     this.formCadastroCliente
       .get('cpf')
       ?.statusChanges.pipe(distinctUntilChanged())
+      .pipe(takeUntil(this.cpf$))
       .subscribe((status) => (status === 'VALID' ? this.validarCpf() : {}));
 
     this.formCadastroCliente
       .get('senha')
-      ?.valueChanges.subscribe(() => this.verificarSenhas());
+      ?.valueChanges.pipe(takeUntil(this.senha$))
+      .subscribe(() => this.verificarSenhas());
 
     this.formCadastroCliente
       .get('confirmacaoSenha')
-      ?.valueChanges.subscribe(() => this.verificarSenhas());
+      ?.valueChanges.pipe(takeUntil(this.confirmacaoSenha$))
+      .subscribe(() => this.verificarSenhas());
   }
 
   ngOnDestroy(): void {
     document.body.classList.remove('display-centered');
-    this.inscricaoCadastro?.unsubscribe();
-    this.inscricaoRota?.unsubscribe();
+    this.vinculo$.next(null);
+    this.cpf$.next(null);
+    this.senha$.next(null);
+    this.confirmacaoSenha$.next(null);
+    this.vinculo$.complete();
+    this.cpf$.complete();
+    this.senha$.complete();
+    this.confirmacaoSenha$.complete();
   }
 
   verificarSenhas() {
@@ -146,8 +162,9 @@ export class CadastroComponent implements OnInit, OnDestroy {
         newCliente.grr = null;
       }
 
-      this.inscricaoCadastro = this.cadastroService
+      this.cadastroService
         .cadastrar(newCliente)
+        .pipe(take(1))
         .subscribe({
           next: (result) => {
             this.ngxService.stopLoader('loader-01');

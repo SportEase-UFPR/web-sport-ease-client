@@ -6,6 +6,7 @@ import { Item } from '../shared/components/inputs/input-select-option/model/item
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EspacoEsportivoResponse } from '../shared/models/espaco-esportivo/espaco-esportivo-response.model';
 import { BuildFilter } from '../utils/build-filter';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-espacos-esportivos',
@@ -28,7 +29,7 @@ export class EspacosEsportivosComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.eeService.listarEE().subscribe({
+    this.eeService.listarEE().pipe(take(1)).subscribe({
       next: (result: EspacoEsportivoResponse[]) => {
         if (result.length > 0) {
           if (result.length > 1) {

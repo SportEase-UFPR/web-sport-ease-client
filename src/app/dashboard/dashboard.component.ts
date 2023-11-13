@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ReservaAvaliacao } from '../shared/models/reserva/reserva-avaliacao.model';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -42,18 +43,21 @@ export class DashboardComponent implements OnInit {
   }
 
   populate(): void {
-    this.dashboardService.listarReservasAndamento().subscribe({
-      next: (result) => {
-        this.reservas = result;
-      },
-      error: (err) => {
-        this.reservas = [];
-        this.toastrService.warning(
-          'Por favor, tente novamente em alguns instantes',
-          'Não foi possível buscar suas reservas'
-        );
-      },
-    });
+    this.dashboardService
+      .listarReservasAndamento()
+      .pipe(take(1))
+      .subscribe({
+        next: (result) => {
+          this.reservas = result;
+        },
+        error: (err) => {
+          this.reservas = [];
+          this.toastrService.warning(
+            'Por favor, tente novamente em alguns instantes',
+            'Não foi possível buscar suas reservas'
+          );
+        },
+      });
   }
 
   openModalConfirmacao(
@@ -75,66 +79,72 @@ export class DashboardComponent implements OnInit {
 
   cancelarReserva() {
     this.ngxLoaderService.startLoader('loader-01');
-    this.dashboardService.cancelarReserva(this.idReserva).subscribe({
-      next: (result) => {
-        this.toastrService.success(
-          'Sua reserva foi cancelada com sucesso',
-          'Reserva cancelada'
-        );
-        this.populate();
-        this.closeModal();
-      },
-      error: (err: HttpErrorResponse) => {
-        switch (err.status) {
-          case 412:
-            this.toastrService.error(
-              err.error.message,
-              'Erro ao cancelar reserva'
-            );
-            break;
+    this.dashboardService
+      .cancelarReserva(this.idReserva)
+      .pipe(take(1))
+      .subscribe({
+        next: (result) => {
+          this.toastrService.success(
+            'Sua reserva foi cancelada com sucesso',
+            'Reserva cancelada'
+          );
+          this.populate();
+          this.closeModal();
+        },
+        error: (err: HttpErrorResponse) => {
+          switch (err.status) {
+            case 412:
+              this.toastrService.error(
+                err.error.message,
+                'Erro ao cancelar reserva'
+              );
+              break;
 
-          default:
-            this.toastrService.error(
-              'Por favor, tente novamente mais tarde',
-              'Erro ao cancelar reserva'
-            );
-            break;
-        }
-      },
-    });
+            default:
+              this.toastrService.error(
+                'Por favor, tente novamente mais tarde',
+                'Erro ao cancelar reserva'
+              );
+              break;
+          }
+        },
+      });
     this.ngxLoaderService.stopLoader('loader-01');
   }
 
   confirmarReserva() {
     this.ngxLoaderService.startLoader('loader-01');
-    this.dashboardService.confirmarUsoReserva(this.idReserva).subscribe({
-      next: (result) => {
-        this.toastrService.success(
-          'Confirmação de uso feita com sucesso',
-          'Reserva confirmada'
-        );
-        this.populate();
-        this.closeModal();
-        this.openModalConfirmacao(this.modalAvalicao!, this.idReserva);
-      },
-      error: (err: HttpErrorResponse) => {
-        switch (err.status) {
-          case 412:
-            this.toastrService.error(
-              err.error.message,
-              'Erro ao confirmar uso'
-            );
-            break;
+    this.dashboardService
+      .confirmarUsoReserva(this.idReserva)
+      .pipe(take(1))
+      .subscribe({
+        next: (result) => {
+          this.toastrService.success(
+            'Confirmação de uso feita com sucesso',
+            'Reserva confirmada'
+          );
+          this.populate();
+          this.closeModal();
+          this.openModalConfirmacao(this.modalAvalicao!, this.idReserva);
+        },
+        error: (err: HttpErrorResponse) => {
+          switch (err.status) {
+            case 412:
+              this.toastrService.error(
+                err.error.message,
+                'Erro ao confirmar uso'
+              );
+              break;
 
-          default:
-            this.toastrService.error(
-              'Por favor, tente novamente mais tarde',
-              'Erro ao confirmar uso'
-            );
-            break;
-        }
-      },
-    });
+            default:
+              this.toastrService.error(
+                'Por favor, tente novamente mais tarde',
+                'Erro ao confirmar uso'
+              );
+              break;
+          }
+        },
+      });
     this.ngxLoaderService.stopLoader('loader-01');
   }
 
@@ -151,6 +161,7 @@ export class DashboardComponent implements OnInit {
             form.get('comentario')?.value
           )
         )
+        .pipe(take(1))
         .subscribe({
           next: (result) => {
             this.toastrService.success(

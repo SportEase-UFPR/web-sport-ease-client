@@ -13,6 +13,7 @@ import { ModalAvaliacoesComponent } from '../modal-avaliacoes/modal-avaliacoes.c
 import { FeedbackReserva } from 'src/app/shared/models/reserva/feedback-reserva.model';
 import { ToastrService } from 'ngx-toastr';
 import { HttpErrorResponse } from '@angular/common/http';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-card-espaco-esportivo',
@@ -81,26 +82,29 @@ export class CardEspacoEsportivoComponent implements OnInit {
 
   buscarAvaliacoes() {
     this.avaliacoes = [];
-    this.eeService.buscarComentarios(this.espaco.id!).subscribe({
-      next: (result) => {
-        this.avaliacoes = result.filter((c) => c.comentario);
+    this.eeService
+      .buscarComentarios(this.espaco.id!)
+      .pipe(take(1))
+      .subscribe({
+        next: (result) => {
+          this.avaliacoes = result.filter((c) => c.comentario);
 
-        if (this.avaliacoes.length > 0) {
-          this.openModal();
-        } else {
-          this.toastrService.info(
-            `Até o momento ${this.espaco.nome} não possui avaliações`,
-            'Nenhuma avaliação encontrada'
+          if (this.avaliacoes.length > 0) {
+            this.openModal();
+          } else {
+            this.toastrService.info(
+              `Até o momento ${this.espaco.nome} não possui avaliações`,
+              'Nenhuma avaliação encontrada'
+            );
+          }
+        },
+        error: (err: HttpErrorResponse) => {
+          this.toastrService.warning(
+            err.error.message ?? 'Por favor, tente novamente mais tarde',
+            'Erro ao buscar avaliações'
           );
-        }
-      },
-      error: (err: HttpErrorResponse) => {
-        this.toastrService.warning(
-          err.error.message ?? 'Por favor, tente novamente mais tarde',
-          'Erro ao buscar avaliações'
-        );
-      },
-    });
+        },
+      });
   }
 
   openModal(): void {

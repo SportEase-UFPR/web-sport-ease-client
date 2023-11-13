@@ -6,7 +6,7 @@ import { ClienteService } from '../shared/services/cliente/cliente.service';
 import { Cliente } from '../shared/models/cliente/cliente';
 import { ToastrService } from 'ngx-toastr';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription, take, takeUntil } from 'rxjs';
 import { ClienteAlteracaoRequest } from '../shared/models/cliente/cliente-alteracao-request.model';
 import { ModalConfirmacaoComponent } from './modal-confirmacao/modal-confirmacao.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -46,8 +46,10 @@ export class EdicaoPerfilComponent implements OnInit, OnDestroy {
 
   focusPasswordType?: string;
   cliente!: Cliente;
-  inscricaoAtualizacao!: Subscription;
-  inscricaoCliente!: Subscription;
+
+  vinculo$ = new Subject();
+  senha$ = new Subject();
+  confirmacaoSenha$ = new Subject();
 
   constructor(
     private router: Router,
@@ -58,8 +60,9 @@ export class EdicaoPerfilComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.inscricaoAtualizacao = this.clienteService
+    this.clienteService
       .getDadosCliente()
+      .pipe(take(1))
       .subscribe({
         next: (result: Cliente) => {
           this.cliente = result;
@@ -77,20 +80,27 @@ export class EdicaoPerfilComponent implements OnInit, OnDestroy {
 
     this.formAlteracaoPerfil
       .get('vinculo')
-      ?.valueChanges.subscribe((value) => this.showGrr(value));
+      ?.valueChanges.pipe(takeUntil(this.vinculo$))
+      .subscribe((value) => this.showGrr(value));
 
     this.formAlteracaoPerfil
       .get('senha')
-      ?.valueChanges.subscribe(() => this.verificarSenhas());
+      ?.valueChanges.pipe(takeUntil(this.senha$))
+      .subscribe(() => this.verificarSenhas());
 
     this.formAlteracaoPerfil
       .get('confirmacaoSenha')
-      ?.valueChanges.subscribe(() => this.verificarSenhas());
+      ?.valueChanges.pipe(takeUntil(this.confirmacaoSenha$))
+      .subscribe(() => this.verificarSenhas());
   }
 
   ngOnDestroy(): void {
-    this.inscricaoAtualizacao?.unsubscribe();
-    this.inscricaoCliente?.unsubscribe();
+    this.vinculo$.next(null);
+    this.senha$.next(null);
+    this.confirmacaoSenha$.next(null);
+    this.vinculo$.complete();
+    this.senha$.complete();
+    this.confirmacaoSenha$.complete();
   }
 
   verificarSenhas() {
@@ -158,11 +168,12 @@ export class EdicaoPerfilComponent implements OnInit, OnDestroy {
         email,
         senha ? senha : null,
         vinculo,
-        vinculo ? `GRR${grr}` : null
+        vinculo ? (grr?.includes('GRR') ? grr : `GRR${grr}`) : null
       );
 
-      this.inscricaoAtualizacao = this.clienteService
+      this.clienteService
         .atualizarDados(dadosCliente)
+        .pipe(take(1))
         .subscribe({
           next: (result: ClienteAlteracaoResponse) => {
             this.ngxService.stopLoader('loader-01');

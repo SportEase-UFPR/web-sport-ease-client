@@ -8,7 +8,7 @@ import { DetectarMobile } from 'src/app/utils/detectar-mobile';
 import { LoginService } from '../services/login.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CadastroSenhaRequest } from 'src/app/shared/models/cliente/cadastro-senha-request.model';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription, take, takeUntil } from 'rxjs';
 import { ValidacoesForm } from 'src/app/utils/validacoes-form';
 
 @Component({
@@ -25,8 +25,8 @@ export class CadastrarSenhaComponent implements OnInit, OnDestroy {
 
   private token?: string;
 
-  inscricaoRota!: Subscription;
-  inscricaoAlterarSenha!: Subscription;
+  senha$ = new Subject();
+  confirmacaoSenha$ = new Subject();
 
   public formNovaSenha: FormGroup = new FormGroup({
     senha: new FormControl(null, [
@@ -49,26 +49,28 @@ export class CadastrarSenhaComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     document.body.classList.add('display-centered');
-    this.inscricaoRota = this.activatedRoute.queryParams.subscribe(
-      (queryParams) => {
-        const tokenQueryParams = queryParams['token'];
-        if (tokenQueryParams) this.token = tokenQueryParams;
-      }
-    );
+    this.activatedRoute.queryParams.pipe(take(1)).subscribe((queryParams) => {
+      const tokenQueryParams = queryParams['token'];
+      if (tokenQueryParams) this.token = tokenQueryParams;
+    });
 
     this.formNovaSenha
       .get('senha')
-      ?.valueChanges.subscribe(() => this.verificarSenhas());
+      ?.valueChanges.pipe(takeUntil(this.senha$))
+      .subscribe(() => this.verificarSenhas());
 
     this.formNovaSenha
       .get('confirmacaoSenha')
-      ?.valueChanges.subscribe(() => this.verificarSenhas());
+      ?.valueChanges.pipe(takeUntil(this.confirmacaoSenha$))
+      .subscribe(() => this.verificarSenhas());
   }
 
   ngOnDestroy(): void {
     document.body.classList.remove('display-centered');
-    this.inscricaoAlterarSenha?.unsubscribe();
-    this.inscricaoRota?.unsubscribe();
+    this.senha$.next(null);
+    this.confirmacaoSenha$.next(null);
+    this.senha$.complete();
+    this.confirmacaoSenha$.complete();
   }
 
   focusPassword() {
@@ -95,12 +97,18 @@ export class CadastrarSenhaComponent implements OnInit, OnDestroy {
         form.get('senha')?.value
       );
 
-      this.inscricaoAlterarSenha = this.loginService
+      this.loginService
         .alterarSenha(dados)
+        .pipe(take(1))
         .subscribe({
           next: (result) => {
             if (DetectarMobile.isMobile()) {
-              //lógica para salvar a nova senha do cliente em mobile
+              //lógica para salvar a nova senha do cliente em mobile (incompleta)
+              this.ngxService.stopLoader('loader-01');
+              this.toastrService.success(
+                'Sua senha foi alterada com sucesso.',
+                'Senha alterada!'
+              );
             } else {
               this.ngxService.stopLoader('loader-01');
               this.toastrService.success(

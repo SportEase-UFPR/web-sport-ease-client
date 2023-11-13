@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { faBell } from '@fortawesome/free-regular-svg-icons';
 
 import { faUserPen, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { CabecalhoService } from './services/cabecalho.service';
 import { Notificacao } from '../shared/models/notificacao/notificacao.model';
+import { Subject, take, takeUntil } from 'rxjs';
 const moment = require('moment');
 
 @Component({
@@ -11,7 +12,7 @@ const moment = require('moment');
   templateUrl: './cabecalho.component.html',
   styleUrls: ['./cabecalho.component.scss'],
 })
-export class CabecalhoComponent implements OnInit {
+export class CabecalhoComponent implements OnInit, OnDestroy {
   faUser = faUserPen;
   faBell = faBell;
   faClose = faXmark;
@@ -20,34 +21,48 @@ export class CabecalhoComponent implements OnInit {
   qtdNotificaoNaoLida: number = 0;
   notificacoes?: Notificacao[];
 
+  notificacoes$ = new Subject();
+
   constructor(private cabecalhoService: CabecalhoService) {}
 
   ngOnInit(): void {
-    // this.notificacoes = undefined;
-    // this.cabecalhoService.buscarNotificacoesWithInterval().subscribe({
-    //   next: (result) => {
-    //     this.notificacoes = result.sort((a, b) => b.id! - a.id!);
-    //     this.qtdNotificaoNaoLida = result.filter((n) => !n.lida).length;
-    //   },
-    //   error: (err) => {
-    //     this.notificacoes = [];
-    //     console.error(err);
-    //   },
-    // });
+    /*
+    this.notificacoes = undefined;
+    this.cabecalhoService
+      .buscarNotificacoesWithInterval()
+      .pipe(takeUntil(this.notificacoes$))
+      .subscribe({
+        next: (result) => {
+          this.notificacoes = result.sort((a, b) => b.id! - a.id!);
+          this.qtdNotificaoNaoLida = result.filter((n) => !n.lida).length;
+        },
+        error: (err) => {
+          this.notificacoes = [];
+          console.error(err);
+        },
+      }); */
+  }
+
+  ngOnDestroy(): void {
+    this.notificacoes$.next(null);
+    this.notificacoes$.complete();
   }
 
   populate() {
-    // this.notificacoes = undefined;
-    // this.cabecalhoService.buscarNotificacoes().subscribe({
-    //   next: (result) => {
-    //     this.notificacoes = result.sort((a, b) => b.id! - a.id!);
-    //     this.qtdNotificaoNaoLida = result.filter((n) => !n.lida).length;
-    //   },
-    //   error: (err) => {
-    //     this.notificacoes = [];
-    //     console.error(err);
-    //   },
-    // });
+    /* this.notificacoes = undefined;
+    this.cabecalhoService
+      .buscarNotificacoes()
+      .pipe(take(1))
+      .subscribe({
+        next: (result) => {
+          this.notificacoes = result.sort((a, b) => b.id! - a.id!);
+          this.qtdNotificaoNaoLida = result.filter((n) => !n.lida).length;
+        },
+        error: (err) => {
+          this.notificacoes = [];
+          console.error(err);
+        },
+      }); */
   }
 
   getSaudacao(): string {
@@ -65,14 +80,17 @@ export class CabecalhoComponent implements OnInit {
 
   toggleSidebar() {
     if (this.isHidden) {
-      this.cabecalhoService.lerNotificacoes().subscribe({
-        next: (result) => {
-          this.populate();
-        },
-        error: (err) => {
-          console.error(err);
-        },
-      });
+      this.cabecalhoService
+        .lerNotificacoes()
+        .pipe(take(1))
+        .subscribe({
+          next: (result) => {
+            this.populate();
+          },
+          error: (err) => {
+            console.error(err);
+          },
+        });
     } else {
       this.populate();
     }

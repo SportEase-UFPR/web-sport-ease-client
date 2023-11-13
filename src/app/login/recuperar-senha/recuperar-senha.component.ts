@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { LoginService } from '../services/login.service';
 import { InstrucoesRecuperacaoRequest } from 'src/app/shared/models/cliente/instrucoes-recuperacao-request.model';
-import { Subscription } from 'rxjs';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-recuperar-senha',
@@ -16,9 +16,6 @@ export class RecuperarSenhaComponent implements OnInit, OnDestroy {
   public formRecuperarSenha: FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
   });
-
-  inscricaoRota!: Subscription;
-  inscricaoIntrucoes!: Subscription;
 
   constructor(
     private router: Router,
@@ -31,17 +28,13 @@ export class RecuperarSenhaComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     document.body.classList.add('display-centered');
 
-    this.inscricaoRota = this.activatedRoute.queryParams.subscribe(
-      (queryParams) => {
-        this.formRecuperarSenha.get('email')?.setValue(queryParams?.['email']);
-      }
-    );
+    this.activatedRoute.queryParams.pipe(take(1)).subscribe((queryParams) => {
+      this.formRecuperarSenha.get('email')?.setValue(queryParams?.['email']);
+    });
   }
 
   ngOnDestroy(): void {
     document.body.classList.remove('display-centered');
-    this.inscricaoIntrucoes?.unsubscribe();
-    this.inscricaoRota?.unsubscribe();
   }
 
   recuperarSenha() {
@@ -51,8 +44,9 @@ export class RecuperarSenhaComponent implements OnInit, OnDestroy {
       const dados: InstrucoesRecuperacaoRequest =
         new InstrucoesRecuperacaoRequest(form.get('email')?.value);
 
-      this.inscricaoIntrucoes = this.loginService
+      this.loginService
         .enviarIntrucoesRecuperacao(dados)
+        .pipe(take(1))
         .subscribe({
           next: (result) => {
             this.ngxService.stopLoader('loader-01');

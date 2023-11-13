@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -13,6 +13,7 @@ import { ReservaResponse } from '../shared/models/reserva/reserva-response.model
 import { EsporteResponse } from '../shared/models/esporte/esporte-response';
 import { EspacoEsportivoReservaResponse } from '../shared/models/espaco-esportivo/espaco-esportivo-reserva-response.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Subject, take, takeUntil } from 'rxjs';
 const moment = require('moment');
 
 @Component({
@@ -20,7 +21,7 @@ const moment = require('moment');
   templateUrl: './nova-reserva.component.html',
   styleUrls: ['./nova-reserva.component.scss'],
 })
-export class NovaReservaComponent implements OnInit {
+export class NovaReservaComponent implements OnInit, OnDestroy {
   formNovaReserva: FormGroup = new FormGroup({
     espacoEsportivo: new FormControl(null, [Validators.required]),
     qtdPessoas: new FormControl(null, [Validators.required, Validators.min(1)]),
@@ -48,6 +49,8 @@ export class NovaReservaComponent implements OnInit {
   periodoLocacao: string = '';
   enabledDays: number[] = [];
 
+  data$ = new Subject();
+
   constructor(
     private reservaService: NovaReservaService,
     private toastrService: ToastrService,
@@ -58,44 +61,53 @@ export class NovaReservaComponent implements OnInit {
 
   ngOnInit(): void {
     this.ngxService.startLoader('loader-01');
-    this.reservaService.listarEE().subscribe({
-      next: (result) => {
-        this.ngxService.stopLoader('loader-01');
-        if (result.length > 0) {
-          this.espacosEsportivos = result;
-          this.espacosEsportivos.forEach((ee) => {
-            this.nomesEE.push(new Item(ee.id, ee.nome));
-          });
+    this.reservaService
+      .listarEE()
+      .pipe(take(1))
+      .subscribe({
+        next: (result) => {
+          this.ngxService.stopLoader('loader-01');
+          if (result.length > 0) {
+            this.espacosEsportivos = result;
+            this.espacosEsportivos.forEach((ee) => {
+              this.nomesEE.push(new Item(ee.id, ee.nome));
+            });
 
-          this.activatedRoute.queryParams.subscribe((qP) => {
-            if (qP['espaco']) {
-              this.idEspacoQueryParam = Number(qP['espaco']);
-              this.formNovaReserva
-                .get('espacoEsportivo')
-                ?.patchValue(this.idEspacoQueryParam);
-              this.showNextSteps();
-            }
-          });
-        } else {
-          this.toastrService.info(
-            'Por favor, realize a solicitação de reserva em outro momento',
-            'Nenhum espaço esportivo disponível'
+            this.activatedRoute.queryParams.pipe(take(1)).subscribe((qP) => {
+              if (qP['espaco']) {
+                this.idEspacoQueryParam = Number(qP['espaco']);
+                this.formNovaReserva
+                  .get('espacoEsportivo')
+                  ?.patchValue(this.idEspacoQueryParam);
+                this.showNextSteps();
+              }
+            });
+          } else {
+            this.toastrService.info(
+              'Por favor, realize a solicitação de reserva em outro momento',
+              'Nenhum espaço esportivo disponível'
+            );
+          }
+        },
+        error: (err) => {
+          this.ngxService.stopLoader('loader-01');
+          this.toastrService.error(
+            'Por favor, tente solictar uma reserva novamente dentro de alguns instantes',
+            'Erro ao buscar espaços esportivos'
           );
-        }
-      },
-      error: (err) => {
-        this.ngxService.stopLoader('loader-01');
-        this.toastrService.error(
-          'Por favor, tente solictar uma reserva novamente dentro de alguns instantes',
-          'Erro ao buscar espaços esportivos'
-        );
-        console.error(err);
-      },
-    });
+          console.error(err);
+        },
+      });
 
     this.formNovaReserva
       .get('data')
-      ?.valueChanges.subscribe((v) => (v ? this.listarHorarios() : null));
+      ?.valueChanges.pipe(takeUntil(this.data$))
+      .subscribe((v) => (v ? this.listarHorarios() : null));
+  }
+
+  ngOnDestroy(): void {
+    this.data$.next(null);
+    this.data$.complete();
   }
 
   showNextSteps(): void {
@@ -154,47 +166,50 @@ export class NovaReservaComponent implements OnInit {
       Number(form.get('espacoEsportivo')?.value)
     );
 
-    this.reservaService.listarHorariosDisponiveis(dados).subscribe({
-      next: (result: ReservaHorariosResponse) => {
-        this.horarios = result.horariosDisponiveis!;
-        this.periodoLocacao = result.periodoLocacao!;
+    this.reservaService
+      .listarHorariosDisponiveis(dados)
+      .pipe(take(1))
+      .subscribe({
+        next: (result: ReservaHorariosResponse) => {
+          this.horarios = result.horariosDisponiveis!;
+          this.periodoLocacao = result.periodoLocacao!;
 
-        if (dataEscolhida.getTime() === dataHoje.getTime()) {
-          this.horarios?.forEach((h) => {
-            const horario = moment()
-              .hour(Number(h.split(':')[0]))
-              .minute(Number(h.split(':')[1]))
-              .second(Number(h.split(':')[2]));
+          if (dataEscolhida.getTime() === dataHoje.getTime()) {
+            this.horarios?.forEach((h) => {
+              const horario = moment()
+                .hour(Number(h.split(':')[0]))
+                .minute(Number(h.split(':')[1]))
+                .second(Number(h.split(':')[2]));
 
-            if (horario.hour() >= new Date().getHours() + 1) {
-              this.setHoraiosDisponiveis(horario.format('HH:mm'));
-            }
-          });
-        } else {
-          this.horarios?.forEach((h) => {
-            this.setHoraiosDisponiveis(h);
-          });
-        }
+              if (horario.hour() >= new Date().getHours() + 1) {
+                this.setHoraiosDisponiveis(horario.format('HH:mm'));
+              }
+            });
+          } else {
+            this.horarios?.forEach((h) => {
+              this.setHoraiosDisponiveis(h);
+            });
+          }
 
-        this.ngxService.stopLoader('loader-01');
-        if (this.horariosDisponiveis.length == 0) {
-          this.toastrService.info(
-            'Não temos horários disponíveis para este dia. Por favor, selecione outra data',
-            'Nenhum horário livre'
+          this.ngxService.stopLoader('loader-01');
+          if (this.horariosDisponiveis.length == 0) {
+            this.toastrService.info(
+              'Não temos horários disponíveis para este dia. Por favor, selecione outra data',
+              'Nenhum horário livre'
+            );
+          } else {
+            this.showHorarios = true;
+          }
+        },
+        error: (err) => {
+          this.ngxService.stopLoader('loader-01');
+          this.toastrService.error(
+            'Por favor, selecione outra data ou tente novamente mais tarde',
+            'Erro ao buscar os horários disponíveis'
           );
-        } else {
-          this.showHorarios = true;
-        }
-      },
-      error: (err) => {
-        this.ngxService.stopLoader('loader-01');
-        this.toastrService.error(
-          'Por favor, selecione outra data ou tente novamente mais tarde',
-          'Erro ao buscar os horários disponíveis'
-        );
-        console.error(err);
-      },
-    });
+          console.error(err);
+        },
+      });
   }
 
   setHoraiosDisponiveis(h: string) {
@@ -302,23 +317,26 @@ export class NovaReservaComponent implements OnInit {
         Number(form.get('espacoEsportivo')?.value)
       );
 
-      this.reservaService.solicitarReserva(novaReserva).subscribe({
-        next: (result: ReservaResponse) => {
-          this.ngxService.stopLoader('loader-01');
-          this.toastrService.success(
-            'A sua solicitação de reserva foi registrada',
-            'Sucesso'
-          );
-          this.router.navigateByUrl('/dashboard');
-        },
-        error: (err: HttpErrorResponse) => {
-          this.ngxService.stopLoader('loader-01');
-          this.toastrService.error(
-            err.error.message ?? 'Por favor, tente novamnete mais tarde',
-            'Erro ao solicitar reserva'
-          );
-        },
-      });
+      this.reservaService
+        .solicitarReserva(novaReserva)
+        .pipe(take(1))
+        .subscribe({
+          next: (result: ReservaResponse) => {
+            this.ngxService.stopLoader('loader-01');
+            this.toastrService.success(
+              'A sua solicitação de reserva foi registrada',
+              'Sucesso'
+            );
+            this.router.navigateByUrl('/dashboard');
+          },
+          error: (err: HttpErrorResponse) => {
+            this.ngxService.stopLoader('loader-01');
+            this.toastrService.error(
+              err.error.message ?? 'Por favor, tente novamnete mais tarde',
+              'Erro ao solicitar reserva'
+            );
+          },
+        });
     } else {
       this.toastrService.warning(
         'Por favor, preencha todos os campos do formulário',

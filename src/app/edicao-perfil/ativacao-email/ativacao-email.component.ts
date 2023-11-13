@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 import { EmailAtivacaoRequest } from 'src/app/shared/models/cliente/email-ativacao-request.model';
 import { ClienteService } from 'src/app/shared/services/cliente/cliente.service';
 import { environment as env } from 'src/environments/environment';
@@ -26,8 +26,9 @@ export class AtivacaoEmailComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     document.body.classList.add('display-centered');
 
-    this.inscricaoRota = this.activatedRoute.queryParams.subscribe(
-      (queryParams) => {
+    this.inscricaoRota = this.activatedRoute.queryParams
+      .pipe(take(1))
+      .subscribe((queryParams) => {
         const token = queryParams['token'];
 
         if (token) {
@@ -36,6 +37,7 @@ export class AtivacaoEmailComponent implements OnInit, OnDestroy {
           );
           this.inscricaoAtivacao = this.clienteService
             .ativarEmail(ativacaoEmail)
+            .pipe(take(1))
             .subscribe({
               next: (result) => {
                 this.ativandoEmail = false;
@@ -51,8 +53,7 @@ export class AtivacaoEmailComponent implements OnInit, OnDestroy {
           this.ativandoEmail = false;
           this.emailAtivada = false;
         }
-      }
-    );
+      });
   }
 
   ngOnDestroy(): void {

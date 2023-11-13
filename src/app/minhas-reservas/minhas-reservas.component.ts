@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
@@ -19,14 +19,14 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { ReservaAvaliacao } from '../shared/models/reserva/reserva-avaliacao.model';
 import { BuildFilter } from '../utils/build-filter';
-import { distinctUntilChanged } from 'rxjs';
+import { Subject, distinctUntilChanged, take, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-minhas-reservas',
   templateUrl: './minhas-reservas.component.html',
   styleUrls: ['./minhas-reservas.component.scss'],
 })
-export class MinhasReservasComponent implements OnInit {
+export class MinhasReservasComponent implements OnInit, OnDestroy {
   formAvaliacao: FormGroup = new FormGroup({
     rating: new FormControl(null, [Validators.required]),
     comentario: new FormControl(null),
@@ -59,6 +59,9 @@ export class MinhasReservasComponent implements OnInit {
   idReserva: number = 0;
   dadosReserva?: ReservaFeitaResponse;
 
+  dataInicial$ = new Subject();
+  dataFinal$ = new Subject();
+
   constructor(
     private router: Router,
     private minhasReservasService: MinhasReservasService,
@@ -72,33 +75,43 @@ export class MinhasReservasComponent implements OnInit {
 
     this.formFiltros
       .get('dataInicial')
-      ?.valueChanges.pipe(distinctUntilChanged())
+      ?.valueChanges.pipe(distinctUntilChanged(), takeUntil(this.dataInicial$))
       .subscribe((v) => {
         (this.minDate = new Date(v)), this.filterReservas();
       });
 
     this.formFiltros
       .get('dataFinal')
-      ?.valueChanges.pipe(distinctUntilChanged())
+      ?.valueChanges.pipe(distinctUntilChanged(), takeUntil(this.dataFinal$))
       .subscribe((v) => {
         (this.maxDate = new Date(v)), this.filterReservas();
       });
   }
 
+  ngOnDestroy(): void {
+    this.dataInicial$.next(null);
+    this.dataFinal$.next(null);
+    this.dataInicial$.complete();
+    this.dataFinal$.complete();
+  }
+
   populate() {
-    this.minhasReservasService.listarReservas().subscribe({
-      next: (result) => {
-        this.minhasReservas = this.ordernarReservasById(result);
-        this.montarFiltros();
-      },
-      error: (err) => {
-        this.minhasReservas = [];
-        this.toastrService.error(
-          'Por favor, tente novamente mais tarde',
-          'Erro ao buscar suas reservas'
-        );
-      },
-    });
+    this.minhasReservasService
+      .listarReservas()
+      .pipe(take(1))
+      .subscribe({
+        next: (result) => {
+          this.minhasReservas = this.ordernarReservasById(result);
+          this.montarFiltros();
+        },
+        error: (err) => {
+          this.minhasReservas = [];
+          this.toastrService.error(
+            'Por favor, tente novamente mais tarde',
+            'Erro ao buscar suas reservas'
+          );
+        },
+      });
   }
 
   novaReserva(): void {
@@ -203,65 +216,71 @@ export class MinhasReservasComponent implements OnInit {
 
   cancelarReserva() {
     this.ngxLoaderService.startLoader('loader-01');
-    this.minhasReservasService.cancelarReserva(this.idReserva).subscribe({
-      next: (result) => {
-        this.toastrService.success(
-          'Sua reserva foi cancelada com sucesso',
-          'Reserva cancelada'
-        );
-        this.populate();
-        this.closeModal();
-      },
-      error: (err: HttpErrorResponse) => {
-        switch (err.status) {
-          case 412:
-            this.toastrService.error(
-              err.error.message,
-              'Erro ao cancelar reserva'
-            );
-            break;
+    this.minhasReservasService
+      .cancelarReserva(this.idReserva)
+      .pipe(take(1))
+      .subscribe({
+        next: (result) => {
+          this.toastrService.success(
+            'Sua reserva foi cancelada com sucesso',
+            'Reserva cancelada'
+          );
+          this.populate();
+          this.closeModal();
+        },
+        error: (err: HttpErrorResponse) => {
+          switch (err.status) {
+            case 412:
+              this.toastrService.error(
+                err.error.message,
+                'Erro ao cancelar reserva'
+              );
+              break;
 
-          default:
-            this.toastrService.error(
-              'Por favor, tente novamente mais tarde',
-              'Erro ao cancelar reserva'
-            );
-            break;
-        }
-      },
-    });
+            default:
+              this.toastrService.error(
+                'Por favor, tente novamente mais tarde',
+                'Erro ao cancelar reserva'
+              );
+              break;
+          }
+        },
+      });
     this.ngxLoaderService.stopLoader('loader-01');
   }
 
   confirmarReserva() {
     this.ngxLoaderService.startLoader('loader-01');
-    this.minhasReservasService.confirmarUsoReserva(this.idReserva).subscribe({
-      next: (result) => {
-        this.toastrService.success(
-          'Confirmação de uso feita com sucesso',
-          'Reserva confirmada'
-        );
-        this.populate();
-        this.closeModal();
-      },
-      error: (err: HttpErrorResponse) => {
-        switch (err.status) {
-          case 412:
-            this.toastrService.error(
-              err.error.message,
-              'Erro ao confirmar uso'
-            );
-            break;
+    this.minhasReservasService
+      .confirmarUsoReserva(this.idReserva)
+      .pipe(take(1))
+      .subscribe({
+        next: (result) => {
+          this.toastrService.success(
+            'Confirmação de uso feita com sucesso',
+            'Reserva confirmada'
+          );
+          this.populate();
+          this.closeModal();
+        },
+        error: (err: HttpErrorResponse) => {
+          switch (err.status) {
+            case 412:
+              this.toastrService.error(
+                err.error.message,
+                'Erro ao confirmar uso'
+              );
+              break;
 
-          default:
-            this.toastrService.error(
-              'Por favor, tente novamente mais tarde',
-              'Erro ao confirmar uso'
-            );
-            break;
-        }
-      },
-    });
+            default:
+              this.toastrService.error(
+                'Por favor, tente novamente mais tarde',
+                'Erro ao confirmar uso'
+              );
+              break;
+          }
+        },
+      });
     this.ngxLoaderService.stopLoader('loader-01');
   }
 
@@ -313,6 +332,7 @@ export class MinhasReservasComponent implements OnInit {
             form.get('comentario')?.value
           )
         )
+        .pipe(take(1))
         .subscribe({
           next: (result) => {
             this.toastrService.success(

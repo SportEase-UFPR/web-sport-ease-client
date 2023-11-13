@@ -24,7 +24,6 @@
       [ngClass]="
         qtdNotificaoNaoLida > 0 ? 'com-notificacao' : 'sem-notificacao'
       "
-      (mouseenter)="toggleSidebar()"
       (click)="toggleSidebar()"
     >
       <fa-icon [icon]="faBell"></fa-icon>
@@ -74,7 +73,7 @@
 
     <ng-template #noSkeleton>
       <ng-container *ngFor="let n of notificacoes; index as i">
-        <li [ngClass]="{ 'nao-lida': n.lida }">
+        <li [ngClass]="{ 'nao-lida': !n.lida }">
           <div class="d-flex justify-content-between">
             <p class="mb-0 notificacao-titulo">{{ n.titulo }}</p>
             <small class="text-gray">{{
