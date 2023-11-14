@@ -13,7 +13,7 @@ import { ReservaResponse } from '../shared/models/reserva/reserva-response.model
 import { EsporteResponse } from '../shared/models/esporte/esporte-response';
 import { EspacoEsportivoReservaResponse } from '../shared/models/espaco-esportivo/espaco-esportivo-reserva-response.model';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Subject, take, takeUntil } from 'rxjs';
+import { Subject, distinctUntilChanged, take, takeUntil } from 'rxjs';
 import { ModalInfoComponent } from './modal-info/modal-info.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 const moment = require('moment');
@@ -29,6 +29,7 @@ export class NovaReservaComponent implements OnInit, OnDestroy {
     qtdPessoas: new FormControl(null, [Validators.required, Validators.min(1)]),
     data: new FormControl(null, [Validators.required]),
     horario: new FormControl(null, [Validators.required]),
+    horarioFim: new FormControl(null),
     objetivo: new FormControl(null, [Validators.required]),
   });
 
@@ -42,16 +43,17 @@ export class NovaReservaComponent implements OnInit, OnDestroy {
   qtdMaxima: number = 1;
   maxLocacao: number = 1;
 
-  nextSteps: boolean = false;
+  showQtd: boolean = false;
+  showDatas: boolean = false;
   showHorarios: boolean = false;
   showObjetivo: boolean = false;
   showHorarioFinal: boolean = false;
 
-  idEspacoQueryParam: number = 0;
   periodoLocacao: string = '';
   enabledDays: number[] = [];
 
   data$ = new Subject();
+  qtdPessoas$ = new Subject();
 
   constructor(
     private reservaService: NovaReservaService,
@@ -78,11 +80,11 @@ export class NovaReservaComponent implements OnInit, OnDestroy {
 
             this.activatedRoute.queryParams.pipe(take(1)).subscribe((qP) => {
               if (qP['espaco']) {
-                this.idEspacoQueryParam = Number(qP['espaco']);
                 this.formNovaReserva
                   .get('espacoEsportivo')
-                  ?.patchValue(this.idEspacoQueryParam);
-                this.showNextSteps();
+                  ?.patchValue(Number(qP['espaco']));
+                this.formNovaReserva.updateValueAndValidity();
+                this.showQtdParticipantes();
               }
             });
 
@@ -105,13 +107,20 @@ export class NovaReservaComponent implements OnInit, OnDestroy {
       });
 
     this.formNovaReserva
+      .get('qtdPessoas')
+      ?.statusChanges.pipe(distinctUntilChanged(), takeUntil(this.qtdPessoas$))
+      .subscribe((s) => this.showDatepicker(s));
+
+    this.formNovaReserva
       .get('data')
       ?.valueChanges.pipe(takeUntil(this.data$))
       .subscribe((v) => (v ? this.listarHorarios() : null));
   }
 
   ngOnDestroy(): void {
+    this.qtdPessoas$.next(null);
     this.data$.next(null);
+    this.qtdPessoas$.complete();
     this.data$.complete();
   }
 
@@ -121,21 +130,44 @@ export class NovaReservaComponent implements OnInit, OnDestroy {
     });
   }
 
-  showNextSteps(): void {
+  showDatepicker(status: string) {
     this.ngxService.startLoader('loader-01');
-    this.formNovaReserva.get('qtdPessoas')?.reset();
-    this.formNovaReserva.get('data')?.reset();
-    this.formNovaReserva.get('horario')?.reset();
-    this.formNovaReserva.get('objetivo')?.reset();
-    this.formNovaReserva?.get('horarioFim')?.reset();
+    this.horarios = [];
+    this.horariosDisponiveis = [];
+    this.showHorarios = false;
+    this.showHorarioFinal = false;
+    this.showObjetivo = false;
+    const form = this.formNovaReserva;
+    form.get('data')?.reset();
+    form.get('horario')?.reset();
+    form.get('horarioFim')?.reset();
+    form.get('objetivo')?.reset();
+    if (status == 'VALID') {
+      this.showDatas = true;
+    } else {
+      this.showDatas = false;
+    }
+    this.ngxService.stopLoader('loader-01');
+  }
+
+  showQtdParticipantes(): void {
+    this.ngxService.startLoader('loader-01');
+    const form = this.formNovaReserva;
+    form.get('qtdPessoas')?.reset();
+    form.get('data')?.reset();
+    form.get('horario')?.reset();
+    form.get('objetivo')?.reset();
+    form.get('horarioFim')?.reset();
+
     this.horarios = [];
     this.horariosDisponiveis = [];
     this.esportes = [];
     this.showHorarios = false;
     this.showHorarioFinal = false;
     this.showObjetivo = false;
+
     const espacoEsportivo = this.espacosEsportivos.filter(
-      (e) => e.id == Number(this.formNovaReserva.get('espacoEsportivo')?.value)
+      (e) => e.id == Number(form.get('espacoEsportivo')?.value)
     )[0];
     this.esportes = espacoEsportivo.listaEsportes!;
     this.qtdMinima = espacoEsportivo.capacidadeMin!;
@@ -143,19 +175,20 @@ export class NovaReservaComponent implements OnInit, OnDestroy {
     this.enabledDays = espacoEsportivo.diasFuncionamento!;
     this.maxLocacao = espacoEsportivo.maxLocacaoDia!;
 
-    this.formNovaReserva
+    form
       .get('qtdPessoas')
       ?.addValidators([
         Validators.max(this.qtdMaxima),
         Validators.min(this.qtdMinima),
       ]);
-    this.formNovaReserva.updateValueAndValidity();
+    form.updateValueAndValidity();
 
-    this.nextSteps = true;
+    this.showQtd = true;
     this.ngxService.stopLoader('loader-01');
   }
 
   listarHorarios() {
+    this.ngxService.startLoader('loader-01');
     const form = this.formNovaReserva;
     const dataHoje = new Date();
     const dataEscolhida = new Date(form.get('data')?.value);
@@ -163,10 +196,12 @@ export class NovaReservaComponent implements OnInit, OnDestroy {
     dataHoje.setHours(0, 0, 0, 0);
     dataEscolhida.setHours(0, 0, 0, 0);
 
-    this.ngxService.startLoader('loader-01');
+    this.showObjetivo = false;
+    this.formNovaReserva.get('objetivo')?.reset();
     this.horariosDisponiveis = [];
     this.horariosDisponiveisFim = [];
     this.showHorarios = false;
+    this.showHorarioFinal = false;
 
     form.patchValue({
       horario: null,
@@ -228,8 +263,10 @@ export class NovaReservaComponent implements OnInit, OnDestroy {
       .hour(Number(h.split(':')[0]))
       .minute(Number(h.split(':')[1]));
 
+    const form = this.formNovaReserva;
     if (this.maxLocacao == 1) {
-      this.formNovaReserva?.removeControl('horarioFim');
+      form.get('horarioFim')?.removeValidators([Validators.required]);
+      form.updateValueAndValidity();
 
       const value = `${horario.format('HH:mm')} - ${horario
         .set(
@@ -244,6 +281,8 @@ export class NovaReservaComponent implements OnInit, OnDestroy {
 
       this.horariosDisponiveis.push(new Item(value, value));
     } else {
+      form.get('horarioFim')?.addValidators([Validators.required]);
+      form.updateValueAndValidity();
       const valueInicial = `${horario.format('HH:mm')}`;
       this.horariosDisponiveis.push(new Item(valueInicial, valueInicial));
     }
@@ -251,22 +290,24 @@ export class NovaReservaComponent implements OnInit, OnDestroy {
 
   showHorarioFim() {
     this.ngxService.startLoader('loader-01');
+    const form = this.formNovaReserva;
+    form.patchValue({
+      horarioFim: null,
+    });
+
+    this.horariosDisponiveisFim = [];
     this.showHorarioFinal = false;
     this.showObjetivo = false;
 
-    const form = this.formNovaReserva;
     const formHora = form.get('horario')?.value;
     const horario = moment()
       .hour(Number(formHora.split(':')[0]))
       .minute(Number(formHora.split(':')[1]));
 
-    form?.removeControl('horarioFim');
-    form.addControl('horarioFim', new FormControl(null, [Validators.required]));
-    this.horariosDisponiveisFim = [];
-
     const posicaoInicial = this.horarios.indexOf(`${formHora}:00`);
 
     for (let i = 0; i < this.maxLocacao; i++) {
+      this.showHorarioFinal = false;
       const valueFinal = `${horario
         .set(
           'hour',
@@ -286,9 +327,21 @@ export class NovaReservaComponent implements OnInit, OnDestroy {
         }
       }
     }
-    this.showHorarioFinal = true;
-    this.ngxService.stopLoader('loader-01');
+
+    setTimeout(() => {
+      this.showHorarioFinal = true;
+      if (this.horariosDisponiveisFim.length == 1) {
+        form.patchValue({
+          horarioFim: this.horariosDisponiveisFim[0].value,
+        });
+
+        this.showObjetivo = true;
+      }
+      this.ngxService.stopLoader('loader-01');
+    }, 1000);
   }
+
+  montarHorariosFim() {}
 
   showMotivoReserva() {
     this.ngxService.startLoader('loader-01');

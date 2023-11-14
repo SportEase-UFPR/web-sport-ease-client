@@ -16,9 +16,8 @@
             [controlName]="'espacoEsportivo'"
             [label]="'Selecione o local'"
             [items]="nomesEE"
-            [valueSelected]="idEspacoQueryParam"
             [validacaoInput]="true"
-            (emitterChange)="showNextSteps()"
+            (emitterChange)="showQtdParticipantes()"
           ></app-input-select-option>
         </div>
 
@@ -28,37 +27,35 @@
           }}</span>
         </div>
 
-        <div *ngIf="nextSteps">
-          <div class="mt-3">
-            <app-input-field
-              [formGroup]="formNovaReserva"
-              [controlName]="'qtdPessoas'"
-              [label]="'Quantidade de participantes'"
-              [inputType]="'number'"
-              [validacaoInput]="true"
-            ></app-input-field>
+        <div class="mt-3" *ngIf="showQtd">
+          <app-input-field
+            [formGroup]="formNovaReserva"
+            [controlName]="'qtdPessoas'"
+            [label]="'Quantidade de participantes'"
+            [inputType]="'number'"
+            [validacaoInput]="true"
+          ></app-input-field>
 
-            <small class="text-gray me-2"
-              >Quantidade mínima: {{ qtdMinima }}</small
-            >
-            <small class="text-gray">Quantidade máxima: {{ qtdMaxima }}</small>
+          <small class="text-gray me-2"
+            >Quantidade mínima: {{ qtdMinima }}</small
+          >
+          <small class="text-gray">Quantidade máxima: {{ qtdMaxima }}</small>
+        </div>
+
+        <div class="mt-5" *ngIf="showDatas">
+          <div>
+            <h5 class="text-green">Informações sobre a reserva</h5>
           </div>
 
-          <div class="mt-5">
-            <div>
-              <h5 class="text-green">Informações sobre a reserva</h5>
-            </div>
-
-            <div>
-              <app-input-date
-                [formGroup]="formNovaReserva"
-                [controlName]="'data'"
-                [label]="'Selecione a data'"
-                [enabledDays]="enabledDays"
-                [haveMinDate]="true"
-                [validacaoInput]="true"
-              ></app-input-date>
-            </div>
+          <div>
+            <app-input-date
+              [formGroup]="formNovaReserva"
+              [controlName]="'data'"
+              [label]="'Selecione a data'"
+              [enabledDays]="enabledDays"
+              [haveMinDate]="true"
+              [validacaoInput]="true"
+            ></app-input-date>
           </div>
         </div>
       </div>
@@ -86,15 +83,16 @@
               (emitterChange)="showHorarioFim()"
             ></app-input-select-option>
 
-            <app-input-select-option
-              *ngIf="showHorarioFinal"
-              [formGroup]="formNovaReserva"
-              [controlName]="'horarioFim'"
-              [label]="'Selecione o horário de fim'"
-              [items]="horariosDisponiveisFim"
-              [validacaoInput]="true"
-              (emitterChange)="showMotivoReserva()"
-            ></app-input-select-option>
+            <div *ngIf="showHorarioFinal">
+              <app-input-select-option
+                [formGroup]="formNovaReserva"
+                [controlName]="'horarioFim'"
+                [label]="'Selecione o horário de fim'"
+                [items]="horariosDisponiveisFim"
+                [validacaoInput]="true"
+                (emitterChange)="showMotivoReserva()"
+              ></app-input-select-option>
+            </div>
           </ng-template>
         </div>
 
