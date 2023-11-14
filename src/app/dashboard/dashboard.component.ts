@@ -10,6 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ReservaAvaliacao } from '../shared/models/reserva/reserva-avaliacao.model';
 import { take } from 'rxjs';
+import { SeparaArray } from '../utils/separa-array';
 
 @Component({
   selector: 'app-dashboard',
@@ -29,6 +30,8 @@ export class DashboardComponent implements OnInit {
   reservas?: ReservaFeitaResponse[];
   idReserva: number = 0;
   modalAvalicao?: any;
+
+  protected separaArray = SeparaArray
 
   constructor(
     private modalService: NgbModal,

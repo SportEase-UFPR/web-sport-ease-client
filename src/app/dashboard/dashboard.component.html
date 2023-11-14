@@ -117,7 +117,7 @@
     Solicitações de reserva em andamento
   </h3>
 
-  <div class="row w-100 justify-content-center">
+  <div class="row w-100">
     <ng-container *ngIf="reservas == undefined; else noSkeleton">
       <div class="col-12 col-md-6 mt-3" *ngFor="let i of [0, 1]">
         <ngx-skeleton-loader
@@ -147,16 +147,38 @@
 
     <ng-template #noSkeleton>
       <ng-container *ngIf="reservas?.length; else semReservas">
-        <div class="col-12 col-md-6 mt-2" *ngFor="let r of reservas">
-          <app-card-reserva
-            [dadosReserva]="r"
-            (emmiterClickCancelar)="
-              openModalConfirmacao(modalCancelaReserva, r.id!)
-            "
-            (emmiterClickUsar)="
-              openModalConfirmacao(modalConfirmarUso, r.id!, modalAvaliacao)
-            "
-          ></app-card-reserva>
+        <div class="col-12 col-md-6">
+          <div
+            class="my-3"
+            *ngFor="let r of separaArray.separarArray(true, reservas!)"
+          >
+            <app-card-reserva
+              [dadosReserva]="r"
+              (emmiterClickCancelar)="
+                openModalConfirmacao(modalCancelaReserva, r.id!)
+              "
+              (emmiterClickUsar)="
+                openModalConfirmacao(modalConfirmarUso, r.id!, modalAvaliacao)
+              "
+            ></app-card-reserva>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <div
+            class="my-3"
+            *ngFor="let r of separaArray.separarArray(false, reservas!)"
+          >
+            <app-card-reserva
+              [dadosReserva]="r"
+              (emmiterClickCancelar)="
+                openModalConfirmacao(modalCancelaReserva, r.id!)
+              "
+              (emmiterClickUsar)="
+                openModalConfirmacao(modalConfirmarUso, r.id!, modalAvaliacao)
+              "
+            ></app-card-reserva>
+          </div>
         </div>
       </ng-container>
 
