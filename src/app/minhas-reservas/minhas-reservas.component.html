@@ -217,7 +217,7 @@
 
       <div class="col-12 col-md-2">
         <app-input-select-option
-          *ngIf="locais.length > 1"
+          *ngIf="locais.length > 2"
           [formGroup]="formFiltros"
           [controlName]="'local'"
           [label]="'Local'"
@@ -228,7 +228,7 @@
 
       <div class="col-12 col-md-2">
         <app-input-select-option
-          *ngIf="statusReservas.length > 1"
+          *ngIf="statusReservas.length > 2"
           [formGroup]="formFiltros"
           [controlName]="'status'"
           [label]="'Status das reserva'"

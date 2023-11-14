@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatNativeDateModule } from '@angular/material/core';
 
 import { NovaReservaComponent } from './nova-reserva.component';
 import { SharedModule } from '../shared/shared.module';
@@ -16,6 +12,8 @@ import {
 } from 'ngx-ui-loader';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
+import { ModalInfoComponent } from './modal-info/modal-info.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: '#0fd45e',
@@ -30,7 +28,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 };
 
 @NgModule({
-  declarations: [NovaReservaComponent],
+  declarations: [NovaReservaComponent, ModalInfoComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -38,10 +36,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     HttpClientModule,
     ToastrModule.forRoot(),
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
-    MatFormFieldModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
+    FontAwesomeModule
   ],
 })
 export class NovaReservaModule {}

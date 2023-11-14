@@ -52,10 +52,10 @@ export class CardReservaComponent implements OnInit {
 
   showConfirmacaoReserva(): boolean {
     if (
-      moment().diff(
-        moment(this.dadosReserva?.dataHoraInicioReserva),
+      moment(this.dadosReserva?.dataHoraInicioReserva).diff(
+        moment(),
         'minutes'
-      ) >= 5
+      ) <= 0
     ) {
       return true;
     }

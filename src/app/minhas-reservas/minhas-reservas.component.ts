@@ -35,8 +35,8 @@ export class MinhasReservasComponent implements OnInit, OnDestroy {
   formFiltros: FormGroup = new FormGroup({
     dataInicial: new FormControl(null),
     dataFinal: new FormControl(null),
-    local: new FormControl(null),
-    status: new FormControl(null),
+    local: new FormControl(-1),
+    status: new FormControl(-1),
   });
 
   p: number = 1;
@@ -127,6 +127,14 @@ export class MinhasReservasComponent implements OnInit, OnDestroy {
 
     let filteredReservas = this.minhasReservas;
 
+    if (Number(localFilter) == -1) {
+      filteredReservas = this.minhasReservas;
+    }
+
+    if (Number(statusFilter) == -1) {
+      filteredReservas = this.minhasReservas;
+    }
+
     if (dataInicial?.value && dataFinal?.value) {
       const dataInicialValue = moment(dataInicial?.value).startOf('day');
       const dataFinalValue = moment(dataFinal?.value).startOf('day');
@@ -151,7 +159,7 @@ export class MinhasReservasComponent implements OnInit, OnDestroy {
       }
     }
 
-    if (localFilter) {
+    if (localFilter && localFilter != -1) {
       this.ngxLoaderService.startLoader('loader-01');
       filteredReservas = filteredReservas?.filter(
         (r) => r.idEspacoEsportivo === Number(localFilter)
@@ -159,7 +167,7 @@ export class MinhasReservasComponent implements OnInit, OnDestroy {
       this.ngxLoaderService.stopLoader('loader-01');
     }
 
-    if (statusFilter) {
+    if (statusFilter && statusFilter != -1) {
       this.ngxLoaderService.startLoader('loader-01');
       filteredReservas = filteredReservas?.filter(
         (r) => r.status === statusFilter
@@ -186,7 +194,7 @@ export class MinhasReservasComponent implements OnInit, OnDestroy {
 
   showConfirmacaoReserva(data: string | Date, status: StatusLocacao): boolean {
     if (
-      moment().diff(moment(data), 'minutes') >= 5 &&
+      moment(data).diff(moment(), 'minutes') <= 0 &&
       status === StatusLocacao.APROVADA
     ) {
       return true;
@@ -287,6 +295,9 @@ export class MinhasReservasComponent implements OnInit, OnDestroy {
   montarFiltros() {
     this.locais = [];
     this.statusReservas = [];
+
+    BuildFilter.adicionarItem(this.locais, -1, 'Todos');
+    BuildFilter.adicionarItem(this.statusReservas, -1, 'Todas');
 
     this.minhasReservas?.forEach((r) => {
       BuildFilter.adicionarItem(

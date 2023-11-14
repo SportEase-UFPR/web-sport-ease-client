@@ -1,0 +1,37 @@
+<div class="modal-body">
+  <div>
+    <h3 class="modal-title text-red text-center">ATENÇÃO</h3>
+  </div>
+
+  <ul class="infos my-2">
+    <li>
+      <span class="text-green me-1"><fa-icon [icon]="faConfirm"></fa-icon></span
+      >Você não pode reservar mais de um espaço esportivo para o mesmo dia e horário;
+    </li>
+
+    <li class="my-2">
+      <span class="text-green me-1"
+        ><fa-icon [icon]="faConfirm"></fa-icon
+      ></span>
+      A quantidade de participantes deve estar entre a quantidade mínima e
+      máxima do espaço;
+    </li>
+
+    <li>
+      <span class="text-green me-1"><fa-icon [icon]="faConfirm"></fa-icon></span
+      >O objetivo da reserva deve ser claro.
+    </li>
+  </ul>
+
+  <div class="w-50 mx-auto mt-3 mb-2">
+    <div>
+      <app-btn-green
+        [textButton]="'Entendi'"
+        [showIcon]="true"
+        [iconFirst]="true"
+        [icone]="faConfirm"
+        (emmiterClick)="activeModal.close()"
+      ></app-btn-green>
+    </div>
+  </div>
+</div>

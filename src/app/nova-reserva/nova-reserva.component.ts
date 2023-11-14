@@ -14,6 +14,8 @@ import { EsporteResponse } from '../shared/models/esporte/esporte-response';
 import { EspacoEsportivoReservaResponse } from '../shared/models/espaco-esportivo/espaco-esportivo-reserva-response.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subject, take, takeUntil } from 'rxjs';
+import { ModalInfoComponent } from './modal-info/modal-info.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 const moment = require('moment');
 
 @Component({
@@ -56,7 +58,8 @@ export class NovaReservaComponent implements OnInit, OnDestroy {
     private toastrService: ToastrService,
     private ngxService: NgxUiLoaderService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -82,6 +85,8 @@ export class NovaReservaComponent implements OnInit, OnDestroy {
                 this.showNextSteps();
               }
             });
+
+            this.openModalInfo();
           } else {
             this.toastrService.info(
               'Por favor, realize a solicitação de reserva em outro momento',
@@ -108,6 +113,12 @@ export class NovaReservaComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.data$.next(null);
     this.data$.complete();
+  }
+
+  openModalInfo(): void {
+    this.modalService.open(ModalInfoComponent, {
+      centered: true,
+    });
   }
 
   showNextSteps(): void {
@@ -324,8 +335,8 @@ export class NovaReservaComponent implements OnInit, OnDestroy {
           next: (result: ReservaResponse) => {
             this.ngxService.stopLoader('loader-01');
             this.toastrService.success(
-              'A sua solicitação de reserva foi registrada',
-              'Sucesso'
+              'Acompannhe a sua solicitção pela tela "Iníco" ou pela tela "Minhas Reservas"',
+              'Reserva solicitada'
             );
             this.router.navigateByUrl('/dashboard');
           },

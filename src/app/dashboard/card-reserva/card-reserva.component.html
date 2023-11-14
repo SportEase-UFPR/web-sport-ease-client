@@ -95,7 +95,7 @@
 
   <div class="reserva-footer">
     <app-btn-green
-      *ngIf="showConfirmacaoReserva()"
+      *ngIf="showConfirmacaoReserva() && dadosReserva.status == 'APROVADA'"
       [showIcon]="true"
       [icone]="faConfirm"
       [textButton]="'Confirmar uso'"
