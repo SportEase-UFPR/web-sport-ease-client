@@ -123,6 +123,11 @@
         <span>{{ dadosReserva?.avaliacao }} de 5</span>
       </div>
 
+      <div class="col-12 my-2" *ngIf="dadosReserva?.comentario">
+        <span class="info-title">Seu comentário para esta reserva: </span>
+        <span>{{ dadosReserva?.comentario }} de 5</span>
+      </div>
+
       <div class="col-12 my-2">
         <span class="info-title">Objetivo da solicitação: </span>
         <span>{{ dadosReserva?.motivoSolicitacao }}</span>

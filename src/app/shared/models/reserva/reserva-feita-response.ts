@@ -17,5 +17,6 @@ export class ReservaFeitaResponse {
     public localidade?: string,
     public nomeEspacoEsportivo?: string,
     public motivoEncerramento?: string,
+    public comentario?: string,
   ) {}
 }

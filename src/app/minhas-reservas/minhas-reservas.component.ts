@@ -312,7 +312,12 @@ export class MinhasReservasComponent implements OnInit, OnDestroy {
 
   limparFiltros() {
     this.ngxLoaderService.startLoader('loader-01');
-    this.formFiltros.reset();
+    this.formFiltros.patchValue({
+      dataInicial: null,
+      dataFinal: null,
+      local: -1,
+      status: -1,
+    });
     this.minhasReservasFilter = undefined;
     this.minDate = undefined;
     this.maxDate = undefined;

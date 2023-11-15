@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { faBell } from '@fortawesome/free-regular-svg-icons';
 
-import { faUserPen, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faCircleUser } from '@fortawesome/free-regular-svg-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { CabecalhoService } from './services/cabecalho.service';
 import { Notificacao } from '../shared/models/notificacao/notificacao.model';
-import { Subject, take, takeUntil } from 'rxjs';
+import { Subject, take } from 'rxjs';
 const moment = require('moment');
 
 @Component({
@@ -13,7 +13,7 @@ const moment = require('moment');
   styleUrls: ['./cabecalho.component.scss'],
 })
 export class CabecalhoComponent implements OnInit, OnDestroy {
-  faUser = faUserPen;
+  faUser = faCircleUser;
   faBell = faBell;
   faClose = faXmark;
 

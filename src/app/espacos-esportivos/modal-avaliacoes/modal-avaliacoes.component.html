@@ -14,15 +14,14 @@
   <div class="comentarios with-scrollbar">
     <div class="card-comentario m-2" *ngFor="let a of avaliacoes">
       <div class="card-cabecalho">
-        <app-rating [nota]="a.avaliacao!"></app-rating>
+        <p class="text-green">{{ a.nomeCliente?.split(' ')?.[0] }}</p>
         <small class="data text-end">{{
           a.dataHoraComentario | date : "HH:mm - dd/MM/yyyy"
         }}</small>
       </div>
       <div class="card-corpo">
-        <p class="mb-1 comentario">
-          "{{ a.comentario }}"
-        </p>
+        <app-rating [nota]="a.avaliacao!"></app-rating>
+        <p *ngIf="a.comentario" class="mb-1 comentario">"{{ a.comentario }}"</p>
       </div>
     </div>
   </div>

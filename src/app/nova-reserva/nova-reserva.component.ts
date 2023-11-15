@@ -250,7 +250,8 @@ export class NovaReservaComponent implements OnInit, OnDestroy {
         error: (err) => {
           this.ngxService.stopLoader('loader-01');
           this.toastrService.error(
-            'Por favor, selecione outra data ou tente novamente mais tarde',
+            err.error.message ??
+              'Por favor, selecione outra data ou tente novamente mais tarde',
             'Erro ao buscar os horários disponíveis'
           );
           console.error(err);
@@ -340,8 +341,6 @@ export class NovaReservaComponent implements OnInit, OnDestroy {
       this.ngxService.stopLoader('loader-01');
     }, 1000);
   }
-
-  montarHorariosFim() {}
 
   showMotivoReserva() {
     this.ngxService.startLoader('loader-01');

@@ -87,7 +87,7 @@ export class CardEspacoEsportivoComponent implements OnInit {
       .pipe(take(1))
       .subscribe({
         next: (result) => {
-          this.avaliacoes = result.filter((c) => c.comentario);
+          this.avaliacoes = result.filter((c) => c.avaliacao);
 
           if (this.avaliacoes.length > 0) {
             this.openModal();
@@ -115,5 +115,35 @@ export class CardEspacoEsportivoComponent implements OnInit {
 
     modalRef.componentInstance.avaliacoes = this.avaliacoes;
     modalRef.componentInstance.nome = this.espaco.nome;
+  }
+
+  diasFuncionamento(dias: number[]): string {
+    if (dias.length == 7) {
+      return 'De domingo a domingo';
+    } else {
+      let sequencia = false;
+      for (let i = 0; i < dias.length - 1; i++) {
+        if (dias[i] + 1 == dias[i + 1]) {
+          sequencia = true;
+        } else {
+          sequencia = false;
+          break;
+        }
+      }
+
+      if (sequencia) {
+        return `De ${this.daysOfWeek[dias[0]]} a ${
+          this.daysOfWeek[dias[dias.length - 1]]
+        }`;
+      } else {
+        let funcionamento = '';
+        dias.forEach((d) => {
+          funcionamento += `${this.daysOfWeek[d]}${
+            d < dias[dias.length - 1] ? ', ' : '.'
+          }`;
+        });
+        return funcionamento;
+      }
+    }
   }
 }

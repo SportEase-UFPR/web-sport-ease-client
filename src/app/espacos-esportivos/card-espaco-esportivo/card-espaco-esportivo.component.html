@@ -94,22 +94,16 @@
           <p class="mb-1">
             <span class="info-title">Dias de funcionamento</span>
           </p>
-          <span
-            class="text-dark-blue"
-            *ngFor="let d of espaco.diasFuncionamento; index as i"
-          >
-            {{
-              daysOfWeek[d] +
-                (espaco.diasFuncionamento?.length! > i + 1 ? "," : ".")
-            }}
+          <span class="text-dark-blue">
+            {{ diasFuncionamento(espaco.diasFuncionamento!) }}
           </span>
         </div>
       </div>
 
       <div>
-        <p><span class="info-title">Tipos de esporte</span></p>
-        <span class="esporte px-3" *ngFor="let e of espaco.listaEsportes">{{
-          e.nome | titlecase
+        <p class="mb-1"><span class="info-title">Tipos de esporte</span></p>
+        <span class="text-dark-blue" *ngFor="let e of espaco.listaEsportes; index as i">{{
+          (e.nome | titlecase) + (i < espaco.listaEsportes?.length! - 1 ? ', ' : '')
         }}</span>
       </div>
 
