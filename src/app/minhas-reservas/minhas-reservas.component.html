@@ -242,12 +242,7 @@
         ></app-input-select-option>
       </div>
 
-      <div
-        class="col-12 col-md-3 mt-4"
-        *ngIf="
-          minhasReservasFilter != null && minhasReservasFilter != undefined
-        "
-      >
+      <div class="col-12 col-md-3 mt-4" *ngIf="showLimparFiltros">
         <app-btn-green
           [textButton]="'Limpar filtros'"
           [showIcon]="true"

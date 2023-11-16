@@ -149,54 +149,57 @@ export class EdicaoPerfilComponent implements OnInit, OnDestroy {
   }
 
   alterarDados(): void {
-    this.ngxService.startLoader('loader-01');
     const form = this.formAlteracaoPerfil;
     const nome = form.get('nome')?.value;
     const email = form.get('email')?.value;
     const vinculo = form.get('vinculo')?.value;
-    const grr = form.get('grr')?.value;
+    let grr = form.get('grr')?.value;
     const senha = form.get('senha')?.value;
+
+    grr = vinculo ? (grr?.includes('GRR') ? grr : `GRR${grr}`) : null;
+
     if (
       nome !== this.cliente.nome ||
       email !== this.cliente.email ||
-      vinculo !== this.cliente.alunoUFPR ||
       grr !== this.cliente.grr ||
-      senha !== this.cliente.senha
+      senha
     ) {
       const dadosCliente: ClienteAlteracaoRequest = new ClienteAlteracaoRequest(
         nome,
         email,
         senha ? senha : null,
         vinculo,
-        vinculo ? (grr?.includes('GRR') ? grr : `GRR${grr}`) : null
+        grr
       );
 
-      this.clienteService
-        .atualizarDados(dadosCliente)
-        .pipe(take(1))
-        .subscribe({
-          next: (result: ClienteAlteracaoResponse) => {
-            this.ngxService.stopLoader('loader-01');
+      if (senha) {
+        this.verificarSenhas();
 
-            if (email !== this.cliente.email) {
-              this.openModal(email);
-            } else {
-              this.toastrService.success(
-                'Dados alterados com sucesso',
-                'Sucesso!'
-              );
-              this.router.navigateByUrl('/dashboard');
-            }
-          },
-          error: (err) => {
-            this.ngxService.stopLoader('loader-01');
-            this.toastrService.error(
-              err.error.message ??
-                'Não foi possível atualziar o cadastro. Tente novamente mais tarde',
-              'Falha ao atualziar os dados'
-            );
-          },
-        });
+        if (this.formAlteracaoPerfil.get('senha')?.invalid) {
+          this.toastrService.warning(
+            'Por favor, a senha deve atender as regras',
+            'Senha está com um formato incorreto'
+          );
+        }
+
+        if (this.formAlteracaoPerfil.get('confirmacaoSenha')?.invalid) {
+          this.toastrService.warning(
+            'Por favor, a confimmação da senha deve atender as regras',
+            'Confirmação da senha está com um formato incorreto'
+          );
+        }
+
+        if (this.senhasDiferentes) {
+          this.toastrService.warning(
+            'Por favor, a senha e a confirmação da senha devem ser idênticas',
+            'As senhas não são idênticas'
+          );
+        } else {
+          this.enviarDados(dadosCliente, email);
+        }
+      } else {
+        this.enviarDados(dadosCliente, email);
+      }
     } else {
       this.ngxService.stopLoader('loader-01');
       this.toastrService.info(
@@ -204,6 +207,36 @@ export class EdicaoPerfilComponent implements OnInit, OnDestroy {
         'Nenhum dado para atualizar'
       );
     }
+  }
+
+  enviarDados(dadosCliente: ClienteAlteracaoRequest, email: string) {
+    this.ngxService.startLoader('loader-01');
+    this.clienteService
+      .atualizarDados(dadosCliente)
+      .pipe(take(1))
+      .subscribe({
+        next: (result: ClienteAlteracaoResponse) => {
+          this.ngxService.stopLoader('loader-01');
+
+          if (email !== this.cliente.email) {
+            this.openModal(email);
+          } else {
+            this.toastrService.success(
+              'Dados alterados com sucesso',
+              'Sucesso!'
+            );
+            this.router.navigateByUrl('/dashboard');
+          }
+        },
+        error: (err) => {
+          this.ngxService.stopLoader('loader-01');
+          this.toastrService.error(
+            err.error.message ??
+              'Não foi possível atualziar o cadastro. Tente novamente mais tarde',
+            'Falha ao atualziar os dados'
+          );
+        },
+      });
   }
 
   openModal(email: string): void {

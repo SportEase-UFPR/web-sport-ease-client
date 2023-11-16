@@ -48,6 +48,7 @@ export class MinhasReservasComponent implements OnInit, OnDestroy {
   statusReservas: Item[] = [];
   minDate?: Date;
   maxDate?: Date;
+  showLimparFiltros: boolean = false;
 
   faAdd = faPlus;
   faConfirm = faCheck;
@@ -129,10 +130,12 @@ export class MinhasReservasComponent implements OnInit, OnDestroy {
 
     if (Number(localFilter) == -1) {
       filteredReservas = this.minhasReservas;
+      this.showLimparFiltros = false;
     }
 
     if (Number(statusFilter) == -1) {
       filteredReservas = this.minhasReservas;
+      this.showLimparFiltros = false;
     }
 
     if (dataInicial?.value && dataFinal?.value) {
@@ -143,6 +146,7 @@ export class MinhasReservasComponent implements OnInit, OnDestroy {
         this.ngxLoaderService.startLoader('loader-01');
         filteredReservas = filteredReservas?.filter((r) => {
           const dataReserva = moment(r.dataHoraInicioReserva);
+          this.showLimparFiltros = true;
 
           return (
             dataReserva.isSameOrAfter(dataInicialValue, 'day') &&
@@ -164,6 +168,7 @@ export class MinhasReservasComponent implements OnInit, OnDestroy {
       filteredReservas = filteredReservas?.filter(
         (r) => r.idEspacoEsportivo === Number(localFilter)
       );
+      this.showLimparFiltros = true;
       this.ngxLoaderService.stopLoader('loader-01');
     }
 
@@ -172,6 +177,7 @@ export class MinhasReservasComponent implements OnInit, OnDestroy {
       filteredReservas = filteredReservas?.filter(
         (r) => r.status === statusFilter
       );
+      this.showLimparFiltros = true;
       this.ngxLoaderService.stopLoader('loader-01');
     }
 
