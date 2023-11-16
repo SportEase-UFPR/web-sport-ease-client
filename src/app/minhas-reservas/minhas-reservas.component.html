@@ -206,7 +206,7 @@
           [controlName]="'dataInicial'"
           [label]="'Data inicial'"
           [haveMaxDate]="maxDate ? true : false"
-          [maxDate]="maxDate ?? null"
+          [maxDate]="maxDate ? maxDate : null"
         ></app-input-date>
       </div>
 
@@ -216,7 +216,7 @@
           [controlName]="'dataFinal'"
           [label]="'Data final'"
           [haveMinDate]="minDate ? true : false"
-          [minDate]="minDate ?? null"
+          [minDate]="minDate ? minDate : null"
         ></app-input-date>
       </div>
 

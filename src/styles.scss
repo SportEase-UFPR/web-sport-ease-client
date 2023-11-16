@@ -232,3 +232,8 @@ body {
 .toast-warning {
   background-color: #ffa500 !important;
 }
+
+//Estilo para o calendário
+.mat-calendar-body-selected{
+  background-color: var(--verde) !important;
+}

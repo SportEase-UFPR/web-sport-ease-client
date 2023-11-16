@@ -46,8 +46,8 @@ export class MinhasReservasComponent implements OnInit, OnDestroy {
   nomesLocais: { id: number; nome: string }[] = [];
   locais: Item[] = [];
   statusReservas: Item[] = [];
-  minDate?: Date;
-  maxDate?: Date;
+  minDate?: Date = undefined;
+  maxDate?: Date = undefined;
   showLimparFiltros: boolean = false;
 
   faAdd = faPlus;
@@ -78,14 +78,20 @@ export class MinhasReservasComponent implements OnInit, OnDestroy {
       .get('dataInicial')
       ?.valueChanges.pipe(distinctUntilChanged(), takeUntil(this.dataInicial$))
       .subscribe((v) => {
-        (this.minDate = new Date(v)), this.filterReservas();
+        if (v) {
+          this.minDate = new Date(v);
+          this.filterReservas();
+        }
       });
 
     this.formFiltros
       .get('dataFinal')
       ?.valueChanges.pipe(distinctUntilChanged(), takeUntil(this.dataFinal$))
       .subscribe((v) => {
-        (this.maxDate = new Date(v)), this.filterReservas();
+        if (v) {
+          this.maxDate = new Date(v);
+          this.filterReservas();
+        }
       });
   }
 
