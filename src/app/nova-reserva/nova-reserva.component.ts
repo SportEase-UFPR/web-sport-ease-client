@@ -387,7 +387,7 @@ export class NovaReservaComponent implements OnInit, OnDestroy {
           next: (result: ReservaResponse) => {
             this.ngxService.stopLoader('loader-01');
             this.toastrService.success(
-              'Acompannhe a sua solicitção pela tela "Iníco" ou pela tela "Minhas Reservas"',
+              'Acompanhe a sua solicitção pela tela "Iníco" ou pela tela "Minhas Reservas"',
               'Reserva solicitada'
             );
             this.router.navigateByUrl('/dashboard');
@@ -395,7 +395,7 @@ export class NovaReservaComponent implements OnInit, OnDestroy {
           error: (err: HttpErrorResponse) => {
             this.ngxService.stopLoader('loader-01');
             this.toastrService.error(
-              err.error.message ?? 'Por favor, tente novamnete mais tarde',
+              err.error.message ?? 'Por favor, tente novamente mais tarde',
               'Erro ao solicitar reserva'
             );
           },

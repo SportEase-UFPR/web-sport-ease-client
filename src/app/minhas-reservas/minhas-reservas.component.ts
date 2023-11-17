@@ -135,11 +135,13 @@ export class MinhasReservasComponent implements OnInit, OnDestroy {
     let filteredReservas = this.minhasReservas;
 
     if (Number(localFilter) == -1) {
+      this.ngxLoaderService.startLoader('loader-01');
       filteredReservas = this.minhasReservas;
       this.showLimparFiltros = false;
     }
 
     if (Number(statusFilter) == -1) {
+      this.ngxLoaderService.startLoader('loader-01');
       filteredReservas = this.minhasReservas;
       this.showLimparFiltros = false;
     }
@@ -159,7 +161,6 @@ export class MinhasReservasComponent implements OnInit, OnDestroy {
             dataReserva.isSameOrBefore(dataFinalValue, 'day')
           );
         });
-        this.ngxLoaderService.stopLoader('loader-01');
       } else {
         dataFinal.patchValue(null);
         this.toastrService.info(
@@ -175,7 +176,6 @@ export class MinhasReservasComponent implements OnInit, OnDestroy {
         (r) => r.idEspacoEsportivo === Number(localFilter)
       );
       this.showLimparFiltros = true;
-      this.ngxLoaderService.stopLoader('loader-01');
     }
 
     if (statusFilter && statusFilter != -1) {
@@ -184,10 +184,12 @@ export class MinhasReservasComponent implements OnInit, OnDestroy {
         (r) => r.status === statusFilter
       );
       this.showLimparFiltros = true;
-      this.ngxLoaderService.stopLoader('loader-01');
     }
 
-    this.minhasReservasFilter = this.ordernarReservasById(filteredReservas!);
+    setTimeout(() => {
+      this.minhasReservasFilter = this.ordernarReservasById(filteredReservas!);
+      this.ngxLoaderService.stopLoader('loader-01');
+    }, 500);
   }
 
   ordernarReservasById(
@@ -333,6 +335,7 @@ export class MinhasReservasComponent implements OnInit, OnDestroy {
     this.minhasReservasFilter = undefined;
     this.minDate = undefined;
     this.maxDate = undefined;
+    this.showLimparFiltros = false;
     this.ngxLoaderService.stopLoader('loader-01');
   }
 
@@ -382,7 +385,7 @@ export class MinhasReservasComponent implements OnInit, OnDestroy {
     } else {
       this.toastrService.warning(
         'Por favor, informe a nota para a reserva',
-        'A avaliação é obrigatória'
+        'A nota é obrigatória'
       );
     }
   }

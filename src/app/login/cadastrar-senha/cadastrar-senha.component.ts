@@ -107,13 +107,13 @@ export class CadastrarSenhaComponent implements OnInit, OnDestroy {
               this.ngxService.stopLoader('loader-01');
               this.toastrService.success(
                 'Sua senha foi alterada com sucesso.',
-                'Senha alterada!'
+                'Senha alterada'
               );
             } else {
               this.ngxService.stopLoader('loader-01');
               this.toastrService.success(
                 'Sua senha foi alterada com sucesso.',
-                'Senha alterada!'
+                'Senha alterada'
               );
               this.router.navigateByUrl('/login');
             }
@@ -121,7 +121,7 @@ export class CadastrarSenhaComponent implements OnInit, OnDestroy {
           error: (err) => {
             this.toastrService.error(
               'Não foi possível atualizar sua senha. Por favor, tente novamente mais tarde',
-              'Falha ao atualziar senha!'
+              'Falha ao atualizar senha'
             );
             this.ngxService.stopLoader('loader-01');
           },
@@ -129,7 +129,7 @@ export class CadastrarSenhaComponent implements OnInit, OnDestroy {
     } else {
       this.toastrService.warning(
         'Por favor, preencha todos os campos corretamente',
-        'Atenção!'
+        'Atenção'
       );
       this.ngxService.stopLoader('loader-01');
     }

@@ -203,7 +203,7 @@ export class EdicaoPerfilComponent implements OnInit, OnDestroy {
     } else {
       this.ngxService.stopLoader('loader-01');
       this.toastrService.info(
-        'Por favor, forneca pelo menos um dado que deseja atualziar',
+        'Por favor, forneca pelo menos um dado que deseja atualizar',
         'Nenhum dado para atualizar'
       );
     }
@@ -223,7 +223,7 @@ export class EdicaoPerfilComponent implements OnInit, OnDestroy {
           } else {
             this.toastrService.success(
               'Dados alterados com sucesso',
-              'Sucesso!'
+              'Sucesso'
             );
             this.router.navigateByUrl('/dashboard');
           }
@@ -232,8 +232,8 @@ export class EdicaoPerfilComponent implements OnInit, OnDestroy {
           this.ngxService.stopLoader('loader-01');
           this.toastrService.error(
             err.error.message ??
-              'Não foi possível atualziar o cadastro. Tente novamente mais tarde',
-            'Falha ao atualziar os dados'
+              'Não foi possível atualizar o cadastro. Tente novamente mais tarde',
+            'Falha ao atualizar os dados'
           );
         },
       });

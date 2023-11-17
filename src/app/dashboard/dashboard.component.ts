@@ -31,7 +31,7 @@ export class DashboardComponent implements OnInit {
   idReserva: number = 0;
   modalAvalicao?: any;
 
-  protected separaArray = SeparaArray
+  protected separaArray = SeparaArray;
 
   constructor(
     private modalService: NgbModal,
@@ -56,7 +56,8 @@ export class DashboardComponent implements OnInit {
         error: (err) => {
           this.reservas = [];
           this.toastrService.warning(
-            'Por favor, tente novamente em alguns instantes',
+            err.error.message ??
+              'Por favor, tente novamente em alguns instantes',
             'Não foi possível buscar suas reservas'
           );
         },
@@ -169,7 +170,7 @@ export class DashboardComponent implements OnInit {
           next: (result) => {
             this.toastrService.success(
               'Avaliação da reserva realizada com sucesso',
-              'Sucesso'
+              'Avaliação feita'
             );
             this.closeModal();
           },
@@ -185,7 +186,7 @@ export class DashboardComponent implements OnInit {
     } else {
       this.toastrService.warning(
         'Por favor, informe a nota para a reserva',
-        'A avaliação é obrigatória'
+        'A nota é obrigatória'
       );
     }
   }

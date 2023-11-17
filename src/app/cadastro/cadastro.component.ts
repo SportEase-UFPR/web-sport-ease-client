@@ -134,7 +134,7 @@ export class CadastroComponent implements OnInit, OnDestroy {
     if (!Validacoes.isValidCpf(cpf?.value)) {
       this.toastrService.warning(
         'Por favor, informe um CPF válido.',
-        'CPF Incorreto'
+        'CPF incorreto'
       );
       cpf?.setValue(null);
     }
@@ -175,7 +175,7 @@ export class CadastroComponent implements OnInit, OnDestroy {
             this.toastrService.error(
               err.error?.errors?.[0]?.message ||
                 err.error?.message ||
-                'Não foi possível realizar o cadastro. Tente novamente mais tarde',
+                'Não foi possível realizar o cadastro. Por favor, tente novamente mais tarde',
               'Falha ao realizar o cadastro'
             );
           },

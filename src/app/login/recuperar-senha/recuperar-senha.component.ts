@@ -52,13 +52,13 @@ export class RecuperarSenhaComponent implements OnInit, OnDestroy {
             this.ngxService.stopLoader('loader-01');
             this.toastrService.success(
               'Em alguns minutos você receberá o e-mail com as instruções.',
-              'Email enviado!'
+              'E-mail enviado'
             );
           },
           error: (err) => {
             this.toastrService.warning(
               'Não foi possível enviar o e-mail. Por favor, tente novamente mais tarde.',
-              'Falha ao enviar e-mail!'
+              'Falha ao enviar e-mail'
             );
             this.ngxService.stopLoader('loader-01');
           },
