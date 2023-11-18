@@ -4,8 +4,18 @@ import { Router } from '@angular/router';
 import {
   faCalendarCheck,
   faCalendarXmark,
+  faClock,
 } from '@fortawesome/free-regular-svg-icons';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCalendarDay,
+  faDumbbell,
+  faLocationDot,
+  faPersonRunning,
+  faRoute,
+  faRulerCombined,
+  faStar,
+  faUsers,
+} from '@fortawesome/free-solid-svg-icons';
 import { EspacoEsportivoResponse } from 'src/app/shared/models/espaco-esportivo/espaco-esportivo-response.model';
 import { EspacosEsportivosService } from '../services/espacos-esportivos.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -37,6 +47,13 @@ export class CardEspacoEsportivoComponent implements OnInit {
   faCalendar = faCalendarCheck;
   faCalendarX = faCalendarXmark;
   faStar = faStar;
+
+  faLocation = faRoute;
+  faUsers = faUsers;
+  faDimensions = faRulerCombined;
+  faCalendario = faCalendarDay;
+  faClock = faClock;
+  faSports = faDumbbell
 
   constructor(
     private sanatizer: DomSanitizer,

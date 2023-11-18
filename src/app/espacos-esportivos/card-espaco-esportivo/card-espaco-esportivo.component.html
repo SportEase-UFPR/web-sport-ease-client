@@ -1,130 +1,111 @@
 <div class="my-3">
-  <div class="d-flex justify-content-between align-items-end">
-    <h5 class="text-green">{{ espaco.nome | titlecase }}</h5>
-
-    <app-rating
-      [nota]="espaco.mediaAvaliacoes || 5"
-      [isClickable]="true"
-      (emitterClick)="buscarAvaliacoes()"
-    ></app-rating>
-  </div>
   <div class="card-conteudo row w-100 mt-2 d-flex align-items-center">
-    <div class="col-12 col-md-4 text-center">
+    <div class=" my-2 col-12 text-center">
       <img
-        width="340px"
-        height="240px"
+        width="100%"
+        height="220px"
         [src]="sanatizerImg(espaco.imagemBase64!)"
       />
     </div>
 
-    <div class="col-12 col-md-8 infos">
-      <div>
-        <p class="text-dark-blue mb-1">
-          <span class="info-title">Descrição do local</span>
-        </p>
-        <p class="text-dark-blue">{{ espaco.descricao }}</p>
-      </div>
+    <div class="mt-3 d-flex justify-content-between align-items-end">
+      <h4 class="text-green mb-0">{{ espaco.nome | titlecase }}</h4>
 
-      <div class="infos-grid">
-        <div>
-          <p class="mb-1">
-            <span class="info-title">Capacidade mínima</span>
-          </p>
-          <p class="text-dark-blue">
-            {{
-              espaco.capacidadeMin +
-                (espaco.capacidadeMin! > 1 ? " Pessoas" : " Pessoa")
-            }}
-          </p>
+      <app-rating
+        *ngIf="espaco.mediaAvaliacoes; else semAvalaicoes"
+        [nota]="espaco.mediaAvaliacoes"
+        [isClickable]="true"
+        [qtd]="espaco.contagemAvaliacoes!"
+        (emitterClick)="buscarAvaliacoes()"
+      ></app-rating>
+
+      <ng-template #semAvalaicoes>
+        <p class="text-gray">Sem avaliações...</p>
+      </ng-template>
+    </div>
+
+    <div class="col-12">
+      <p class="text-dark-blue mt-1">{{ espaco.descricao }}</p>
+    </div>
+
+    <div class="col-12 mb-1">
+      <span class="me-1 text-dark-blue icone">
+        <fa-icon [icon]="faLocation"></fa-icon>
+      </span>
+      <span class="text-dark-blue">{{ espaco.localidade }}</span>
+    </div>
+
+    <div class="col-12 my-1">
+      <span class="me-1 text-dark-blue icone">
+        <fa-icon [icon]="faUsers"></fa-icon>
+      </span>
+      <span class="text-dark-blue"
+        >Capacidade de {{ espaco.capacidadeMin }} a
+        {{
+          espaco.capacidadeMax +
+            (espaco.capacidadeMax! > 1 ? " pessoas" : " pessoa")
+        }}</span
+      >
+    </div>
+
+    <div class="col-12 my-1">
+      <span class="me-1 text-dark-blue icone">
+        <fa-icon [icon]="faClock"></fa-icon>
+      </span>
+      <span class="text-dark-blue">
+        {{ espaco.horaAbertura! | mask : "Hh:mm" }} -
+        {{ espaco.horaFechamento! | mask : "Hh:mm" }} (Duração da locação:
+        {{ espaco.periodoLocacao! | mask : "Hh:mm" }})
+      </span>
+    </div>
+
+    <div class="daysOfWeek col-12 my-1">
+      <span class="me-1 text-dark-blue icone">
+        <fa-icon [icon]="faCalendario"></fa-icon>
+      </span>
+      <span class="text-dark-blue">
+        {{ diasFuncionamento(espaco.diasFuncionamento!) }}
+      </span>
+    </div>
+
+    <div class="col-12 my-1">
+      <span class="me-1 text-dark-blue icone">
+        <fa-icon [icon]="faDimensions"></fa-icon>
+      </span>
+      <span class="text-dark-blue">{{ espaco.dimensoes }} (Piso: {{ espaco.piso }})</span>
+    </div>
+
+    <div class="col-12 my-2">
+      <span class="me-1 text-dark-blue icone">
+        <fa-icon [icon]="faSports"></fa-icon>
+      </span>
+      <span
+        class="text-dark-blue"
+        *ngFor="let e of espaco.listaEsportes; index as i"
+        >{{
+          (e.nome | titlecase) +
+            (i < espaco.listaEsportes?.length! - 1 ? ", " : "")
+        }}</span
+      >
+    </div>
+
+    <div class="mt-2 d-flex justify-content-end">
+      <ng-container *ngIf="espaco.disponivel; else naoDisponivel">
+        <app-btn-green
+          [showIcon]="true"
+          [iconFirst]="false"
+          [icone]="faCalendar"
+          [textButton]="'Reservar Local'"
+          (emmiterClick)="solicitarReserva(espaco.id!)"
+        ></app-btn-green>
+      </ng-container>
+
+      <ng-template #naoDisponivel>
+        <div class="espaco-indisponivel">
+          <span class="me-2"> Indisponível </span>
+          <fa-icon [icon]="faCalendarX"></fa-icon>
         </div>
-
-        <div>
-          <p class="mb-1">
-            <span class="info-title">Capacidade máxima</span>
-          </p>
-          <p class="text-dark-blue">
-            {{
-              espaco.capacidadeMax +
-                (espaco.capacidadeMax! > 1 ? " Pessoas" : " Pessoa")
-            }}
-          </p>
-        </div>
-
-        <div>
-          <p class="mb-1">
-            <span class="info-title">Dimensões</span>
-          </p>
-          <p class="text-dark-blue">{{ espaco.dimensoes }}</p>
-        </div>
-
-        <div>
-          <p class="mb-1">
-            <span class="info-title">Piso</span>
-          </p>
-          <p class="text-dark-blue">{{ espaco.piso }}</p>
-        </div>
-
-        <div>
-          <p class="mb-1">
-            <span class="info-title">Local</span>
-          </p>
-          <p class="text-dark-blue">{{ espaco.localidade }}</p>
-        </div>
-
-        <div>
-          <p class="mb-1">
-            <span class="info-title">Duração da locação</span>
-          </p>
-          <p class="text-dark-blue">
-            {{ espaco.periodoLocacao! | mask : "Hh:mm" }}
-          </p>
-        </div>
-
-        <div>
-          <p class="mb-1">
-            <span class="info-title">Horário de funcionamento</span>
-          </p>
-          <p class="text-dark-blue">
-            {{ espaco.horaAbertura! | mask : "Hh:mm" }} -
-            {{ espaco.horaFechamento! | mask : "Hh:mm" }}
-          </p>
-        </div>
-
-        <div class="daysOfWeek">
-          <p class="mb-1">
-            <span class="info-title">Dias de funcionamento</span>
-          </p>
-          <span class="text-dark-blue">
-            {{ diasFuncionamento(espaco.diasFuncionamento!) }}
-          </span>
-        </div>
-      </div>
-
-      <div>
-        <p class="mb-1"><span class="info-title">Tipos de esporte</span></p>
-        <span class="text-dark-blue" *ngFor="let e of espaco.listaEsportes; index as i">{{
-          (e.nome | titlecase) + (i < espaco.listaEsportes?.length! - 1 ? ', ' : '')
-        }}</span>
-      </div>
-
-      <div class="d-flex justify-content-end">
-        <ng-container *ngIf="espaco.disponivel; else naoDisponivel">
-          <app-btn-green
-            [showIcon]="true"
-            [iconFirst]="false"
-            [icone]="faCalendar"
-            [textButton]="'Reservar Local'"
-            (emmiterClick)="solicitarReserva(espaco.id!)"
-          ></app-btn-green>
-        </ng-container>
-
-        <ng-template #naoDisponivel>
-          <div class="espaco-indisponivel">
-            <span class="me-2"> Indisponível </span>
-            <fa-icon [icon]="faCalendarX"></fa-icon>
-          </div>
-        </ng-template>
-      </div>
+      </ng-template>
     </div>
   </div>
 </div>

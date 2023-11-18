@@ -18,6 +18,7 @@ export class EspacoEsportivoResponse {
     public mediaAvaliacoes?: number,
     public capacidadeMax?: number,
     public capacidadeMin?: number,
-    public diasFuncionamento?: number[]
+    public diasFuncionamento?: number[],
+    public contagemAvaliacoes?: number
   ) {}
 }

@@ -63,16 +63,24 @@ export class CardReservaComponent implements OnInit {
     return false;
   }
 
-  showCancelarReserva(): boolean {
-    if (
-      moment(this.dadosReserva?.dataHoraInicioReserva).diff(
-        moment(),
-        'minutes'
-      ) >= 15
-    ) {
+  showCancelarReserva(status: StatusLocacao): boolean {
+    if (status == 'SOLICITADA') {
       return true;
     }
 
-    return false;
+    if (status == 'APROVADA') {
+      if (
+        moment(this.dadosReserva?.dataHoraInicioReserva).diff(
+          moment(),
+          'hours'
+        ) >= 24
+      ) {
+        return true;
+      }
+
+      return false;
+    }
+
+    return false
   }
 }

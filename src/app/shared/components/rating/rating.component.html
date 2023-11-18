@@ -1,4 +1,8 @@
-<div class="rating pb-2" (click)="onClick()" [ngClass]="{clickable : isClickable}">
+<div
+  class="rating pb-2"
+  (click)="onClick()"
+  [ngClass]="{ clickable: isClickable }"
+>
   <span *ngFor="let r of buildingStartsRating()" [ngSwitch]="r">
     <ng-container *ngSwitchCase="'a'">
       <svg
@@ -54,4 +58,7 @@
       </svg>
     </ng-container>
   </span>
+  <span *ngIf="qtdAvaliacoes > 0" class="qtd-avaliacoes"
+    >({{ qtdAvaliacoes }})</span
+  >
 </div>

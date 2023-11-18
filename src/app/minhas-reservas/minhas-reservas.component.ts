@@ -127,8 +127,8 @@ export class MinhasReservasComponent implements OnInit, OnDestroy {
 
   filterReservas(): void {
     const form = this.formFiltros;
-    const dataInicial = form.get('dataInicial');
-    const dataFinal = form.get('dataFinal');
+    const dataInicial = form.get('dataInicial')?.value;
+    const dataFinal = form.get('dataFinal')?.value;
     const localFilter = form.get('local')?.value;
     const statusFilter = form.get('status')?.value;
 
@@ -146,28 +146,26 @@ export class MinhasReservasComponent implements OnInit, OnDestroy {
       this.showLimparFiltros = false;
     }
 
-    if (dataInicial?.value && dataFinal?.value) {
-      const dataInicialValue = moment(dataInicial?.value).startOf('day');
-      const dataFinalValue = moment(dataFinal?.value).startOf('day');
+    if (dataInicial) {
+      const dataInicialValue = moment(dataInicial).startOf('day');
+      this.ngxLoaderService.startLoader('loader-01');
+      filteredReservas = filteredReservas?.filter((r) => {
+        const dataReserva = moment(r.dataHoraInicioReserva);
 
-      if (dataFinalValue.diff(dataInicialValue, 'hour') >= 0) {
-        this.ngxLoaderService.startLoader('loader-01');
-        filteredReservas = filteredReservas?.filter((r) => {
-          const dataReserva = moment(r.dataHoraInicioReserva);
-          this.showLimparFiltros = true;
+        return dataReserva.isSameOrAfter(dataInicialValue, 'day');
+      });
+      this.showLimparFiltros = true;
+    }
 
-          return (
-            dataReserva.isSameOrAfter(dataInicialValue, 'day') &&
-            dataReserva.isSameOrBefore(dataFinalValue, 'day')
-          );
-        });
-      } else {
-        dataFinal.patchValue(null);
-        this.toastrService.info(
-          'A data final não pode ser anterior à data inicial. Por favor, selecione uma data válida',
-          'Período inválido'
-        );
-      }
+    if (dataFinal) {
+      const dataFinalValue = moment(dataFinal).startOf('day');
+      this.ngxLoaderService.startLoader('loader-01');
+      filteredReservas = filteredReservas?.filter((r) => {
+        const dataReserva = moment(r.dataHoraInicioReserva);
+
+        return dataReserva.isSameOrBefore(dataFinalValue, 'day');
+      });
+      this.showLimparFiltros = true;
     }
 
     if (localFilter && localFilter != -1) {
@@ -340,11 +338,16 @@ export class MinhasReservasComponent implements OnInit, OnDestroy {
   }
 
   showCancelarReserva(data: string | Date, status: StatusLocacao): boolean {
-    if (
-      moment(data).diff(moment(), 'minutes') >= 15 &&
-      (status === StatusLocacao.APROVADA || status === StatusLocacao.SOLICITADA)
-    ) {
+    if (status == 'SOLICITADA') {
       return true;
+    }
+
+    if (status == 'APROVADA') {
+      if (moment(data).diff(moment(), 'hours') >= 24) {
+        return true;
+      }
+
+      return false;
     }
 
     return false;

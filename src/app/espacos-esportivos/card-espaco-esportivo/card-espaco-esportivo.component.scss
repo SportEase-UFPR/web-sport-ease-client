@@ -10,24 +10,13 @@
     border-radius: 15px;
   }
 
-  .infos-grid {
-    display: grid;
-    grid-template-columns: auto auto auto;
+  .icone {
+    font-size: 20px;
+    font-weight: 500;
   }
 
   .daysOfWeek {
     grid-column: span 2;
-  }
-
-  .infos {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  .info-title {
-    font-weight: 500;
-    color: var(--verde);
   }
 
   .esporte {

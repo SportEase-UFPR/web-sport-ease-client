@@ -8,6 +8,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class RatingComponent implements OnInit {
   @Input() nota: number = 5;
   @Input() isClickable: boolean = false;
+  @Input('qtd') qtdAvaliacoes: number = 0;
 
   @Output() emitterClick = new EventEmitter();
 
