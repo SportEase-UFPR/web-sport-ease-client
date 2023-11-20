@@ -4,7 +4,7 @@ import { faBell, faCircleUser } from '@fortawesome/free-regular-svg-icons';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { CabecalhoService } from './services/cabecalho.service';
 import { Notificacao } from '../shared/models/notificacao/notificacao.model';
-import { Subject, take } from 'rxjs';
+import { Subject, take, takeUntil } from 'rxjs';
 const moment = require('moment');
 
 @Component({
@@ -26,7 +26,6 @@ export class CabecalhoComponent implements OnInit, OnDestroy {
   constructor(private cabecalhoService: CabecalhoService) {}
 
   ngOnInit(): void {
-    /*
     this.notificacoes = undefined;
     this.cabecalhoService
       .buscarNotificacoesWithInterval()
@@ -40,7 +39,7 @@ export class CabecalhoComponent implements OnInit, OnDestroy {
           this.notificacoes = [];
           console.error(err);
         },
-      }); */
+      });
   }
 
   ngOnDestroy(): void {
@@ -49,7 +48,7 @@ export class CabecalhoComponent implements OnInit, OnDestroy {
   }
 
   populate() {
-    /* this.notificacoes = undefined;
+    this.notificacoes = undefined;
     this.cabecalhoService
       .buscarNotificacoes()
       .pipe(take(1))
@@ -62,7 +61,7 @@ export class CabecalhoComponent implements OnInit, OnDestroy {
           this.notificacoes = [];
           console.error(err);
         },
-      }); */
+      });
   }
 
   getSaudacao(): string {
