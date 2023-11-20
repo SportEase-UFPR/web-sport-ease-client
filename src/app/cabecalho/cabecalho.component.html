@@ -1,0 +1,90 @@
+<header class="itens-cabecalho px-3 pt-2 m-0">
+  <div class="d-flex align-items-center">
+    <p class="saudacao mb-0">
+      {{ getSaudacao() }}
+    </p>
+  </div>
+
+  <div class="d-flex align-items-center justify-content-center">
+    <img
+      src="../../assets/site/logo-sport-ease.png"
+      alt="logo sport ease ufpr"
+      width="50"
+    />
+    <h2 class="ms-2 mb-0 text-dark-blue">SportEase</h2>
+  </div>
+
+  <div class="text-end">
+    <a class="dados-cliente text-dark-blue m-0" [routerLink]="'/editar-perfil'">
+      <fa-icon [icon]="faUser"></fa-icon>
+    </a>
+
+    <button
+      class="btn-notifications ms-3"
+      [ngClass]="
+        qtdNotificaoNaoLida > 0 ? 'com-notificacao' : 'sem-notificacao'
+      "
+      (click)="toggleSidebar()"
+    >
+      <fa-icon [icon]="faBell"></fa-icon>
+      <span *ngIf="qtdNotificaoNaoLida > 0">{{
+        qtdNotificaoNaoLida > 9 ? "9+" : qtdNotificaoNaoLida
+      }}</span>
+    </button>
+  </div>
+</header>
+
+<aside [ngClass]="{ hidden: isHidden }" class="sidebar sidebar-glass">
+  <div class="d-flex justify-content-between">
+    <h4 class="text-green pt-2">Notificações</h4>
+    <button class="btn-close-modal text-gray" (click)="toggleSidebar()">
+      <fa-icon [icon]="faClose"></fa-icon>
+    </button>
+  </div>
+
+  <ul class="mt-2">
+    <ng-container *ngIf="notificacoes == undefined; else noSkeleton">
+      <li class="my-2" *ngFor="let i of [0, 1, 2]">
+        <ngx-skeleton-loader
+          count="1"
+          appearance="line"
+          [theme]="{ background: '#73779144', height: '12px' }"
+        ></ngx-skeleton-loader>
+
+        <div class="mt-2"></div>
+
+        <ngx-skeleton-loader
+          count="1"
+          appearance="line"
+          [theme]="{ background: '#73779144', height: '12px' }"
+        ></ngx-skeleton-loader>
+
+        <div class="w-50">
+          <ngx-skeleton-loader
+            count="1"
+            appearance="line"
+            [theme]="{ background: '#73779144', height: '12px' }"
+          ></ngx-skeleton-loader>
+        </div>
+
+        <hr *ngIf="i !== 2" />
+      </li>
+    </ng-container>
+
+    <ng-template #noSkeleton>
+      <ng-container *ngFor="let n of notificacoes; index as i">
+        <li [ngClass]="{ 'nao-lida': !n.lida }">
+          <div class="d-flex justify-content-between">
+            <p class="mb-0 notificacao-titulo">{{ n.titulo }}</p>
+            <small class="text-gray">{{
+              showHoraNotificacao(n.dataHora!)
+            }}</small>
+          </div>
+          <small class="notificacao-conteudo">{{ n.conteudo }}</small>
+        </li>
+
+        <hr *ngIf="notificacoes?.length !== i + 1" />
+      </ng-container>
+    </ng-template>
+  </ul>
+</aside>

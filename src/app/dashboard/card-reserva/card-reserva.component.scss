@@ -1,0 +1,53 @@
+@import "/src/cores.scss";
+
+.card-reserva {
+  background-color: var(--branco);
+  border-radius: 15px;
+  box-shadow: 2px 4px 4px 2px var(--cinza-claro);
+  padding: 10px;
+
+  .reserva-header {
+    display: flex;
+    justify-content: space-between;
+
+    .SOLICITADA {
+      color: var(--amarelo);
+    }
+
+    .APROVADA {
+      color: var(--verde);
+    }
+
+    .NEGADA {
+      color: var(--vermelho);
+    }
+
+    .CANCELADA {
+      color: var(--amarelo);
+    }
+
+    .FINALIZADA {
+      color: var(--verde);
+    }
+
+    .ENCERRADA {
+      color: var(--cinza-claro);
+    }
+  }
+
+  .reserva-body {
+    .info-title {
+      font-weight: 500;
+    }
+
+    .motivo-reserva-collapse {
+      cursor: pointer;
+    }
+  }
+
+  .reserva-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+}

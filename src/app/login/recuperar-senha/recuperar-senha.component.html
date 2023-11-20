@@ -1,0 +1,56 @@
+<ngx-ui-loader [loaderId]="'loader-01'"></ngx-ui-loader>
+
+<div class="d-flex align-items-center justify-content-center">
+  <div class="card-fomulario card-shadow p-2 p-md-3 my-3">
+    <header
+      class="d-flex align-items-center justify-content-center"
+    >
+      <img
+        src="../../../assets/site/logo-sport-ease.png"
+        alt="logo sport ease ufpr"
+        width="70"
+      />
+      <h1 class="ms-0 ms-md-2 mb-0 text-dark-blue">SportEase</h1>
+    </header>
+
+    <main class="mt-5">
+      <p class="text-gray text-center">
+        Informe o seu e-mail cadastrado na plataforma para receber as instruções
+        e recuperar sua senha.
+      </p>
+
+      <form [formGroup]="formRecuperarSenha" class="p-2">
+        <div class="row w-100 justify-content-center m-0">
+          <div class="col-12">
+            <app-input-field
+              [formGroup]="formRecuperarSenha"
+              [controlName]="'email'"
+              [label]="'E-mail'"
+              [validacaoInput]="true"
+              [inputType]="'email'"
+            ></app-input-field>
+          </div>
+
+          <div class="col-12 mt-2">
+            <div>
+              <app-btn-green
+                [textButton]="'Recuperar Senha'"
+                [type]="'submit'"
+                [buttonDisabled]="formRecuperarSenha.invalid"
+                (emmiterClick)="recuperarSenha()"
+              ></app-btn-green>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <footer class="mt-5">
+        <div>
+          <a class="text-blue text-decoration-none" (click)="navigate()">
+            <p class="text-center">Voltar</p>
+          </a>
+        </div>
+      </footer>
+    </main>
+  </div>
+</div>

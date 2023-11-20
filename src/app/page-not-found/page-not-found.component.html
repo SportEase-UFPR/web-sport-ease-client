@@ -1,0 +1,29 @@
+<div class="d-flex align-items-center justify-content-center">
+  <div class="card-msg card-shadow p-3 mt-5">
+    <header
+      class="d-block text-center d-md-flex align-items-center justify-content-center"
+    >
+      <img
+        src="../../assets/site/logo-sport-ease.png"
+        alt="logo sport ease ufpr"
+        width="70"
+      />
+      <h1 class="ms-0 ms-md-2 mb-0 text-dark-blue">SportEase</h1>
+    </header>
+
+    <main class="text-center mt-5">
+      <h2 class="text-green">Página não encontrada :(</h2>
+
+      <p class="text-gray my-4 px-3">
+        Infelizmente a página que você está tentando acessar não existe
+      </p>
+
+      <div class="card-button-confirm mx-auto">
+        <app-btn-green
+          [textButton]="'Voltar para tela tela inicial'"
+          (emmiterClick)="navigate()"
+        ></app-btn-green>
+      </div>
+    </main>
+  </div>
+</div>

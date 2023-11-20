@@ -1,0 +1,113 @@
+<div class="card-reserva" *ngIf="dadosReserva">
+  <div class="reserva-header">
+    <h4 class="text-green">Reserva #{{ dadosReserva.id }}</h4>
+    <span class="{{ dadosReserva.status }}"
+      >Reserva {{ statusToString(dadosReserva.status!) | titlecase }}</span
+    >
+  </div>
+
+  <hr class="mt-1 mb-2" />
+
+  <div class="reserva-body">
+    <div class="row w-100">
+      <div class="col-12">
+        <p>
+          <span class="info-title text-green">Período: </span>
+          <span
+            >{{ dadosReserva.dataHoraInicioReserva | date : "HH:mm" }}
+            às
+            {{
+              dadosReserva.dataHoraFimReserva | date : "HH:mm - dd/MM/yyyy"
+            }}</span
+          >
+        </p>
+      </div>
+
+      <div class="col-12">
+        <p>
+          <span class="info-title text-green">Local: </span>
+          <span>{{ dadosReserva.nomeEspacoEsportivo + " - " + dadosReserva.localidade }}</span>
+        </p>
+      </div>
+
+      <div class="col-12">
+        <p>
+          <span class="info-title text-green"
+            >Quantidade de participantes:
+          </span>
+          <span>{{ dadosReserva.qtdParticipantes }} pessoas</span>
+        </p>
+      </div>
+    </div>
+
+    <div>
+      <p
+        (click)="motivoReserva.toggle()"
+        [attr.aria-expanded]="!motivoReservaCollapsed"
+        aria-controls="collapseExample"
+        class="motivo-reserva-collapse mb-1"
+      >
+        <span class="info-title text-green">
+          Motivo da reserva
+          <span>
+            <fa-icon [icon]="changeIcon(motivoReservaCollapsed)"></fa-icon>
+          </span>
+        </span>
+      </p>
+
+      <div
+        #motivoReserva="ngbCollapse"
+        [(ngbCollapse)]="motivoReservaCollapsed"
+      >
+        <div>
+          <p>{{ dadosReserva.motivoSolicitacao }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="dadosReserva.status == statusLocacao.NEGADA">
+      <p
+        (click)="collapse.toggle()"
+        [attr.aria-expanded]="!justificativaReservaCollapsed"
+        aria-controls="collapseExample"
+        class="motivo-reserva-collapse mb-1"
+      >
+        <span>
+          Justificativa para reserva negada
+          <span>
+            <fa-icon
+              [icon]="changeIcon(justificativaReservaCollapsed)"
+            ></fa-icon>
+          </span>
+        </span>
+      </p>
+
+      <div
+        #collapse="ngbCollapse"
+        [(ngbCollapse)]="justificativaReservaCollapsed"
+      >
+        <div>
+          <p>{{ dadosReserva.motivoCancelamento }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reserva-footer">
+    <app-btn-green
+      *ngIf="showConfirmacaoReserva() && dadosReserva.status == 'APROVADA'"
+      [showIcon]="true"
+      [icone]="faConfirm"
+      [textButton]="'Confirmar uso'"
+      (emmiterClick)="confirmarUso()"
+    ></app-btn-green>
+
+    <app-btn-red
+      *ngIf="showCancelarReserva(dadosReserva.status!)"
+      [showIcon]="true"
+      [icone]="faCancel"
+      [textButton]="'Cancelar reserva'"
+      (emmiterClick)="cancelarReserva()"
+    ></app-btn-red>
+  </div>
+</div>

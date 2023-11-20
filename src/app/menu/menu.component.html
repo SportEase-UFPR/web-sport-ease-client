@@ -1,0 +1,36 @@
+<div class="menu ps-3">
+  <a id="inicio" routerLink="/dashboard">
+    <p>
+      <fa-icon [icon]="faHouse" class="me-2"></fa-icon>
+      <span> Início </span>
+    </p>
+  </a>
+
+  <a id="espacos-esportivos" routerLink="/espacos-esportivos">
+    <p>
+      <fa-icon [icon]="faDumbbell" class="me-2"></fa-icon>
+      <span> Espaços Esportivos </span>
+    </p>
+  </a>
+
+  <a id="minhas-reservas" routerLink="/minhas-reservas">
+    <p>
+      <fa-icon [icon]="faClock" class="me-2"></fa-icon>
+      <span> Minhas Reservas </span>
+    </p>
+  </a>
+
+  <a id="solicitar-reserva" routerLink="/nova-reserva">
+    <p>
+      <fa-icon [icon]="faPlus" class="me-2"></fa-icon>
+      <span> Solicitar Reserva </span>
+    </p>
+  </a>
+
+  <div>
+    <button class="ms-2 btn-logout" (click)="sair()">
+      <fa-icon [icon]="faExit" class="me-2"></fa-icon>
+      <span> Sair </span>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,204 @@
+<ng-template #modalCancelaReserva let-modal>
+  <div class="modal-body">
+    <div class="d-flex justify-content-between">
+      <h4 class="modal-title text-dark-blue text-center">
+        Você realmente deseja cancelar essa reserva?
+      </h4>
+    </div>
+
+    <div class="d-block d-md-flex mt-3 mb-2">
+      <div class="col-12 col-md-6 me-0 me-md-2 mb-2 mb-md-0 pe-2">
+        <app-btn-green
+          [textButton]="'Confirmar'"
+          [showIcon]="true"
+          [iconFirst]="true"
+          [icone]="faConfirm"
+          (emmiterClick)="cancelarReserva()"
+        ></app-btn-green>
+      </div>
+
+      <div class="col-12 col-md-6 pe-2">
+        <app-btn-red
+          [textButton]="'Cancelar'"
+          [showIcon]="true"
+          [iconFirst]="true"
+          [icone]="faClose"
+          (emmiterClick)="closeModal()"
+        ></app-btn-red>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalConfirmarUso let-modal>
+  <div class="modal-body">
+    <div class="d-flex justify-content-between">
+      <h4 class="modal-title text-dark-blue text-center">
+        Você realmente deseja confirmar que fez o uso desta reserva?
+      </h4>
+    </div>
+
+    <div class="d-block d-md-flex mt-3 mb-2">
+      <div class="col-12 col-md-6 me-0 me-md-2 mb-2 mb-md-0 pe-2">
+        <app-btn-green
+          [textButton]="'Confirmar'"
+          [showIcon]="true"
+          [iconFirst]="true"
+          [icone]="faConfirm"
+          (emmiterClick)="confirmarReserva()"
+        ></app-btn-green>
+      </div>
+
+      <div class="col-12 col-md-6 pe-2">
+        <app-btn-red
+          [textButton]="'Cancelar'"
+          [showIcon]="true"
+          [iconFirst]="true"
+          [icone]="faClose"
+          (emmiterClick)="closeModal()"
+        ></app-btn-red>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalAvaliacao let-modal>
+  <div class="modal-body">
+    <h4 class="modal-title text-green text-center">Avalie sua reserva</h4>
+
+    <div class="my-2">
+      <form [formGroup]="formAvaliacao">
+        <div class="text-center">
+          <app-input-star-rating
+            [formGroup]="formAvaliacao"
+            [controlName]="'rating'"
+            [label]="'Nota para a reserva'"
+          ></app-input-star-rating>
+        </div>
+
+        <div class="mt-2">
+          <app-input-textarea
+            [formGroup]="formAvaliacao"
+            [controlName]="'comentario'"
+            [label]="'Caso deseje, deposite aqui sua crítica ou sugestão'"
+          ></app-input-textarea>
+        </div>
+      </form>
+
+      <div class="d-block d-md-flex mt-3 mb-2">
+        <div class="col-12 col-md-6 me-0 me-md-2 mb-2 mb-md-0 pe-2">
+          <app-btn-green
+            [textButton]="'Enviar avaliação'"
+            [showIcon]="true"
+            [iconFirst]="true"
+            [icone]="faConfirm"
+            (emmiterClick)="enviarAvaliacao()"
+          ></app-btn-green>
+        </div>
+
+        <div class="col-12 col-md-6 pe-2">
+          <app-btn-border-green
+            [textButton]="'Avaliar depois'"
+            [showIcon]="true"
+            [iconFirst]="true"
+            [icone]="faClose"
+            (emmiterClick)="closeModal()"
+          ></app-btn-border-green>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ngx-ui-loader [loaderId]="'loader-01'"></ngx-ui-loader>
+
+<div class="mx-3 mt-4 mb-3">
+  <h3 class="text-green font-weight-bold mb-3">
+    Solicitações de reserva em andamento
+  </h3>
+
+  <div class="row w-100">
+    <ng-container *ngIf="reservas == undefined; else noSkeleton">
+      <div class="col-12 col-md-6 mt-3" *ngFor="let i of [0, 1]">
+        <ngx-skeleton-loader
+          count="1"
+          appearance="line"
+          [theme]="{ background: '#73779144' }"
+        ></ngx-skeleton-loader>
+        <hr class="mt-1 mb-3" />
+        <ngx-skeleton-loader
+          count="3"
+          appearance="line"
+          [theme]="{ background: '#73779144' }"
+        ></ngx-skeleton-loader>
+        <div class="my-3"></div>
+
+        <div class="d-flex justify-content-end">
+          <div class="w-50">
+            <ngx-skeleton-loader
+              count="1"
+              appearance="line"
+              [theme]="{ background: '#73779144' }"
+            ></ngx-skeleton-loader>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #noSkeleton>
+      <ng-container *ngIf="reservas?.length; else semReservas">
+        <div class="col-12 col-md-6">
+          <div
+            class="my-3"
+            *ngFor="let r of separaArray.separarArray(true, reservas!)"
+          >
+            <app-card-reserva
+              [dadosReserva]="r"
+              (emmiterClickCancelar)="
+                openModalConfirmacao(modalCancelaReserva, r.id!)
+              "
+              (emmiterClickUsar)="
+                openModalConfirmacao(modalConfirmarUso, r.id!, modalAvaliacao)
+              "
+            ></app-card-reserva>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <div
+            class="my-3"
+            *ngFor="let r of separaArray.separarArray(false, reservas!)"
+          >
+            <app-card-reserva
+              [dadosReserva]="r"
+              (emmiterClickCancelar)="
+                openModalConfirmacao(modalCancelaReserva, r.id!)
+              "
+              (emmiterClickUsar)="
+                openModalConfirmacao(modalConfirmarUso, r.id!, modalAvaliacao)
+              "
+            ></app-card-reserva>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-template #semReservas>
+        <div class="col-12 mt-5">
+          <p class="text-center">
+            No momento você não possui nenhuma reserva em andamento, que tal
+            solicitar uma?
+          </p>
+        </div>
+
+        <div class="col-12 d-flex justify-content-center">
+          <app-btn-green
+            [textButton]="'Nova reserva'"
+            [showIcon]="true"
+            [icone]="faAdd"
+            (emmiterClick)="navigate()"
+          ></app-btn-green>
+        </div>
+      </ng-template>
+    </ng-template>
+  </div>
+</div>

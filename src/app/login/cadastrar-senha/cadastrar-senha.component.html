@@ -1,0 +1,63 @@
+<ngx-ui-loader [loaderId]="'loader-01'"></ngx-ui-loader>
+
+<div class="d-flex align-items-center justify-content-center">
+  <div class="card-fomulario card-shadow p-2 p-md-3 my-3">
+    <header
+      class="d-flex align-items-center justify-content-center"
+    >
+      <img
+        src="../../../assets/site/logo-sport-ease.png"
+        alt="logo sport ease ufpr"
+        width="70"
+      />
+      <h1 class="ms-0 ms-md-2 mb-0 text-dark-blue">SportEase</h1>
+    </header>
+
+    <main class="mt-5">
+      <h2 class="text-green text-center">Cadastrar Nova Senha</h2>
+      <form [formGroup]="formNovaSenha" class="p-2">
+        <div class="row w-100 justify-content-center m-0">
+          <div class="col-12 mt-2">
+            <app-input-senha
+              [formGroup]="formNovaSenha"
+              [controlName]="'senha'"
+              [label]="'Senha...'"
+              [validacaoInput]="true"
+              (emmiterFocus)="focusPassword()"
+            >
+            </app-input-senha>
+          </div>
+
+          <div class="col-12 mt-2">
+            <app-input-senha
+              [formGroup]="formNovaSenha"
+              [controlName]="'confirmacaoSenha'"
+              [label]="'Confirmar Senha...'"
+              [validacaoInput]="true"
+              (emmiterFocus)="focusPassword()"
+            >
+            </app-input-senha>
+          </div>
+
+          <ng-container *ngIf="passwordChecklist">
+            <app-password-checklist
+              [control]="formNovaSenha.get('senha')!"
+              [senhasDiferentes]="senhasDiferentes"
+            ></app-password-checklist>
+          </ng-container>
+
+          <div class="col-12 mt-2">
+            <div>
+              <app-btn-green
+                [textButton]="'Atualizar Senha'"
+                [type]="'submit'"
+                [buttonDisabled]="formNovaSenha.invalid && senhasDiferentes"
+                (emmiterClick)="recuperarSenha()"
+              ></app-btn-green>
+            </div>
+          </div>
+        </div>
+      </form>
+    </main>
+  </div>
+</div>

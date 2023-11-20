@@ -1,0 +1,9 @@
+@import "/src/cores.scss";
+
+.card-fomulario {
+  width: 70%;
+
+  input{
+    color: var(--azul-escuro) !important;
+  }
+}

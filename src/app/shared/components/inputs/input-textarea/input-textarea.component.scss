@@ -1,0 +1,31 @@
+@import "/src/cores.scss";
+
+.input-textarea {
+  border: none;
+  border-radius: 10px;
+  outline: none;
+  padding: 0 10px;
+  box-shadow: 4px 4px 5px 0 var(--cinza-claro);
+  color: var(--azul-escuro);
+  transition: 0.2s ease-in-out;
+
+  &:focus {
+    transition: 0.2s ease-in-out;
+    box-shadow: 4px 4px 2px 0 var(--verde) !important;
+  }
+
+  &::placeholder {
+    color: var(--cinza-claro);
+  }
+
+  &:disabled {
+    background-color: var(--cinza-claro);
+    color: var(--branco);
+  }
+}
+
+.is-invalid-input-textarea {
+  textarea {
+    box-shadow: 4px 4px 2px 0 var(--vermelho);
+  }
+}

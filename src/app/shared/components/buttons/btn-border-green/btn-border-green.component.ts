@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 @Component({
   selector: 'app-btn-border-green',
   templateUrl: './btn-border-green.component.html',
-  styleUrls: ['./btn-border-green.component.scss']
+  styleUrls: ['./btn-border-green.component.scss'],
 })
 export class BtnBorderGreenComponent implements OnInit {
   @Input() buttonDisabled: boolean = false;

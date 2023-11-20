@@ -1,0 +1,80 @@
+<div id="star-rating">
+  <h5 class="text-gray">{{ label }}</h5>
+
+  <div class="rating-group" [formGroup]="formGroup">
+    <input
+      formControlName="{{ controlName }}"
+      class="input-ratting"
+      name="{{ controlName }}"
+      id="rating-1"
+      value="1.0"
+      type="radio"
+    />
+    <label aria-label="1 estrela" class="label-rating" for="rating-1">
+      <fa-icon
+        [ngClass]="rating >= 1.0 ? 'rating-icon-checked' : 'rating-icon'"
+        [icon]="faStar"
+      ></fa-icon>
+    </label>
+
+    <input
+      formControlName="{{ controlName }}"
+      class="input-ratting"
+      name="{{ controlName }}"
+      id="rating-2"
+      value="2.0"
+      type="radio"
+    />
+    <label aria-label="2 stars" class="label-rating" for="rating-2">
+      <fa-icon
+        [ngClass]="rating >= 2.0 ? 'rating-icon-checked' : 'rating-icon'"
+        [icon]="faStar"
+      ></fa-icon>
+    </label>
+
+    <input
+      formControlName="{{ controlName }}"
+      class="input-ratting"
+      name="{{ controlName }}"
+      id="rating-3"
+      value="3.0"
+      type="radio"
+    />
+    <label aria-label="3 stars" class="label-rating" for="rating-3">
+      <fa-icon
+        [ngClass]="rating >= 3.0 ? 'rating-icon-checked' : 'rating-icon'"
+        [icon]="faStar"
+      ></fa-icon>
+    </label>
+
+    <input
+      formControlName="{{ controlName }}"
+      class="input-ratting"
+      name="{{ controlName }}"
+      id="rating-4"
+      value="4.0"
+      type="radio"
+    />
+    <label aria-label="4 stars" class="label-rating" for="rating-4">
+      <fa-icon
+        [ngClass]="rating >= 4.0 ? 'rating-icon-checked' : 'rating-icon'"
+        [icon]="faStar"
+      ></fa-icon>
+    </label>
+
+    <input
+      formControlName="{{ controlName }}"
+      class="input-ratting"
+      name="{{ controlName }}"
+      id="rating-5"
+      value="5.0"
+      type="radio"
+    />
+    <label aria-label="5 stars" class="label-rating" for="rating-5">
+      <fa-icon
+        [ngClass]="rating >= 5.0 ? 'rating-icon-checked' : 'rating-icon'"
+        [icon]="faStar"
+      ></fa-icon>
+    </label>
+  </div>
+</div>

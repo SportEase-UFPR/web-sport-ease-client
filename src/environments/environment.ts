@@ -1,3 +1,6 @@
 export const environment = {
-  baseUrl: 'http://localhost:8080/',
+  baseUrl: 'https://api-gateway-production-40a1.up.railway.app/',
+  email: 'sportease.ufpr@gmail.com',
+  ss_token: 'SS_CLIENTE',
+  userProfile: 'ROLE_CLIENTE',
 };

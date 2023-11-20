@@ -1,0 +1,21 @@
+<div class="modal-body">
+  <div class="d-flex justify-content-between">
+    <h4 class="modal-title text-dark-blue text-center">
+      Enviamos um e-mail para
+      <strong>{{ email ? email : "" }}</strong>
+      com as instruções para confirmar a alteração do e-mail
+    </h4>
+  </div>
+
+  <div class=" w-50 mx-auto mt-3 mb-2">
+    <div>
+      <app-btn-green
+        [textButton]="'Entendi'"
+        [showIcon]="true"
+        [iconFirst]="true"
+        [icone]="faConfirm"
+        (emmiterClick)="navigate()"
+      ></app-btn-green>
+    </div>
+  </div>
+</div>

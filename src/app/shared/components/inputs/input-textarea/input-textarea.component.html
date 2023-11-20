@@ -1,0 +1,18 @@
+<div
+  [formGroup]="formGroup"
+  class="mb-3"
+  [ngClass]="{
+    'is-invalid-input-textarea': inputValid()
+  }"
+>
+  <app-label [idInput]="controlName" [textLabel]="label"></app-label>
+  <div class="d-flex">
+    <textarea
+      class="input-textarea w-100"
+      formControlName="{{ controlName }}"
+      id="{{ controlName }}"
+      name="{{ controlName }}"
+      rows="8"
+    ></textarea>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<div
+  [formGroup]="formGroup"
+  class="mb-3"
+  [ngClass]="{
+    'is-invalid-input': inputValid()
+  }"
+>
+  <app-label [idInput]="controlName" [textLabel]="label"></app-label>
+  <div class="d-flex">
+    <select
+      class="input-basic w-100"
+      name="select"
+      formControlName="{{ controlName }}"
+      id="{{ controlName }}"
+      name="{{ controlName }}"
+      (change)="onChange()"
+    >
+      <option disabled value="0" selected></option>
+      <option *ngFor="let i of items" value="{{ i.value }}">
+        {{ i.label | titlecase }}
+      </option>
+    </select>
+  </div>
+</div>

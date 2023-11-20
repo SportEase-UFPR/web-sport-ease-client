@@ -1,0 +1,118 @@
+<ngx-ui-loader [loaderId]="'loader-01'"></ngx-ui-loader>
+
+<div class="d-flex align-items-center justify-content-center">
+  <div class="card-fomulario card-shadow p-3">
+    <header
+      class="d-block text-center d-md-flex align-items-center justify-content-center"
+    >
+      <img
+        src="../../assets/site/logo-sport-ease.png"
+        alt="logo sport ease ufpr"
+        width="70"
+      />
+      <h1 class="ms-0 ms-md-2 mb-0 text-dark-blue">SportEase</h1>
+    </header>
+
+    <main class="mt-3">
+      <h3 class="text-green text-center">Criar conta</h3>
+
+      <form [formGroup]="formCadastroCliente" class="p-2">
+        <div class="row w-100">
+          <div class="col-12">
+            <app-input-field
+              [formGroup]="formCadastroCliente"
+              [controlName]="'nome'"
+              [label]="'Nome completo'"
+              [validacaoInput]="true"
+            ></app-input-field>
+          </div>
+
+          <div class="col-12">
+            <app-input-field
+              [formGroup]="formCadastroCliente"
+              [controlName]="'email'"
+              [label]="'E-mail'"
+              [validacaoInput]="true"
+              [inputType]="'email'"
+            ></app-input-field>
+          </div>
+
+          <div class="col-12">
+            <app-input-field
+              [formGroup]="formCadastroCliente"
+              [controlName]="'cpf'"
+              [label]="'CPF'"
+              [validacaoInput]="true"
+              [mask]="'000.000.000-00'"
+            ></app-input-field>
+          </div>
+
+          <div class="col-12">
+            <app-input-toogle
+              [formGroup]="formCadastroCliente"
+              [controlName]="'vinculo'"
+              [label]="'Sou aluno(a) da UFPR'"
+            ></app-input-toogle>
+
+            <div class="mt-2" *ngIf="showInputGrr">
+              <app-input-field
+                [formGroup]="formCadastroCliente"
+                [controlName]="'grr'"
+                [label]="'GRR (somente os números)'"
+                [validacaoInput]="true"
+                [mask]="'00000000'"
+              ></app-input-field>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 mt-2">
+            <app-input-senha
+              [formGroup]="formCadastroCliente"
+              [controlName]="'senha'"
+              [label]="'Senha...'"
+              [validacaoInput]="true"
+              (emmiterFocus)="focusPassword()"
+            >
+            </app-input-senha>
+          </div>
+
+          <div class="col-12 col-md-6 mt-2">
+            <app-input-senha
+              [formGroup]="formCadastroCliente"
+              [controlName]="'confirmacaoSenha'"
+              [label]="'Confirmar Senha...'"
+              [validacaoInput]="true"
+              (emmiterFocus)="focusPassword()"
+            >
+            </app-input-senha>
+          </div>
+
+          <ng-container *ngIf="passwordChecklist">
+            <app-password-checklist
+              [control]="formCadastroCliente.get('senha')!"
+              [senhasDiferentes]="senhasDiferentes"
+            ></app-password-checklist>
+          </ng-container>
+
+          <div class="col-12 d-block d-md-flex justify-content-end mt-2">
+            <div>
+              <app-btn-green
+                [textButton]="'Cadastrar'"
+                [type]="'submit'"
+                [buttonDisabled]="!cadastroValido()"
+                (emmiterClick)="cadastrar()"
+              ></app-btn-green>
+            </div>
+
+            <div class="ms-0 ms-md-2 mt-2 mt-md-0">
+              <app-btn-border-green
+                [textButton]="'Cancelar'"
+                (emmiterClick)="navigate()"
+              ></app-btn-border-green>
+            </div>
+          </div>
+        </div>
+      </form>
+    </main>
+  </div>
+</div>

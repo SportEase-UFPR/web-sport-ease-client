@@ -1,0 +1,36 @@
+@import "src/cores.scss";
+
+#star-rating {
+  .rating-group {
+    display: inline-flex;
+
+    &:hover .label-rating fa-icon {
+      color: var(--amarelo);
+    }
+  }
+
+  .rating-icon {
+    pointer-events: none;
+    color: var(--cinza-claro);
+  }
+
+  .rating-icon-checked {
+    pointer-events: none;
+    color: var(--amarelo);
+  }
+
+  .input-ratting {
+    position: absolute !important;
+    left: -9999px !important;
+  }
+
+  .label-rating {
+    cursor: pointer;
+    padding: 0 0.1em;
+    font-size: 2rem;
+
+    &:hover ~ .label-rating fa-icon {
+      color: var(--cinza-claro);
+    }
+  }
+}
