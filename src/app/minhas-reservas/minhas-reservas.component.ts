@@ -134,6 +134,8 @@ export class MinhasReservasComponent implements OnInit, OnDestroy {
 
     let filteredReservas = this.minhasReservas;
 
+    this.p = 1;
+
     if (Number(localFilter) == -1) {
       this.ngxLoaderService.startLoader('loader-01');
       filteredReservas = this.minhasReservas;
@@ -188,6 +190,40 @@ export class MinhasReservasComponent implements OnInit, OnDestroy {
       this.minhasReservasFilter = this.ordernarReservasById(filteredReservas!);
       this.ngxLoaderService.stopLoader('loader-01');
     }, 500);
+  }
+
+  montarFiltros() {
+    this.locais = [];
+    this.statusReservas = [];
+
+    BuildFilter.adicionarItem(this.locais, -1, 'Todos');
+    BuildFilter.adicionarItem(this.statusReservas, -1, 'Todas');
+
+    this.minhasReservas?.forEach((r) => {
+      BuildFilter.adicionarItem(
+        this.locais,
+        r.idEspacoEsportivo!,
+        r.nomeEspacoEsportivo
+      );
+
+      BuildFilter.adicionarItem(this.statusReservas, r.status!);
+    });
+  }
+
+  limparFiltros() {
+    this.ngxLoaderService.startLoader('loader-01');
+    this.formFiltros.patchValue({
+      dataInicial: null,
+      dataFinal: null,
+      local: -1,
+      status: -1,
+    });
+    this.minhasReservasFilter = undefined;
+    this.minDate = undefined;
+    this.maxDate = undefined;
+    this.showLimparFiltros = false;
+    this.p = 1;
+    this.ngxLoaderService.stopLoader('loader-01');
   }
 
   ordernarReservasById(
@@ -301,39 +337,6 @@ export class MinhasReservasComponent implements OnInit, OnDestroy {
           }
         },
       });
-    this.ngxLoaderService.stopLoader('loader-01');
-  }
-
-  montarFiltros() {
-    this.locais = [];
-    this.statusReservas = [];
-
-    BuildFilter.adicionarItem(this.locais, -1, 'Todos');
-    BuildFilter.adicionarItem(this.statusReservas, -1, 'Todas');
-
-    this.minhasReservas?.forEach((r) => {
-      BuildFilter.adicionarItem(
-        this.locais,
-        r.idEspacoEsportivo!,
-        r.nomeEspacoEsportivo
-      );
-
-      BuildFilter.adicionarItem(this.statusReservas, r.status!);
-    });
-  }
-
-  limparFiltros() {
-    this.ngxLoaderService.startLoader('loader-01');
-    this.formFiltros.patchValue({
-      dataInicial: null,
-      dataFinal: null,
-      local: -1,
-      status: -1,
-    });
-    this.minhasReservasFilter = undefined;
-    this.minDate = undefined;
-    this.maxDate = undefined;
-    this.showLimparFiltros = false;
     this.ngxLoaderService.stopLoader('loader-01');
   }
 
