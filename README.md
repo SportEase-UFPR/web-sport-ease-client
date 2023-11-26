@@ -1,5 +1,9 @@
 # SportEase UFPR - WEB Cliente
 
+## Website
+
+Link para acessar o [site](https://sportease-client.netlify.app/)
+
 ## Instalação e uso
 
 1. Instalar [Node.Js](https://nodejs.org/en) e NPM
