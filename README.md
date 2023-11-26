@@ -18,7 +18,7 @@ git clone https://github.com/SportEase-UFPR/web-sport-ease-client.git
 cd web-sport-ease-client/
 ```
 
-4. Instale os pacotes NPM do projeto56
+4. Instale os pacotes NPM do projeto
 
 ```sh
 
