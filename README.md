@@ -1,39 +1,46 @@
-# SportEase UFPR - WEB Cliente
 
-## Website
+# SportEase UFPR - Client
 
-Link para acessar o [site](https://sportease-client.netlify.app/)
+O SportEase UFPR - Client permite realizar as solicitações de reserva e acompanhar seus processos, visualizar os espaços esportivos com suas respectivas avaliações, realizar a avaliação da reserva e visualziar o histórico de solicitações feitas.
 
-## Instalação e uso
+## 🥳 Visualizar o projeto
 
-1. Instalar [Node.Js](https://nodejs.org/en) e NPM
+Caso não queira instalar e usar o SportEase UFPR - Clientlocalmente, ele também está hospedado. Sendo possível, através desse [link](https://sportease-client.netlify.app/login), você ser redirecionado para ele.
+	  
+## 💻 Pré-requisitos
 
-2. Instalar o Angular CLI
+Antes de começar, verifique se você atendeu aos seguintes requisitos:
+ 
+- Você deve ter instalado na sua máquina [Node.js](https://nodejs.org/en) e [Angular CLI](https://angular.io/guide/setup-local)
 
-```sh
-npm install -g @angular/cli
+## 🚀 Instalando SportEase UFPR - Client
+
+Para instalar o SportEase UFPR - Manager, siga estas etapas:
+
+Clone o repositório:
+
+```
+git clone https://github.com/MatheusKerscher/web-sport-ease-client.git
 ```
 
-4. Clone esse repositório e acesse a pasta
+Acesse a pasta do repositório:
 
-```sh
-git clone https://github.com/SportEase-UFPR/web-sport-ease-client.git
-
+```
 cd web-sport-ease-client/
 ```
 
-4. Instale os pacotes NPM do projeto
-
-```sh
-
-npm install
-
+Instale as dependências do projeto:
+``` 
+npm i
 ```
 
-5. Executar o projeto
+## ☕ Usando SportEase UFPR - Manager
 
-```sh
+Para usar SportEase UFPR - Client, siga estas etapas:
 
+Executar e abrir o projeto:
+```
 ng s -o
-
 ```
+
+> A flag "-o" fará o projeto já ser aberto em uma nova guia no navegador padrão do seu compuador.
